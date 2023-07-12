@@ -1,6 +1,7 @@
 #include <iostream> 
+#include "Controller.cpp"
 
 int main(void)
 {
-    std::cout << "testing main method" << std::endl;
+    Controller controller;
 }
