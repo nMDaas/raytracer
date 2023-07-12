@@ -1,11 +1,12 @@
 #ifndef __CONTROLLER_H__
 #define __CONTROLLER_H__
 #include <iostream>
+#include "model.h"
 
 class Controller
 {
 public:
-    Controller();
+    Controller(Model& m);
     ~Controller();
 
     /*
@@ -16,7 +17,9 @@ public:
     }
 
     void run();
+
 private:
+    Model model;
 };
 
 #endif

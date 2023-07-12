@@ -5,7 +5,7 @@
 
 int main(void)
 {
-    Controller controller;
     Model model;
+    Controller controller(model);
     //controller.run();
 }

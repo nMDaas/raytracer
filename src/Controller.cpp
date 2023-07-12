@@ -1,7 +1,8 @@
 #include "Controller.h"
 #include <iostream> 
 
-Controller::Controller() {
+Controller::Controller(Model& m) {
+    model = m;
 }
 
 Controller::~Controller()
