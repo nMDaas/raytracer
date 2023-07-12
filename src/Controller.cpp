@@ -9,3 +9,8 @@ Controller::~Controller()
 {
 
 }
+
+void Controller::run()
+{
+    std::cout << "testing controller run method" << std::endl;
+}
