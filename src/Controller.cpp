@@ -2,7 +2,7 @@
 #include <iostream> 
 
 Controller::Controller() {
-   
+   std::cout << "copy constructor called" << std::endl;
 }
 
 Controller::~Controller()
