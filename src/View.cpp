@@ -52,5 +52,9 @@ void View::init(vector<util::PolygonMesh<VertexAttrib>>& meshes,vector<util::Mat
     {
         static_cast<View*>(glfwGetWindowUserPointer(window))->reshape(window,width,height);
     });
+
+    glfwMakeContextCurrent(window);
+    gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+    glfwSwapInterval(1);
   
 }
