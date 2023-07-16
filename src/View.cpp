@@ -141,12 +141,22 @@ void View::display() {
     modelview = modelview * glm::lookAt(glm::vec3(0.0f,200.0f,200.0f),glm::vec3(0.0f,
             0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
 
+    modelview = modelview 
+                * glm::scale(glm::mat4(1.0),glm::vec3(200.0f,200.0f,200.0f))
+                * glm::rotate(glm::mat4(1.0f),(float)glm::radians((float)angleOfRotation),glm::vec3(0.0f,1.0f,0.0f));
+
     //send modelview matrix to GPU  
     glUniformMatrix4fv(shaderLocations.getLocation("modelview"), 1, GL_FALSE, glm::value_ptr(modelview));
     //send projection matrix to GPU    
     glUniformMatrix4fv(shaderLocations.getLocation("projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
-    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE); //OUTLINES
+    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL); //OUTLINES
+    for (int i=0;i<objects.size();i++) {
+        //send color of triangle to GPU
+        glUniform4fv(shaderLocations.getLocation("vColor"),1,glm::value_ptr(objects[i].material.getAmbient()));
+   
+        objects[i].object.draw();
+    }
 
     glFlush();
 
@@ -155,7 +165,7 @@ void View::display() {
 
     glfwSwapBuffers(window);
     glfwPollEvents();
-    
+
     frames++;
     double currenttime = glfwGetTime();
     if ((currenttime-time)>1.0) {

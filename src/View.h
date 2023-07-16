@@ -1,6 +1,14 @@
 #ifndef __VIEW_H__
 #define __VIEW_H__
 #include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <vector>
+using namespace std;
+
+#ifndef GLFW_INCLUDE_NONE
+#define GLFW_INCLUDE_NONE
+#endif
 
 #include "PolygonMesh.h"
 #include "VertexAttrib.h"
@@ -49,7 +57,6 @@ private:
 
     void onkey(GLFWwindow* window, int key, int scancode, int action, int mods);
     void reshape(GLFWwindow* window, int width, int height);
-
     
 };
 
