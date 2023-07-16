@@ -1,4 +1,4 @@
-OBJS = Raytracer.o 
+OBJS = Raytracer.o Controller.o Model.o
 INCLUDES = -I../include
 LIBS = -L../lib
 LDFLAGS = -lglad -lglfw3
@@ -13,11 +13,17 @@ else ifeq ($(shell uname -s),Darwin)     # is MACOSX
     LDFLAGS += -framework Cocoa -framework OpenGL -framework IOKit
 endif
 
-ObjViewer: clean $(OBJS)
+Raytracer: clean $(OBJS)
 	$(COMPILER) -o $(PROGRAM) $(OBJS) $(LIBS) $(LDFLAGS)
 
 Raytracer.o: Raytracer.cpp
 	$(COMPILER) $(INCLUDES) $(CFLAGS) -c Raytracer.cpp	
+
+Controller.o: Controller.cpp Controller.h
+	$(COMPILER) $(INCLUDES) $(CFLAGS) -c Controller.cpp	
+
+Model.o: Model.cpp Model.h
+	$(COMPILER) $(INCLUDES) $(CFLAGS) -c Model.cpp	
 	
 RM = rm	-f
 ifeq ($(OS),Windows_NT)     # is Windows_NT on XP, 2000, 7, Vista, 10...

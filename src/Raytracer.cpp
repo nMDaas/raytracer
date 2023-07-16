@@ -1,6 +1,6 @@
 #include <iostream> 
-#include "Controller.cpp"
-#include "Model.cpp"
+#include "Controller.h"
+#include "Model.h"
 
 
 int main(void)

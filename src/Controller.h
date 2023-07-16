@@ -1,7 +1,12 @@
 #ifndef __CONTROLLER_H__
 #define __CONTROLLER_H__
 #include <iostream>
+
 #include "model.h"
+
+#include "PolygonMesh.h"
+#include "VertexAttrib.h"
+#include "Material.h"
 
 class Controller
 {
@@ -19,6 +24,7 @@ public:
     void run();
 
 private:
+    void meshMaterialSetup();
     Model model;
 };
 
