@@ -35,10 +35,11 @@ private:
     GLFWwindow* window;
     util::ShaderProgram program;
     glm::mat4 projection;
+    util::ShaderLocationsVault shaderLocations;
 
     void onkey(GLFWwindow* window, int key, int scancode, int action, int mods);
     void reshape(GLFWwindow* window, int width, int height);
-
+    
 };
 
 #endif

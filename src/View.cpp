@@ -56,5 +56,10 @@ void View::init(vector<util::PolygonMesh<VertexAttrib>>& meshes,vector<util::Mat
     glfwMakeContextCurrent(window);
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     glfwSwapInterval(1);
+
+    program.createProgram(string("shaders/default.vert"),
+                          string("shaders/default.frag"));
+    program.enable();
+    shaderLocations = program.getAllShaderVariables();
   
 }
