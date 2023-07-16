@@ -6,9 +6,13 @@
 #include "VertexAttrib.h"
 #include "Material.h"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <ShaderProgram.h>
+
 
 class View
 {
@@ -30,8 +34,10 @@ private:
     glm::vec2 window_dimensions;
     GLFWwindow* window;
     util::ShaderProgram program;
+    glm::mat4 projection;
 
     void onkey(GLFWwindow* window, int key, int scancode, int action, int mods);
+    void reshape(GLFWwindow* window, int width, int height);
 
 };
 

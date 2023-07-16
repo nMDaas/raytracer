@@ -13,6 +13,14 @@ void View::onkey(GLFWwindow* window, int key, int scancode, int action, int mods
     glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
+void View::reshape(GLFWwindow* window, int width, int height) 
+{
+    glViewport(0, 0, width, height);
+
+    // last few point is for the z axis (something very close to something very far)
+    projection = glm::ortho(-400.0f,400.0f,-400.0f,400.0f,0.1f,10000.0f);
+}
+
 void View::init(vector<util::PolygonMesh<VertexAttrib>>& meshes,vector<util::Material>& materials) {
     if (!glfwInit())
         exit(EXIT_FAILURE);
@@ -39,5 +47,10 @@ void View::init(vector<util::PolygonMesh<VertexAttrib>>& meshes,vector<util::Mat
         static_cast<View*>(glfwGetWindowUserPointer(window))->onkey(window,key,scancode,action,mods);
     });
 
+    glfwSetWindowSizeCallback(window, 
+    [](GLFWwindow* window, int width,int height)
+    {
+        static_cast<View*>(glfwGetWindowUserPointer(window))->reshape(window,width,height);
+    });
   
 }
