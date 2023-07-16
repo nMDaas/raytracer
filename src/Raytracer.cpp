@@ -9,5 +9,6 @@ int main(void)
     Model model;
     View view;
     Controller controller(model, view);
+    controller.meshMaterialSetup();
     controller.run();
 }

@@ -22,10 +22,10 @@ public:
         std::cout << "CONTROLLER COPY CONSTRUCTOR CALLED" << std::endl;
     }
 
+    void meshMaterialSetup();
     void run();
 
 private:
-    void meshMaterialSetup();
     Model model;
     View view;
 };
