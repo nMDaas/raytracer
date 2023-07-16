@@ -7,6 +7,7 @@ using namespace std;
 #include "ShaderProgram.h"
 #include "ShaderLocationsVault.h"
 #include <glm/glm.hpp>
+#include <glad/glad.h>
 
 namespace util 
 {	
