@@ -67,4 +67,27 @@ void View::init(vector<util::PolygonMesh<VertexAttrib>>& meshes,vector<util::Mat
     program.enable(); // set this program to be in use
     shaderLocations = program.getAllShaderVariables();
   
+    /*
+        In the mesh we have attributes for each vertex. In the shader, 
+        we have variables for each vertex attribute. We need to create a 
+        connection between attribute name in the mesh and corresponding
+        shader variable name.
+    */
+    map<string, string> shaderVarsToVertexAttribs;
+    // currently there are only two per-vertex attribute: position and color
+    shaderVarsToVertexAttribs["vPosition"] = "position";
+
+    for (int i=0;i<meshes.size();i++) {
+        util::ObjectInstance obj("triangles");
+        obj.initPolygonMesh<VertexAttrib>(
+            program,                    // the shader program
+            shaderLocations,            // the shader locations
+            shaderVarsToVertexAttribs,  // the shader variable -> attrib map
+            meshes[i]);                 // the actual mesh object
+        Object objStruct;
+        objStruct.object = obj;
+        objStruct.material = materials[i];
+        objects.push_back(objStruct);
+
+    }
 }

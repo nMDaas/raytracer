@@ -5,6 +5,8 @@
 #include "PolygonMesh.h"
 #include "VertexAttrib.h"
 #include "Material.h"
+#include "Object.h"
+#include "ObjectInstance.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -36,6 +38,7 @@ private:
     util::ShaderProgram program;
     glm::mat4 projection;
     util::ShaderLocationsVault shaderLocations;
+    vector<Object> objects;
 
     void onkey(GLFWwindow* window, int key, int scancode, int action, int mods);
     void reshape(GLFWwindow* window, int width, int height);
