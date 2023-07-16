@@ -38,7 +38,9 @@ void Controller::run()
     view.init(meshes, materials);
 
     while (!view.shouldWindowClose()) {
-        
+        view.display();
     }
 
+    view.closeWindow();
+    exit(EXIT_SUCCESS);
 }

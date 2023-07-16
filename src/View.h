@@ -45,9 +45,11 @@ private:
     int angleOfRotation;
     int frames;
     double time;
+    glm::mat4 modelview;
 
     void onkey(GLFWwindow* window, int key, int scancode, int action, int mods);
     void reshape(GLFWwindow* window, int width, int height);
+
     
 };
 

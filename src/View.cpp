@@ -126,5 +126,41 @@ void View::init(vector<util::PolygonMesh<VertexAttrib>>& meshes,vector<util::Mat
 }
 
 void View::display() {
+    program.enable();
+    glClearColor(0, 0, 0, 1); // set background color to black
+
+    //clear the background
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_DEPTH_TEST);
+
+    angleOfRotation = (angleOfRotation+1)%360;
+
+    modelview = glm::mat4(1.0); // model view starts off as identity
+
+    // CAMERA SETUP: position, looking at ?, orientation 
+    modelview = modelview * glm::lookAt(glm::vec3(0.0f,200.0f,200.0f),glm::vec3(0.0f,
+            0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
+
+    //send modelview matrix to GPU  
+    glUniformMatrix4fv(shaderLocations.getLocation("modelview"), 1, GL_FALSE, glm::value_ptr(modelview));
+    //send projection matrix to GPU    
+    glUniformMatrix4fv(shaderLocations.getLocation("projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE); //OUTLINES
+
+    glFlush();
+
+    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL); //BACK TO FILL
+    program.disable();
+
+    glfwSwapBuffers(window);
+    glfwPollEvents();
     
+    frames++;
+    double currenttime = glfwGetTime();
+    if ((currenttime-time)>1.0) {
+        printf("Framerate: %2.0f\r",frames/(currenttime-time));
+        frames = 0;
+        time = currenttime;
+    }
 }

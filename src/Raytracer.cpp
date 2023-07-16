@@ -9,5 +9,5 @@ int main(void)
     Model model;
     View view;
     Controller controller(model, view);
-    //controller.run();
+    controller.run();
 }
