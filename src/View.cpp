@@ -12,6 +12,17 @@ bool View::shouldWindowClose() {
     return glfwWindowShouldClose(window);
 }
 
+void View::closeWindow() {
+    for (int i=0;i<objects.size();i++) {
+        objects[i].object.cleanup();
+       // delete objects[i].object;
+    }
+    objects.clear();
+    glfwDestroyWindow(window);
+
+    glfwTerminate();
+}
+
 void View::onkey(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     glfwSetWindowShouldClose(window, GLFW_TRUE);
@@ -112,4 +123,8 @@ void View::init(vector<util::PolygonMesh<VertexAttrib>>& meshes,vector<util::Mat
     angleOfRotation = 0;
     frames = 0;
     time = glfwGetTime();
+}
+
+void View::display() {
+    
 }

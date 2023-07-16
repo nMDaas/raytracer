@@ -32,6 +32,8 @@ public:
 
     void init(vector<util::PolygonMesh<VertexAttrib>>& meshes,vector<util::Material>& materials);
     bool shouldWindowClose();
+    void display();
+    void closeWindow();
 
 private:
     glm::vec2 window_dimensions;
