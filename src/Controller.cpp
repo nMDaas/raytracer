@@ -35,4 +35,5 @@ void Controller::run()
 {
     vector<util::PolygonMesh<VertexAttrib> > meshes = model.getMeshes();
     vector<util::Material> materials = model.getMaterials();
+    view.init(meshes, materials);
 }
