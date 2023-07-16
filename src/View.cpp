@@ -22,23 +22,26 @@ void View::reshape(GLFWwindow* window, int width, int height)
 }
 
 void View::init(vector<util::PolygonMesh<VertexAttrib>>& meshes,vector<util::Material>& materials) {
+
+    // This function initializes the GLFW library because before GLFW functions can be used, GLFW must be initialized
     if (!glfwInit())
         exit(EXIT_FAILURE);
 
+    // ... 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
+    // Setup window and terminate the program if this is not successful
     window_dimensions = glm::vec2(800,800);
-
-    window = glfwCreateWindow(window_dimensions.x,window_dimensions.y, "ObjViewer", NULL, NULL);
+    window = glfwCreateWindow(window_dimensions.x,window_dimensions.y, "Raytracer", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
         exit(EXIT_FAILURE);
     }
-     glfwSetWindowUserPointer(window, this);
+    glfwSetWindowUserPointer(window, this); // set pointer of window to this
 
     //using C++ functions as callbacks to a C-style library
     glfwSetKeyCallback(window, 
@@ -53,13 +56,15 @@ void View::init(vector<util::PolygonMesh<VertexAttrib>>& meshes,vector<util::Mat
         static_cast<View*>(glfwGetWindowUserPointer(window))->reshape(window,width,height);
     });
 
+    // ...
     glfwMakeContextCurrent(window);
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     glfwSwapInterval(1);
 
+    // create shader program with a vertex and fragment shader
     program.createProgram(string("shaders/default.vert"),
                           string("shaders/default.frag"));
-    program.enable();
+    program.enable(); // set this program to be in use
     shaderLocations = program.getAllShaderVariables();
   
 }
