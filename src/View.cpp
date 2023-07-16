@@ -90,4 +90,22 @@ void View::init(vector<util::PolygonMesh<VertexAttrib>>& meshes,vector<util::Mat
         objects.push_back(objStruct);
 
     }
+
+    //prepare the projection matrix for orthographic projection
+	glViewport(0, 0, window_dimensions.x, window_dimensions.y);
+
+    // CAN UNCOMMENT THIS IF YOU WANT ORTHOGRAPHIC INSTEAD OF PERSPECTIVE PROJECTION
+    // projection = glm::ortho(-400.0f,400.0f,-400.0f,400.0f,0.1f,10000.0f);
+
+    // perspective projection - makes objects farther away appear smaller 
+    // 60 degrees is how much you can see (if you don't move your head)
+    // next parameter: aspect vision - aspect ratio of dimension to make sure window doesn't distort
+    projection = glm::perspective((float)glm::radians(60.0f),
+            (float) window_dimensions.x/window_dimensions.y,
+            0.1f, // near distance
+            10000.0f); // far distance
+
+    angleOfRotation = 0;
+    frames = 0;
+    time = glfwGetTime();
 }

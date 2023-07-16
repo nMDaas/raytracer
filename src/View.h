@@ -39,6 +39,9 @@ private:
     glm::mat4 projection;
     util::ShaderLocationsVault shaderLocations;
     vector<Object> objects;
+    int angleOfRotation;
+    int frames;
+    double time;
 
     void onkey(GLFWwindow* window, int key, int scancode, int action, int mods);
     void reshape(GLFWwindow* window, int width, int height);
