@@ -32,5 +32,6 @@ void Controller::meshMaterialSetup() {
 
 void Controller::run()
 {
-    std::cout << "testing controller run method" << std::endl;
+    vector<util::PolygonMesh<VertexAttrib> > meshes = model.getMeshes();
+    vector<util::Material> materials = model.getMaterials();
 }
