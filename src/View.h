@@ -31,6 +31,8 @@ private:
     GLFWwindow* window;
     util::ShaderProgram program;
 
+    void onkey(GLFWwindow* window, int key, int scancode, int action, int mods);
+
 };
 
 #endif
