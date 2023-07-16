@@ -8,6 +8,10 @@ View::~View(){
 
 }
 
+bool View::shouldWindowClose() {
+    return glfwWindowShouldClose(window);
+}
+
 void View::onkey(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     glfwSetWindowShouldClose(window, GLFW_TRUE);
