@@ -8,6 +8,6 @@ int main(void)
 {
     Model model;
     View view;
-    Controller controller(model);
+    Controller controller(model, view);
     //controller.run();
 }

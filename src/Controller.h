@@ -2,7 +2,8 @@
 #define __CONTROLLER_H__
 #include <iostream>
 
-#include "model.h"
+#include "Model.h"
+#include "View.h"
 
 #include "PolygonMesh.h"
 #include "VertexAttrib.h"
@@ -11,7 +12,7 @@
 class Controller
 {
 public:
-    Controller(Model& m);
+    Controller(Model& m, View& v);
     ~Controller();
 
     /*
@@ -26,6 +27,7 @@ public:
 private:
     void meshMaterialSetup();
     Model model;
+    View view;
 };
 
 #endif

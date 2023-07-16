@@ -3,8 +3,9 @@
 #include <fstream>
 #include <ObjImporter.h>
 
-Controller::Controller(Model& m) {
+Controller::Controller(Model& m, View& v) {
     model = m;
+    view = v;
 }
 
 Controller::~Controller()
