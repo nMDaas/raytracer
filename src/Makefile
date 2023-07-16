@@ -1,4 +1,4 @@
-OBJS = Raytracer.o Controller.o Model.o
+OBJS = Raytracer.o Controller.o Model.o View.o
 INCLUDES = -I../include
 LIBS = -L../lib
 LDFLAGS = -lglad -lglfw3
@@ -24,6 +24,9 @@ Controller.o: Controller.cpp Controller.h
 
 Model.o: Model.cpp Model.h
 	$(COMPILER) $(INCLUDES) $(CFLAGS) -c Model.cpp	
+
+View.o: View.cpp View.h
+	$(COMPILER) $(INCLUDES) $(CFLAGS) -c View.cpp	
 	
 RM = rm	-f
 ifeq ($(OS),Windows_NT)     # is Windows_NT on XP, 2000, 7, Vista, 10...
