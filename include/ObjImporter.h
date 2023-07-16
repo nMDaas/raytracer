@@ -1,6 +1,7 @@
 #ifndef _OBJIMPORTER_H_
 #define _OBJIMPORTER_H_
 
+#include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <fstream>
