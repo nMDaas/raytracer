@@ -18,7 +18,7 @@ void Controller::meshMaterialSetup() {
     util::PolygonMesh<VertexAttrib> mesh;
 
     //import an OBJ model from file
-    ifstream in("models/thomas-lyons-object.obj");
+    ifstream in("models/box.obj");
     mesh = util::ObjImporter<VertexAttrib>::importFile(in,true);
 
     //give a material for it.
