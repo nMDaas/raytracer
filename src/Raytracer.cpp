@@ -10,5 +10,5 @@ int main(void)
     View view;
     Controller controller(model, view);
     controller.meshMaterialSetup();
-    controller.run();
+    //controller.run();
 }

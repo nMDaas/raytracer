@@ -18,13 +18,17 @@ Controller::~Controller()
 
 void Controller::meshMaterialSetup() {
 
+    ifstream inFile("scenegraphs/firstScene.txt");
+    ScenegraphImporter importer;
+    IScenegraph *scenegraph = importer.parse(inFile);
+    cout << "Scenegraph made" << endl;   
+
+    /*
     util::PolygonMesh<VertexAttrib> mesh;
 
     //import an OBJ model from file
     ifstream in("models/box.obj");
     mesh = util::ObjImporter<VertexAttrib>::importFile(in,true);
-
-    ScenegraphImporter s;
 
     //give a material for it.
     util::Material material;
@@ -33,6 +37,7 @@ void Controller::meshMaterialSetup() {
     material.setSpecular(1,1,1);
     
     model.addMesh(mesh,material);
+    */
 
 }
 
