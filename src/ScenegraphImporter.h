@@ -20,7 +20,7 @@ class ScenegraphImporter {
             std::cout << "SCENEGRAPH IMPORTER COPY CONSTRUCTOR CALLED" << std::endl;
         }
 
-        IScenegraph *parse(std::istream& input);
+        IScenegraph* parse(std::istream& input);
 
         private: 
         std::string stripComments(std::istream& input); // to remove lines with comments (lines starting with "#...")
