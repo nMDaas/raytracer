@@ -1,4 +1,4 @@
-OBJS = Raytracer.o Controller.o Model.o View.o
+OBJS = Raytracer.o ScenegraphImporter.o Controller.o Model.o View.o 
 INCLUDES = -I../include
 LIBS = -L../lib
 LDFLAGS = -lglad -lglfw3
@@ -18,6 +18,9 @@ Raytracer: clean $(OBJS)
 
 Raytracer.o: Raytracer.cpp
 	$(COMPILER) $(INCLUDES) $(CFLAGS) -c Raytracer.cpp	
+
+ScenegraphImporter.o: ScenegraphImporter.cpp ScenegraphImporter.h
+	$(COMPILER) $(INCLUDES) $(CFLAGS) -c ScenegraphImporter.cpp
 
 Controller.o: Controller.cpp Controller.h
 	$(COMPILER) $(INCLUDES) $(CFLAGS) -c Controller.cpp	

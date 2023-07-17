@@ -1,7 +1,10 @@
 #include "Controller.h"
+
 #include <iostream> 
 #include <fstream>
+
 #include <ObjImporter.h>
+#include "ScenegraphImporter.h"
 
 Controller::Controller(Model& m, View& v) {
     model = m;
@@ -20,6 +23,8 @@ void Controller::meshMaterialSetup() {
     //import an OBJ model from file
     ifstream in("models/box.obj");
     mesh = util::ObjImporter<VertexAttrib>::importFile(in,true);
+
+    ScenegraphImporter s;
 
     //give a material for it.
     util::Material material;
