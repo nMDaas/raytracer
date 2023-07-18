@@ -113,26 +113,31 @@ void ScenegraphImporter::parseMaterial(istream& input) {
         if (command == "ambient") {
             input >> r >> g >> b;
             std::cout << "ambient: " << r << " " << g << " " << b << std::endl;
+            mat.setAmbient(r,g,b);
         }
         else if (command == "diffuse") {
             input >> r >> g >> b;
             std::cout << "diffuse: " << r << " " << g << " " << b << std::endl;
+            mat.setDiffuse(r,g,b);
         }
         else if (command == "specular") {
             input >> r >> g >> b;
             std::cout << "specular: " << r << " " << g << " " << b << std::endl;
+            mat.setSpecular(r,g,b);
         }
         else if (command == "emission") {
             input >> r >> g >> b;
             std::cout << "emission: " << r << " " << g << " " << b << std::endl;
+            mat.setEmission(r,g,b);
         }
         else if (command == "shininess") {
             input >> r;
             std::cout << "shininess: " << r  << std::endl;
+            mat.setShininess(r);
         }
-    input >> command;
+        input >> command;
     }
-
+     materials[name] = mat;
 }
 
 void ScenegraphImporter::parseScale(istream& input) {
