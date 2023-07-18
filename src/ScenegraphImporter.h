@@ -37,6 +37,7 @@ class ScenegraphImporter {
         map<string,string> meshPaths; // array that stores obj filepaths in input txt file
         map<string,util::PolygonMesh<VertexAttrib> > meshes; // array that stores meshes of instances in input txt file
         map<string,SGNode *> nodes;
+        map<string,util::Material> materials;
 
         void parseInstance(istream& input);
         void parseGroup(istream& input);
