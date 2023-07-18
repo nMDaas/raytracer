@@ -64,7 +64,7 @@ IScenegraph* ScenegraphImporter::parse(std::istream& input) {
             parseSetRoot(inputWithOutComments);
         }
         else {
-            std::cout << "other command: " << command << std::endl;
+            throw runtime_error("Unrecognized or out-of-place command: "+command);
         }
     }
 
