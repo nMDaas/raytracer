@@ -5,8 +5,11 @@
 #include <string>
 #include <sstream>
 using namespace std;
+#include <map>
 
 #include "Material.h"
+#include "PolygonMesh.h"
+#include "VertexAttrib.h"
 
 #include "sgraph/IScenegraph.h"
 
@@ -26,6 +29,8 @@ class ScenegraphImporter {
 
         private: 
         std::string stripComments(std::istream& input); // to remove lines with comments (lines starting with "#...")
+        map<string,string> meshPaths;
+        map<string,util::PolygonMesh<VertexAttrib> > meshes;
 
         void parseInstance(istream& input);
         void parseGroup(istream& input);
