@@ -97,6 +97,8 @@ void ScenegraphImporter::parseLeaf(istream& input) {
         input >> instanceof;
     }
     std::cout << "command: leaf " << varname << " " << name << " " << command << " " << instanceof << std::endl;
+    SGNode *leaf = new LeafNode(instanceof,name,NULL);
+    nodes[varname] = leaf;
 }
 
 void ScenegraphImporter::parseMaterial(istream& input) {
