@@ -4,11 +4,11 @@
 #include "View.h"
 
 
-int main(void)
+int main(int argc,char *argv[])
 {
     Model model;
     View view;
     Controller controller(model, view);
-    controller.meshMaterialSetup();
+    controller.meshMaterialSetup(argv[1]);
     //controller.run();
 }

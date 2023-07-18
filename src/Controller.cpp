@@ -16,9 +16,9 @@ Controller::~Controller()
 
 }
 
-void Controller::meshMaterialSetup() {
+void Controller::meshMaterialSetup(char* filePath) {
 
-    ifstream inFile("scenegraphs/firstScene.txt");
+    ifstream inFile(filePath);
     ScenegraphImporter importer;
     IScenegraph *scenegraph = importer.parse(inFile);
     cout << "Scenegraph made" << endl;   

@@ -22,7 +22,7 @@ public:
         std::cout << "CONTROLLER COPY CONSTRUCTOR CALLED" << std::endl;
     }
 
-    void meshMaterialSetup();
+    void meshMaterialSetup(char* filePath);
     void run();
 
 private:
