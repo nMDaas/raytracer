@@ -17,13 +17,6 @@ class ParentSGNode: public AbstractSGNode {
         ~ParentSGNode() {
         }
 
-        /*
-        to check for copy constructors
-        */
-        ParentSGNode (ParentSGNode &t) {
-            std::cout << "PARENT NODE COPY CONSTRUCTOR CALLED" << std::endl;
-        }
-
 };
 
 #endif
