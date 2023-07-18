@@ -74,6 +74,12 @@ void ScenegraphImporter::parseInstance(istream& input) {
     string name,path;
     input >> name >> path;
     std::cout << "command: instance " << name << " " << path << std::endl;
+    meshPaths[name] = path;
+    ifstream in(path);
+    if (in.is_open()) {
+        util::PolygonMesh<VertexAttrib> mesh = util::ObjImporter<VertexAttrib>::importFile(in,false);
+        meshes[name] = mesh;         
+        } 
 }
 
 void ScenegraphImporter::parseGroup(istream& input) {

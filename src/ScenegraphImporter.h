@@ -2,6 +2,7 @@
 #define _SCENEGRAPHIMPORTER_H_
 #include <iostream>
 #include <istream>
+#include <fstream>
 #include <string>
 #include <sstream>
 using namespace std;
@@ -10,6 +11,7 @@ using namespace std;
 #include "Material.h"
 #include "PolygonMesh.h"
 #include "VertexAttrib.h"
+#include <ObjImporter.h>
 
 #include "sgraph/IScenegraph.h"
 
@@ -29,8 +31,8 @@ class ScenegraphImporter {
 
         private: 
         std::string stripComments(std::istream& input); // to remove lines with comments (lines starting with "#...")
-        map<string,string> meshPaths;
-        map<string,util::PolygonMesh<VertexAttrib> > meshes;
+        map<string,string> meshPaths; // array that stores obj filepaths in input txt file
+        map<string,util::PolygonMesh<VertexAttrib> > meshes; // array that stores meshes of instances in input txt file
 
         void parseInstance(istream& input);
         void parseGroup(istream& input);
