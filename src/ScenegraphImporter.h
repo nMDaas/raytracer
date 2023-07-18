@@ -17,6 +17,8 @@ using namespace std;
 #include "sgraph/nodes/SGNode.h"
 #include "sgraph/nodes/GroupNode.h"
 #include "sgraph/nodes/LeafNode.h"
+#include "sgraph/nodes/TransformNode.h"
+#include "sgraph/nodes/ScaleTransform.h"
 
 class ScenegraphImporter {
     public:

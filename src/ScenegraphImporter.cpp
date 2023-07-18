@@ -146,6 +146,8 @@ void ScenegraphImporter::parseScale(istream& input) {
     float sx,sy,sz;
     input >> sx >> sy >> sz;
     std::cout << "command: scale " << varname << " " << name << " " << sx << " " << sy << " " << sz << std::endl;
+    SGNode *scaleNode = new ScaleTransform(sx,sy,sz,name,NULL);
+    nodes[varname] = scaleNode;
 }
 
 void ScenegraphImporter::parseRotate(istream& input) {
