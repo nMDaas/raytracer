@@ -86,6 +86,8 @@ void ScenegraphImporter::parseGroup(istream& input) {
     string varname,name;
     input >> varname >> name;
     std::cout << "command: group " << varname << " " << name << std::endl;
+    SGNode *group = new GroupNode(name,NULL);
+    nodes[varname] = group;
 }
 
 void ScenegraphImporter::parseLeaf(istream& input) {
