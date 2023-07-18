@@ -71,49 +71,110 @@ IScenegraph* ScenegraphImporter::parse(std::istream& input) {
 }
 
 void ScenegraphImporter::parseInstance(istream& input) {
-    std::cout << "instance" << std::endl;
+    string name,path;
+    input >> name >> path;
+    std::cout << "command: instance " << name << " " << path << std::endl;
 }
 
 void ScenegraphImporter::parseGroup(istream& input) {
-    std::cout << "group" << std::endl;
+    string varname,name;
+    input >> varname >> name;
+    std::cout << "command: group " << varname << " " << name << std::endl;
 }
 
 void ScenegraphImporter::parseLeaf(istream& input) {
-    std::cout << "leaf" << std::endl;
+    string varname,name,command,instanceof;
+    input >> varname >> name >> command;
+    if (command == "instanceof") {
+        input >> instanceof;
+    }
+    std::cout << "command: leaf " << varname << " " << name << " " << command << " " << instanceof << std::endl;
 }
 
 void ScenegraphImporter::parseMaterial(istream& input) {
-    std::cout << "material" << std::endl;
+    util::Material mat;
+    float r,g,b;
+    string name;
+    input >> name;
+    string command;
+    input >> command;
+    std::cout << "command: material " << name << std::endl;
+    while (command!="end-material") {
+        if (command == "ambient") {
+            input >> r >> g >> b;
+            std::cout << "ambient: " << r << " " << g << " " << b << std::endl;
+        }
+        else if (command == "diffuse") {
+            input >> r >> g >> b;
+            std::cout << "diffuse: " << r << " " << g << " " << b << std::endl;
+        }
+        else if (command == "specular") {
+            input >> r >> g >> b;
+            std::cout << "specular: " << r << " " << g << " " << b << std::endl;
+        }
+        else if (command == "emission") {
+            input >> r >> g >> b;
+            std::cout << "emission: " << r << " " << g << " " << b << std::endl;
+        }
+        else if (command == "shininess") {
+            input >> r;
+            std::cout << "shininess: " << r  << std::endl;
+        }
+    input >> command;
+    }
+
 }
 
 void ScenegraphImporter::parseScale(istream& input) {
-    std::cout << "scale" << std::endl;
+    string varname,name;
+    input >> varname >> name;
+    float sx,sy,sz;
+    input >> sx >> sy >> sz;
+    std::cout << "command: scale " << varname << " " << name << " " << sx << " " << sy << " " << sz << std::endl;
 }
 
 void ScenegraphImporter::parseRotate(istream& input) {
-    std::cout << "rotate" << std::endl;
+    string varname,name;
+    input >> varname >> name;
+    float angleInDegrees,ax,ay,az;
+    input >> angleInDegrees >> ax >> ay >> az;
+    std::cout << "command: rotate " << varname << " " << name << " " << angleInDegrees << " " << ax << " " << ay << " " << az <<std::endl;
 }
 
 void ScenegraphImporter::parseTranslate(istream& input) {
-    std::cout << "translate" << std::endl;
+    string varname,name;
+    input >> varname >> name;
+    float tx,ty,tz;
+    input >> tx >> ty >> tz;
+    std::cout << "command: translate " << varname << " " << name << " " << tx << " " << ty << " " << tz << std::endl;
 }
 
 void ScenegraphImporter::parseCopy(istream& input) {
-    std::cout << "copy" << std::endl;
+    string nodename,copyof;
+    input >> nodename >> copyof;
+    std::cout << "command: copy " << nodename << " " << copyof << std::endl;
 }
 
 void ScenegraphImporter::parseImport(istream& input) {
-    std::cout << "import" << std::endl;
+    string nodename,filepath;
+    input >> nodename >> filepath;
+    std::cout << "command: import " << nodename << " " << filepath << std::endl;
 }
 
 void ScenegraphImporter::parseAssignMaterial(istream& input) {
-    std::cout << "assign-material" << std::endl;
+    string nodename,matname;
+    input >> nodename >> matname;
+    std::cout << "command: assign-material " << nodename << " " << matname << std::endl;
 }
 
 void ScenegraphImporter::parseAddChild(istream& input) {
-    std::cout << "add-child" << std::endl;
+    string childname,parentname;
+    input >> childname >> parentname;
+    std::cout << "command: add-child" << " " << childname << " " << parentname << std::endl;
 }
 
 void ScenegraphImporter::parseSetRoot(istream& input) {
-    std::cout << "assign-root" << std::endl;
+    string rootname;
+    input >> rootname;
+    std::cout << "command: assign-root " << rootname << std::endl;
 }

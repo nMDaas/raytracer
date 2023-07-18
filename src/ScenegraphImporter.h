@@ -6,6 +6,8 @@
 #include <sstream>
 using namespace std;
 
+#include "Material.h"
+
 #include "sgraph/IScenegraph.h"
 
 class ScenegraphImporter {
