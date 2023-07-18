@@ -156,6 +156,8 @@ void ScenegraphImporter::parseRotate(istream& input) {
     float angleInDegrees,ax,ay,az;
     input >> angleInDegrees >> ax >> ay >> az;
     std::cout << "command: rotate " << varname << " " << name << " " << angleInDegrees << " " << ax << " " << ay << " " << az <<std::endl;
+    SGNode *rotateNode = new RotateTransform(glm::radians(angleInDegrees),ax,ay,az,name,NULL);
+    nodes[varname] = rotateNode;  
 }
 
 void ScenegraphImporter::parseTranslate(istream& input) {
@@ -164,6 +166,8 @@ void ScenegraphImporter::parseTranslate(istream& input) {
     float tx,ty,tz;
     input >> tx >> ty >> tz;
     std::cout << "command: translate " << varname << " " << name << " " << tx << " " << ty << " " << tz << std::endl;
+    SGNode *translateNode = new TranslateTransform(tx,ty,tz,name,NULL);
+    nodes[varname] = translateNode;  
 }
 
 void ScenegraphImporter::parseCopy(istream& input) {

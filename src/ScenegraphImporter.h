@@ -19,6 +19,8 @@ using namespace std;
 #include "sgraph/nodes/LeafNode.h"
 #include "sgraph/nodes/TransformNode.h"
 #include "sgraph/nodes/ScaleTransform.h"
+#include "sgraph/nodes/RotateTransform.h"
+#include "sgraph/nodes/TranslateTransform.h"
 
 class ScenegraphImporter {
     public:
