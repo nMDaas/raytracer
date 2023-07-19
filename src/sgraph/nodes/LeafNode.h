@@ -7,6 +7,9 @@
 #include "../IScenegraph.h"
 
 class LeafNode: public AbstractSGNode {
+    protected: 
+    util::Material material;
+
     public: 
     LeafNode(const std::string& instanceOf,util::Material& material,const std::string& name,IScenegraph *graph)
         :AbstractSGNode(name,graph) {
@@ -17,6 +20,11 @@ class LeafNode: public AbstractSGNode {
     }
 	
 	~LeafNode(){}
+
+    // sets material of all vertices in this object
+    void setMaterial(const util::Material& mat) {
+        material = mat;
+    }
 };
 
 #endif
