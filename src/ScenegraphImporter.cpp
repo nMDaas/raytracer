@@ -186,6 +186,10 @@ void ScenegraphImporter::parseAssignMaterial(istream& input) {
     string nodename,matname;
     input >> nodename >> matname;
     std::cout << "command: assign-material " << nodename << " " << matname << std::endl;
+    LeafNode *leafNode = dynamic_cast<LeafNode *>(nodes[nodename]);
+    if ((leafNode!=NULL) && (materials.find(matname)!=materials.end())) {
+        leafNode->setMaterial(materials[matname]);
+    }
 }
 
 void ScenegraphImporter::parseAddChild(istream& input) {
