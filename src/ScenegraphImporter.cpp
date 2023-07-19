@@ -202,4 +202,5 @@ void ScenegraphImporter::parseSetRoot(istream& input) {
     string rootname;
     input >> rootname;
     std::cout << "command: assign-root " << rootname << std::endl;
+    root = nodes[rootname];
 }
