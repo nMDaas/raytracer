@@ -1,6 +1,7 @@
 #ifndef _SCENEGRAPH_H_
 #define _SCENEGRAPH_H_
 #include <string>
+#include <map>
 
 #include "IScenegraph.h"
 
@@ -9,6 +10,7 @@
 class Scenegraph: public IScenegraph {
     protected:
         SGNode *root;
+        std::map<std::string,SGNode *> nodes; // to keep track of all nodes in this scenegraph
 
     public:
     Scenegraph() {
@@ -20,6 +22,11 @@ class Scenegraph: public IScenegraph {
           delete root;
           root = NULL;
       }
+    }
+
+    // add a node to the scenegraph to keep track of all nodes
+    void addNode(const std::string& name, SGNode *node) {
+      nodes[name]=node;
     }
 };
 
