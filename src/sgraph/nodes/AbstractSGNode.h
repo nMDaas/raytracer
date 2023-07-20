@@ -17,6 +17,9 @@ class AbstractSGNode : public SGNode {
 
     public:
     AbstractSGNode(const std::string& name,IScenegraph *graph) {
+      this->parent = NULL;
+      scenegraph = graph;
+      setName(name);
     }
 
     // set parent of this node
