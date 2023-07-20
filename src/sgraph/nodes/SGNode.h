@@ -8,6 +8,9 @@ class SGNode {
     public:
     SGNode(){}
     virtual ~SGNode(){}
+
+    // set parent of this node
+    virtual void setParent(SGNode *parent)=0;
 };
 
 #endif
