@@ -14,10 +14,13 @@ class LeafNode: public AbstractSGNode {
     public: 
     LeafNode(const std::string& instanceOf,util::Material& material,const std::string& name,IScenegraph *graph)
         :AbstractSGNode(name,graph) {
+        this->objInstanceName = instanceOf;
+        this->material = material;
     }
 
     LeafNode(const std::string& instanceOf,const std::string& name,IScenegraph *graph)
         :AbstractSGNode(name,graph) {
+        this->objInstanceName = instanceOf;
     }
 	
 	~LeafNode(){}
