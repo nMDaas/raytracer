@@ -15,5 +15,11 @@ class GroupNode : public ParentSGNode {
       
     }
 
+    // add another child to this node
+    void addChild(SGNode *child) {
+      children.push_back(child);
+      child->setParent(this);
+    }
+
 };
 #endif
