@@ -4,10 +4,16 @@
 #include "../IScenegraph.h"
 #include "ParentSGNode.h"
 
+#include "glm/glm.hpp"
+
 class TransformNode: public ParentSGNode {
+    protected:
+      glm::mat4 transform;
+
     public:
       TransformNode(const std::string& name,IScenegraph *graph)
         :ParentSGNode(name,graph) {
+        this->transform = glm::mat4(1.0);
       }
       
       ~TransformNode()	{
