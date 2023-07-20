@@ -17,6 +17,10 @@ class RotateTransform: public TransformNode {
     public:
         RotateTransform(float angleInRadians,float ax,float ay,float az,const std::string& name,IScenegraph *graph) 
                 :TransformNode(name,graph) {
+                    this->angleInRadians = angleInRadians;
+                    this->axis = glm::vec3(ax,ay,az);
+                    glm::mat4 transform = glm::rotate(glm::mat4(1.0),this->angleInRadians,this->axis);
+                    setTransform(transform);
         }
 };
 
