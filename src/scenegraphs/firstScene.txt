@@ -20,5 +20,9 @@ assign-material node-3-0 mat-node-3-0
 add-child node-3-0 node-2-0
 add-child node-2-0 node-1-0
 
+# test copy
+# copy group2 node-1-0
+# add-child group2 root
+
 assign-root node-1-0
 
