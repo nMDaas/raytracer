@@ -1,6 +1,7 @@
 #ifndef _GROUPNODE_H_
 #define _GROUPNODE_H_
 #include <iostream>
+#include <vector>
 
 #include "../IScenegraph.h"
 #include "ParentSGNode.h"
@@ -10,7 +11,7 @@ class GroupNode : public ParentSGNode {
     ParentSGNode *copyNode() {
       return new GroupNode(name,scenegraph);
     }
-    
+
     public:
     GroupNode(const std::string& name,IScenegraph *graph)
       :ParentSGNode(name,graph) {      
@@ -24,6 +25,28 @@ class GroupNode : public ParentSGNode {
     void addChild(SGNode *child) {
       children.push_back(child);
       child->setParent(this);
+    }
+
+    SGNode *clone() {
+      std::vector<SGNode *> newc;
+
+      for (int i=0;i<children.size();i++) {
+          newc.push_back(children[i]->clone());
+      }
+
+      GroupNode *newgroup = new GroupNode(name,scenegraph);
+
+      for (int i=0;i<children.size();i++) {
+          try
+          {
+            newgroup->addChild(newc[i]);
+          }
+          catch (std::runtime_error e)
+          {
+
+          }
+      }
+      return newgroup;
     }
 
 };

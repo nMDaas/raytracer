@@ -12,7 +12,7 @@
 class ParentSGNode: public AbstractSGNode {
 
     protected:
-        vector<SGNode *> children;
+        std::vector<SGNode *> children;
 
     public:
         ParentSGNode(const std::string& name,IScenegraph *scenegraph)
@@ -25,6 +25,16 @@ class ParentSGNode: public AbstractSGNode {
         virtual void addChild(SGNode *child)=0;
 
         virtual ParentSGNode *copyNode()=0;
+
+        SGNode *clone() {
+            ParentSGNode * newtransform = copyNode();
+
+            for (int i=0;i<children.size();i=i+1) {
+                    newtransform->addChild(children[i]->clone());
+            }
+
+            return newtransform;
+        }
 };
 
 #endif

@@ -9,6 +9,7 @@
 class LeafNode: public AbstractSGNode {
     protected: 
     util::Material material;
+    string objInstanceName;
 
     public: 
     LeafNode(const std::string& instanceOf,util::Material& material,const std::string& name,IScenegraph *graph)
@@ -24,6 +25,11 @@ class LeafNode: public AbstractSGNode {
     // sets material of all vertices in this object
     void setMaterial(const util::Material& mat) {
         material = mat;
+    }
+
+    SGNode *clone() {
+        LeafNode *newclone = new LeafNode(this->objInstanceName,material,name,scenegraph);
+        return newclone;
     }
 };
 

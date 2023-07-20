@@ -11,6 +11,9 @@ class SGNode {
 
     // set parent of this node
     virtual void setParent(SGNode *parent)=0;
+
+    // returns deep copy of scenegraph rooted at this node
+    virtual SGNode *clone()=0;
 };
 
 #endif

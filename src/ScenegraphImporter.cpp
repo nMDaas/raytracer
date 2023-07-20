@@ -174,6 +174,10 @@ void ScenegraphImporter::parseCopy(istream& input) {
     string nodename,copyof;
     input >> nodename >> copyof;
     std::cout << "command: copy " << nodename << " " << copyof << std::endl;
+    if (nodes.find(copyof)!=nodes.end()) {
+        SGNode * copy = nodes[copyof]->clone();
+        nodes[nodename] = copy;
+    }
 }
 
 void ScenegraphImporter::parseImport(istream& input) {
