@@ -24,6 +24,7 @@ class ParentSGNode: public AbstractSGNode {
         // add another child to this node
         virtual void addChild(SGNode *child)=0;
 
+        virtual ParentSGNode *copyNode()=0;
 };
 
 #endif

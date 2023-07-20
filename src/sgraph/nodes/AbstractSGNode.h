@@ -1,6 +1,7 @@
 #ifndef _ABSTRACTSGNODE_H_
 #define _ABSTRACTSGNODE_H_
 #include <iostream>
+#include <string>
 
 #include "../IScenegraph.h"
 #include "SGNode.h"
@@ -10,8 +11,10 @@
 */
 class AbstractSGNode : public SGNode {
     protected: 
+    std::string name;
     SGNode *parent;
-    
+    IScenegraph *scenegraph;
+
     public:
     AbstractSGNode(const std::string& name,IScenegraph *graph) {
     }

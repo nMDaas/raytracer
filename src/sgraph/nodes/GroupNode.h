@@ -6,6 +6,11 @@
 #include "ParentSGNode.h"
 
 class GroupNode : public ParentSGNode {
+    protected:
+    ParentSGNode *copyNode() {
+      return new GroupNode(name,scenegraph);
+    }
+    
     public:
     GroupNode(const std::string& name,IScenegraph *graph)
       :ParentSGNode(name,graph) {      
