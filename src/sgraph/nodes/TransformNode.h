@@ -9,6 +9,10 @@
 class TransformNode: public ParentSGNode {
     protected:
       glm::mat4 transform;
+      
+      void setTransform(glm::mat4& transform) {
+        this->transform = transform;
+      }
 
     public:
       TransformNode(const std::string& name,IScenegraph *graph)
