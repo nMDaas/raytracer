@@ -15,6 +15,11 @@ class TranslateTransform: public TransformNode {
     public:
         TranslateTransform(float tx,float ty,float tz,const std::string& name,IScenegraph *graph) 
                 :TransformNode(name,graph) {
+                    this->tx = tx;
+                    this->ty = ty;
+                    this->tz = tz;
+                    glm::mat4 transform = glm::translate(glm::mat4(1.0),glm::vec3(tx,ty,tz));
+                    setTransform(transform);
         }
 };
 
