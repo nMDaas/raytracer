@@ -19,6 +19,9 @@ class ParentSGNode: public AbstractSGNode {
         : AbstractSGNode(name,scenegraph) {}
 
         ~ParentSGNode() {
+            for (int i=0;i<children.size();i++) {
+                delete children[i];
+            }
         }
 
         // add another child to this node
