@@ -14,6 +14,9 @@ class SGNode {
 
     // returns deep copy of scenegraph rooted at this node
     virtual SGNode *clone()=0;
+
+    // set name of this node
+    virtual void setName(const string& name)=0;
 };
 
 #endif

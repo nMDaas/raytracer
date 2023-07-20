@@ -24,6 +24,11 @@ class AbstractSGNode : public SGNode {
       this->parent = parent;
     }
 
+    // set name of this node
+    void setName(const std::string& name) {
+      this->name = name;
+    }
+
 };
 
 #endif
