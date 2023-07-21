@@ -1,5 +1,6 @@
 #ifndef _SGNODE_H_
 #define _SGNODE_H_
+#include <string>
 
 /*
     This interface represents a scenegraph node.
@@ -16,7 +17,7 @@ class SGNode {
     virtual SGNode *clone()=0;
 
     // set name of this node
-    virtual void setName(const string& name)=0;
+    virtual void setName(const std::string& name)=0;
 };
 
 #endif
