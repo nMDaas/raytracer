@@ -21,3 +21,7 @@ vector<util::PolygonMesh<VertexAttrib> > Model::getMeshes() {
 vector<util::Material> Model::getMaterials() {
     return materials;
 }
+
+void Model::setScenegraph(IScenegraph *scenegraph) {
+    this->scenegraph = scenegraph;
+}

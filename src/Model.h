@@ -2,6 +2,7 @@
 #define __MODEL_H__
 #include <iostream> 
 
+#include "sgraph/IScenegraph.h"
 #include "PolygonMesh.h"
 #include "VertexAttrib.h"
 #include "Material.h"
@@ -22,10 +23,12 @@ public:
     void addMesh(util::PolygonMesh<VertexAttrib>& mesh,util::Material& mat);
     vector<util::PolygonMesh<VertexAttrib> > getMeshes();
     vector<util::Material> getMaterials();
+    void setScenegraph(IScenegraph *scenegraph);
     
 private:
     vector<util::PolygonMesh<VertexAttrib> > meshes;
     vector<util::Material> materials;
+    IScenegraph *scenegraph;
 };
 
 #endif
