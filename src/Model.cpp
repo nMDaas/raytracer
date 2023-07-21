@@ -25,3 +25,7 @@ vector<util::Material> Model::getMaterials() {
 void Model::setScenegraph(IScenegraph *scenegraph) {
     this->scenegraph = scenegraph;
 }
+
+IScenegraph *Model::getScenegraph() {
+    return this->scenegraph;
+}

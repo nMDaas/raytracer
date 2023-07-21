@@ -24,6 +24,7 @@ public:
     vector<util::PolygonMesh<VertexAttrib> > getMeshes();
     vector<util::Material> getMaterials();
     void setScenegraph(IScenegraph *scenegraph);
+    IScenegraph *getScenegraph();
     
 private:
     vector<util::PolygonMesh<VertexAttrib> > meshes;
