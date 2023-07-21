@@ -11,6 +11,7 @@ class Scenegraph: public IScenegraph {
     protected:
         SGNode *root;
         std::map<std::string,SGNode *> nodes; // to keep track of all nodes in this scenegraph
+        std::map<std::string,util::PolygonMesh<VertexAttrib> > meshes;
 
     public:
     Scenegraph() {
@@ -27,6 +28,10 @@ class Scenegraph: public IScenegraph {
     // add a node to the scenegraph to keep track of all nodes
     void addNode(const std::string& name, SGNode *node) {
       nodes[name]=node;
+    }
+
+    std::map<std::string,util::PolygonMesh<VertexAttrib>> getMeshes() {
+      return this->meshes;
     }
 };
 
