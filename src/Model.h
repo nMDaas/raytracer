@@ -21,7 +21,6 @@ public:
     }
 
     void addMesh(util::PolygonMesh<VertexAttrib>& mesh,util::Material& mat);
-    vector<util::PolygonMesh<VertexAttrib> > getMeshes();
     vector<util::Material> getMaterials();
     void setScenegraph(IScenegraph *scenegraph);
     IScenegraph *getScenegraph();

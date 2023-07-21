@@ -14,10 +14,6 @@ void Model::addMesh(util::PolygonMesh<VertexAttrib>& mesh,util::Material& mat) {
     materials.push_back(mat);
 }
 
-vector<util::PolygonMesh<VertexAttrib> > Model::getMeshes() {
-    return meshes;
-}
-
 vector<util::Material> Model::getMaterials() {
     return materials;
 }
