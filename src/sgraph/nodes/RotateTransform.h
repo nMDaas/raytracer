@@ -22,6 +22,14 @@ class RotateTransform: public TransformNode {
                     glm::mat4 transform = glm::rotate(glm::mat4(1.0),this->angleInRadians,this->axis);
                     setTransform(transform);
         }
+
+        glm::vec3 getRotationAxis() {
+            return axis;
+        }
+
+        float getAngleInRadians() {
+            return angleInRadians;
+        }
 };
 
 #endif
