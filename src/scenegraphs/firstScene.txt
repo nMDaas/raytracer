@@ -12,9 +12,8 @@ end-material
 
 #the root
 group root root
-scale s1 scale 50 50 50
+scale s1 s1 50 50 50
 leaf l1 one-box instanceof box 
-
 
 assign-material l1 mat
 add-child l1 s1
