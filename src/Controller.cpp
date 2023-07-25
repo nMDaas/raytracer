@@ -21,7 +21,7 @@ void Controller::meshMaterialSetup(char* filePath) {
     ifstream inFile(filePath);
     ScenegraphImporter importer;
     IScenegraph *scenegraph = importer.parse(inFile);
-    importer.testParse();
+    importer.testParse(scenegraph);
     model.setScenegraph(scenegraph);
     cout << "Scenegraph made" << endl;   
 

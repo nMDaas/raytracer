@@ -232,8 +232,8 @@ void ScenegraphImporter::parseSetRoot(istream& input) {
     root = nodes[rootname];
 }
 
-// parseAddChild() is implicitly tested
-void ScenegraphImporter::testParse() {
+// parseAddChild() and parseAssignMaterial() is implicitly tested
+void ScenegraphImporter::testParse(IScenegraph* scenegraph) {
     std::cout << "----------------------" << std::endl;
 
     // tests for parseInstance
@@ -345,6 +345,13 @@ void ScenegraphImporter::testParse() {
             }
             }
     }
+
+    std::cout << std::endl;
+
+
+    // testing parseSetRoot()
+    SGNode *scenegraphRoot = scenegraph->getRoot();
+    std::cout << "root name: " << scenegraphRoot->getName() << std::endl;
 
     std::cout << "----------------------" << std::endl;
 

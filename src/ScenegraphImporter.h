@@ -40,7 +40,7 @@ class ScenegraphImporter {
         }
 
         IScenegraph* parse(std::istream& input);
-        void testParse();
+        void testParse(IScenegraph* scenegraph);
 
         private: 
         std::string stripComments(std::istream& input); // to remove lines with comments (lines starting with "#...")
