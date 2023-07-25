@@ -246,6 +246,18 @@ void ScenegraphImporter::testParse() {
     }
 
     std::cout << std::endl;
+
+    // test for parseMaterial
+    std::cout << "materials size: " << materials.size() << std::endl;
+    for (auto i : materials) {
+        std::cout << "material: " << i.first << std::endl;
+        std::cout << "   ambient: " << glm::to_string(i.second.getAmbient()) << std::endl;
+        std::cout << "   diffuse: " << glm::to_string(i.second.getDiffuse()) << std::endl;
+        std::cout << "   specular: " << glm::to_string(i.second.getSpecular()) << std::endl;
+        std::cout << std::endl;
+    }
+
+    std::cout << std::endl;
     std::cout << "nodes size: " << nodes.size() << std::endl;
 
     // test for parseGroup
@@ -279,16 +291,6 @@ void ScenegraphImporter::testParse() {
     }
 
     std::cout << std::endl;
-
-    // test for parseMaterial
-    std::cout << "materials size: " << materials.size() << std::endl;
-    for (auto i : materials) {
-        std::cout << "material: " << i.first << std::endl;
-        std::cout << "   ambient: " << glm::to_string(i.second.getAmbient()) << std::endl;
-        std::cout << "   diffuse: " << glm::to_string(i.second.getDiffuse()) << std::endl;
-        std::cout << "   specular: " << glm::to_string(i.second.getSpecular()) << std::endl;
-        std::cout << std::endl;
-    }
 
     // test for parseScale
     std::cout << "   SCALE NODES:"<< std::endl;
