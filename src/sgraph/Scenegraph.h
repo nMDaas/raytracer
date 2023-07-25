@@ -12,6 +12,7 @@ class Scenegraph: public IScenegraph {
         SGNode *root;
         std::map<std::string,SGNode *> nodes; // to keep track of all nodes in this scenegraph
         std::map<std::string,util::PolygonMesh<VertexAttrib> > meshes;
+        map<string,string> meshPaths;
 
     public:
     Scenegraph() {
@@ -39,6 +40,14 @@ class Scenegraph: public IScenegraph {
       if (root!=NULL) {
         this->root->setScenegraph(this);
       }
+    }
+
+    void setMeshPaths(map<string,string>& meshPaths) {
+      this->meshPaths = meshPaths;
+    }
+
+    void setMeshes(map<string,util::PolygonMesh<VertexAttrib> >& meshes) {
+      this->meshes = meshes;
     }
 };
 

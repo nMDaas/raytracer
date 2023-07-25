@@ -18,6 +18,9 @@ class IScenegraph {
 
     // make scene by initializing root
     virtual void makeScenegraph(SGNode *root)=0;
+
+    virtual void setMeshPaths(map<string,string>& meshPaths)=0;
+    virtual void setMeshes(map<string,util::PolygonMesh<VertexAttrib> >& meshes)=0;
 };
 
 #endif
