@@ -34,6 +34,10 @@ class LeafNode: public AbstractSGNode {
         LeafNode *newclone = new LeafNode(this->objInstanceName,material,name,scenegraph);
         return newclone;
     }
+
+    string getInstanceOf() {
+        return this->objInstanceName;
+    }
 };
 
 #endif
