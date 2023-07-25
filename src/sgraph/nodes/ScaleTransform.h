@@ -21,6 +21,10 @@ class ScaleTransform: public TransformNode {
                 glm::mat4 transform = glm::scale(glm::mat4(1.0),glm::vec3(sx,sy,sz));
                 setTransform(transform);
         }
+
+        glm::vec3 getScale() {
+            return glm::vec3(sx,sy,sz);
+        }
 };
 
 #endif
