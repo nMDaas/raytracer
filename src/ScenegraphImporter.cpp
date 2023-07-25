@@ -236,18 +236,6 @@ void ScenegraphImporter::parseSetRoot(istream& input) {
 void ScenegraphImporter::testParse(IScenegraph* scenegraph) {
     std::cout << "----------------------" << std::endl;
 
-    // tests for parseInstance
-    std::cout << "meshPaths size: " << meshPaths.size() << std::endl;
-    for (auto i : meshPaths) {
-        std::cout << "mesh path: " << i.first << " - " << i.second << std::endl;
-    }
-    std::cout << "meshes size: " << meshes.size() << std::endl;
-    for (auto i : meshes) {
-        std::cout << "mesh: " << i.first << std::endl;
-    }
-
-    std::cout << std::endl;
-
     // test for parseMaterial
     std::cout << "materials size: " << materials.size() << std::endl;
     for (auto i : materials) {
@@ -348,9 +336,20 @@ void ScenegraphImporter::testParse(IScenegraph* scenegraph) {
 
     std::cout << std::endl;
 
+    // tests for parseInstance
+    std::cout << "meshPaths size: " << meshPaths.size() << std::endl;
+    for (auto i : meshPaths) {
+        std::cout << "mesh path: " << i.first << " - " << i.second << std::endl;
+    }
+    std::cout << "meshes size: " << meshes.size() << std::endl;
+    for (auto i : meshes) {
+        std::cout << "mesh: " << i.first << std::endl;
+    }
 
-    // testing parseSetRoot()
-    SGNode *scenegraphRoot = scenegraph->getRoot();
+    std::cout << std::endl;
+
+    // testing Scenegraph construction
+    SGNode *scenegraphRoot = scenegraph->getRoot(); // testing parseSetRoot()
     std::cout << "root name: " << scenegraphRoot->getName() << std::endl;
 
     std::cout << "----------------------" << std::endl;
