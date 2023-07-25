@@ -2,7 +2,7 @@
 instance box models/box.obj
 
 #material
-material mat-node-3-0
+material mat
 emission 0 0 0
 ambient 1 0 0
 diffuse 1 0 0
@@ -11,18 +11,14 @@ shininess 0
 end-material
 
 #the root
-group node-1-0 root
-scale node-2-0 scale 50 50 50
-leaf node-3-0 one-box instanceof box 
+group root root
+scale s1 scale 50 50 50
+leaf l1 one-box instanceof box 
 
 
-assign-material node-3-0 mat-node-3-0
-add-child node-3-0 node-2-0
-add-child node-2-0 node-1-0
+assign-material l1 mat
+add-child l1 s1
+add-child s1 root
 
-# test copy
-# copy group2 node-1-0
-# add-child group2 root
-
-assign-root node-1-0
+assign-root root
 
