@@ -351,6 +351,10 @@ void ScenegraphImporter::testParse(IScenegraph* scenegraph) {
     // testing Scenegraph construction
     SGNode *scenegraphRoot = scenegraph->getRoot(); // testing parseSetRoot()
     std::cout << "root name: " << scenegraphRoot->getName() << std::endl;
+    map<string,util::PolygonMesh<VertexAttrib>> sgMeshes = scenegraph->getMeshes();
+    std::cout << "Number of meshes IN SCENEGRAPH: " << sgMeshes.size() << std::endl;
+    map<string,string> sgMeshPaths = scenegraph->getMeshPaths();
+    std::cout << "Number of mesh paths IN SCENEGRAPH: " << sgMeshPaths.size() << std::endl;
 
     std::cout << "----------------------" << std::endl;
 
