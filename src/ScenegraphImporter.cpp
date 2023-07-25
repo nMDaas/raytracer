@@ -290,6 +290,18 @@ void ScenegraphImporter::testParse() {
         std::cout << std::endl;
     }
 
+    // test for parseScale
+    std::cout << "   SCALE NODES:"<< std::endl;
+     for (auto i : nodes) {
+        string nodeName = typeid(*i.second).name();
+        if (nodeName.find("ScaleTransform") != std::string::npos) {
+            ScaleTransform* scaleNode = dynamic_cast<ScaleTransform *> (i.second);
+            std::cout << "      node name: " << scaleNode->getName() << std::endl;
+            std::cout << "      scale values: " << glm::to_string(scaleNode->getScale()) << std::endl;
+            std::cout << std::endl;
+            }
+    }
+
     std::cout << "----------------------" << std::endl;
 
 }
