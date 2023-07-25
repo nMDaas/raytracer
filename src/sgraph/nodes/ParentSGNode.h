@@ -38,6 +38,10 @@ class ParentSGNode: public AbstractSGNode {
 
             return newtransform;
         }
+
+        vector<SGNode *> getChildren() {
+            return children;
+        }
 };
 
 #endif
