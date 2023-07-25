@@ -32,6 +32,11 @@ class AbstractSGNode : public SGNode {
       this->name = name;
     }
 
+    void setScenegraph(IScenegraph *graph) {
+      this->scenegraph = graph;
+      graph->addNode(this->name,this);
+    }
+
 };
 
 #endif

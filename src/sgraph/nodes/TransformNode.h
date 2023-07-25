@@ -25,11 +25,18 @@ class TransformNode: public ParentSGNode {
       }
 
       // add another child to this node ONLY if this node doesn't already have a child
-      void addChild(SGNode *child) {
+    void addChild(SGNode *child) {
       if (this->children.size()>0)
         throw runtime_error("Transform node already has a child");
       this->children.push_back(child);
       child->setParent(this);
+    }
+
+    void setScenegraph(IScenegraph *graph) {
+      AbstractSGNode::setScenegraph(graph);
+      if (children.size()>0) {
+          children[0]->setScenegraph(graph);
+      }
     }
 };
 

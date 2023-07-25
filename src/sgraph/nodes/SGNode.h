@@ -2,6 +2,8 @@
 #define _SGNODE_H_
 #include <string>
 
+class IScenegraph;
+
 /*
     This interface represents a scenegraph node.
 */
@@ -18,6 +20,7 @@ class SGNode {
 
     // set name of this node
     virtual void setName(const std::string& name)=0;
+    virtual void setScenegraph(IScenegraph *graph)=0;
 };
 
 #endif

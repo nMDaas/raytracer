@@ -49,5 +49,13 @@ class GroupNode : public ParentSGNode {
       return newgroup;
     }
 
+    void setScenegraph(IScenegraph *graph) {
+      AbstractSGNode::setScenegraph(graph);
+      for (int i=0;i<children.size();i++)
+      {
+        children[i]->setScenegraph(graph);
+      }
+    }
+
 };
 #endif
