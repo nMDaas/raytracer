@@ -11,8 +11,8 @@
     This is an abstract class.
 */
 class IScenegraph {
-    // add a node to the scenegraph to keep track of all nodes
     public:
+    // add a node to the scenegraph to keep track of all nodes
     virtual void addNode(const std::string& name,SGNode *node)=0;
     virtual std::map<std::string,util::PolygonMesh<VertexAttrib>> getMeshes()=0;
 
