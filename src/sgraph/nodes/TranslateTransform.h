@@ -21,6 +21,10 @@ class TranslateTransform: public TransformNode {
                     glm::mat4 transform = glm::translate(glm::mat4(1.0),glm::vec3(tx,ty,tz));
                     setTransform(transform);
         }
+
+        glm::vec3 getTranslate() {
+            return glm::vec3(tx,ty,tz);
+        }
 };
 
 #endif
