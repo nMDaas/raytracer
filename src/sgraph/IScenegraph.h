@@ -15,6 +15,9 @@ class IScenegraph {
     public:
     virtual void addNode(const std::string& name,SGNode *node)=0;
     virtual std::map<std::string,util::PolygonMesh<VertexAttrib>> getMeshes()=0;
+
+    // make scene by initializing root
+    virtual void makeScenegraph(SGNode *root)=0;
 };
 
 #endif
