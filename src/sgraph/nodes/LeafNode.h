@@ -38,6 +38,11 @@ class LeafNode: public AbstractSGNode {
     string getInstanceOf() {
         return this->objInstanceName;
     }
+
+    util::Material getMaterial()
+    {
+        return material;
+    }
 };
 
 #endif
