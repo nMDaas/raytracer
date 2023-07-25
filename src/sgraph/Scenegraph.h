@@ -49,6 +49,10 @@ class Scenegraph: public IScenegraph {
     void setMeshes(map<string,util::PolygonMesh<VertexAttrib> >& meshes) {
       this->meshes = meshes;
     }
+
+    SGNode *getRoot() {
+      return root;
+    }
 };
 
 #endif
