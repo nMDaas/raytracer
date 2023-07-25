@@ -245,21 +245,38 @@ void ScenegraphImporter::testParse() {
         std::cout << "mesh: " << i.first << std::endl;
     }
 
-    // test for parseGroup
     std::cout << std::endl;
     std::cout << "nodes size: " << nodes.size() << std::endl;
+
+    // test for parseGroup
+    std::cout << "   GROUP NODES:"<< std::endl;
      for (auto i : nodes) {
         string nodeName = typeid(*i.second).name();
         if (nodeName.find("GroupNode") != std::string::npos) {
             GroupNode* groupNode = dynamic_cast<GroupNode *> (i.second);
-            std::cout << "   group node: " << groupNode->getName() << std::endl;
+            std::cout << "      group node: " << groupNode->getName() << std::endl;
             vector<SGNode *> children = groupNode->getChildren();
             for (int i = 0; i < children.size(); i++) {
-                std::cout << "      child: " << children[i]->getName() << " - " << typeid(*children[i]).name()<< std::endl;
+                std::cout << "         child: " << children[i]->getName() << " - " << typeid(*children[i]).name()<< std::endl;
             }
             std::cout << std::endl;
             }
-        std::cout << "----------------------" << std::endl;
     }
+
+    std::cout << std::endl;
+
+    // test for parseLeaf
+    std::cout << "   LEAF NODES:"<< std::endl;
+     for (auto i : nodes) {
+        string nodeName = typeid(*i.second).name();
+        if (nodeName.find("LeafNode") != std::string::npos) {
+            LeafNode* leafNode = dynamic_cast<LeafNode *> (i.second);
+            std::cout << "      leaf node: " << leafNode->getName() << std::endl;
+            std::cout << "      instance of: " << leafNode->getInstanceOf() << std::endl;
+            std::cout << "      material ambient: " << glm::to_string(leafNode->getMaterial().getAmbient()) << std::endl;
+            std::cout << std::endl;
+            }
+    }
+    std::cout << "----------------------" << std::endl;
 
 }

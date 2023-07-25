@@ -12,6 +12,8 @@ using namespace std;
 #include "PolygonMesh.h"
 #include "VertexAttrib.h"
 #include <ObjImporter.h>
+#include "sgraph/IScenegraph.h"
+#include <glm/gtx/string_cast.hpp>
 
 #include "sgraph/IScenegraph.h"
 #include "sgraph/Scenegraph.h"
