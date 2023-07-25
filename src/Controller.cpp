@@ -21,6 +21,8 @@ void Controller::meshMaterialSetup(char* filePath) {
     ifstream inFile(filePath);
     ScenegraphImporter importer;
     IScenegraph *scenegraph = importer.parse(inFile);
+    importer.testParse();
+    model.setScenegraph(scenegraph);
     cout << "Scenegraph made" << endl;   
 
     /*
@@ -43,9 +45,11 @@ void Controller::meshMaterialSetup(char* filePath) {
 
 void Controller::run()
 {
-    vector<util::PolygonMesh<VertexAttrib> > meshes = model.getMeshes();
+    IScenegraph* scenegraph = model.getScenegraph();
+    std::map<string,util::PolygonMesh<VertexAttrib> > meshes = scenegraph->getMeshes();
+
     vector<util::Material> materials = model.getMaterials();
-    view.init(meshes, materials);
+    //view.init(meshes, materials);
 
     while (!view.shouldWindowClose()) {
         view.display();

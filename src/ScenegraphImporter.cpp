@@ -232,3 +232,18 @@ void ScenegraphImporter::parseSetRoot(istream& input) {
     //std::cout << "command: assign-root " << rootname << std::endl;
     root = nodes[rootname];
 }
+
+void ScenegraphImporter::testParse() {
+    std::cout << "----------------------" << std::endl;
+    // tests for parseInstance
+    std::cout << "meshPaths size: " << meshPaths.size() << std::endl;
+    for (auto i : meshPaths) {
+        std::cout << "mesh path: " << i.first << " - " << i.second << std::endl;
+    }
+    std::cout << std::endl;
+    std::cout << "meshes size: " << meshes.size() << std::endl;
+    for (auto i : meshes) {
+        std::cout << "mesh: " << i.first << std::endl;
+    }
+    std::cout << "----------------------" << std::endl;
+}
