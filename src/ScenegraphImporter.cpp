@@ -232,6 +232,7 @@ void ScenegraphImporter::parseSetRoot(istream& input) {
     root = nodes[rootname];
 }
 
+// parseAddChild() is implicitly tested
 void ScenegraphImporter::testParse() {
     std::cout << "----------------------" << std::endl;
 
