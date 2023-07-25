@@ -31,10 +31,6 @@ class Scenegraph: public IScenegraph {
       nodes[name]=node;
     }
 
-    std::map<std::string,util::PolygonMesh<VertexAttrib>> getMeshes() {
-      return this->meshes;
-    }
-
     void makeScenegraph(SGNode *root) {
       this->root = root;
       if (root!=NULL) {
@@ -46,8 +42,16 @@ class Scenegraph: public IScenegraph {
       this->meshPaths = meshPaths;
     }
 
+     map<string,string> getMeshPaths() {
+      return this->meshPaths;
+    }
+
     void setMeshes(map<string,util::PolygonMesh<VertexAttrib> >& meshes) {
       this->meshes = meshes;
+    }
+
+    map<string,util::PolygonMesh<VertexAttrib> > getMeshes() {
+      return this->meshes;
     }
 
     SGNode *getRoot() {
