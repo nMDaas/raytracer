@@ -304,6 +304,21 @@ void ScenegraphImporter::testParse() {
             }
     }
 
+    std::cout << std::endl;
+    
+    // test for parseRotate
+    std::cout << "   ROTATE NODES:"<< std::endl;
+     for (auto i : nodes) {
+        string nodeName = typeid(*i.second).name();
+        if (nodeName.find("RotateTransform") != std::string::npos) {
+            RotateTransform* rotateNode = dynamic_cast<RotateTransform *> (i.second);
+            std::cout << "      node name: " << rotateNode->getName() << std::endl;
+            std::cout << "      rotation angle(radians): " << rotateNode->getAngleInRadians() << std::endl;
+            std::cout << "      rotation axis: " << glm::to_string(rotateNode->getRotationAxis()) << std::endl;
+            std::cout << std::endl;
+            }
+    }
+
     std::cout << "----------------------" << std::endl;
 
 }
