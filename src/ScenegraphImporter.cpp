@@ -96,7 +96,6 @@ void ScenegraphImporter::parseInstance(istream& input) {
 void ScenegraphImporter::parseGroup(istream& input) {
     string varname,name;
     input >> varname >> name;
-    //std::cout << "command: group " << varname << " " << name << std::endl;
     SGNode *group = new GroupNode(name,NULL);
     nodes[varname] = group;
 }
@@ -235,15 +234,32 @@ void ScenegraphImporter::parseSetRoot(istream& input) {
 
 void ScenegraphImporter::testParse() {
     std::cout << "----------------------" << std::endl;
+
     // tests for parseInstance
     std::cout << "meshPaths size: " << meshPaths.size() << std::endl;
     for (auto i : meshPaths) {
         std::cout << "mesh path: " << i.first << " - " << i.second << std::endl;
     }
-    std::cout << std::endl;
     std::cout << "meshes size: " << meshes.size() << std::endl;
     for (auto i : meshes) {
         std::cout << "mesh: " << i.first << std::endl;
     }
-    std::cout << "----------------------" << std::endl;
+
+    // test for parseGroup
+    std::cout << std::endl;
+    std::cout << "nodes size: " << nodes.size() << std::endl;
+     for (auto i : nodes) {
+        string nodeName = typeid(*i.second).name();
+        if (nodeName.find("GroupNode") != std::string::npos) {
+            GroupNode* groupNode = dynamic_cast<GroupNode *> (i.second);
+            std::cout << "   group node: " << groupNode->getName() << std::endl;
+            vector<SGNode *> children = groupNode->getChildren();
+            for (int i = 0; i < children.size(); i++) {
+                std::cout << "      child: " << children[i]->getName() << " - " << typeid(*children[i]).name()<< std::endl;
+            }
+            std::cout << std::endl;
+            }
+        std::cout << "----------------------" << std::endl;
+    }
+
 }

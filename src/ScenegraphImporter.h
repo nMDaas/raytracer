@@ -16,6 +16,8 @@ using namespace std;
 #include "sgraph/IScenegraph.h"
 #include "sgraph/Scenegraph.h"
 #include "sgraph/nodes/SGNode.h"
+#include "sgraph/nodes/ParentSGNode.h"
+#include "sgraph/nodes/AbstractSGNode.h"
 #include "sgraph/nodes/GroupNode.h"
 #include "sgraph/nodes/LeafNode.h"
 #include "sgraph/nodes/TransformNode.h"
