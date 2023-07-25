@@ -300,6 +300,10 @@ void ScenegraphImporter::testParse() {
             ScaleTransform* scaleNode = dynamic_cast<ScaleTransform *> (i.second);
             std::cout << "      node name: " << scaleNode->getName() << std::endl;
             std::cout << "      scale values: " << glm::to_string(scaleNode->getScale()) << std::endl;
+            vector<SGNode *> children = scaleNode->getChildren();
+            for (int i = 0; i < children.size(); i++) {
+                std::cout << "      child: " << children[i]->getName() << " - " << typeid(*children[i]).name()<< std::endl;
+            }
             std::cout << std::endl;
             }
     }
@@ -315,6 +319,10 @@ void ScenegraphImporter::testParse() {
             std::cout << "      node name: " << rotateNode->getName() << std::endl;
             std::cout << "      rotation angle(radians): " << rotateNode->getAngleInRadians() << std::endl;
             std::cout << "      rotation axis: " << glm::to_string(rotateNode->getRotationAxis()) << std::endl;
+            vector<SGNode *> children = rotateNode->getChildren();
+            for (int i = 0; i < children.size(); i++) {
+                std::cout << "      child: " << children[i]->getName() << " - " << typeid(*children[i]).name()<< std::endl;
+            }
             std::cout << std::endl;
             }
     }
@@ -330,6 +338,10 @@ void ScenegraphImporter::testParse() {
             std::cout << "      node name: " << translateNode->getName() << std::endl;
             std::cout << "      translation: " << glm::to_string(translateNode->getTranslate()) << std::endl;
             std::cout << std::endl;
+            vector<SGNode *> children = translateNode->getChildren();
+            for (int i = 0; i < children.size(); i++) {
+                std::cout << "      child: " << children[i]->getName() << " - " << typeid(*children[i]).name()<< std::endl;
+            }
             }
     }
 
