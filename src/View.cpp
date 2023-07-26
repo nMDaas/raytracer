@@ -103,8 +103,6 @@ void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>
         objects[it->first] = obj; // ObjectInstance stored in map
     }
 
-    std::cout << "View init: meshes map size: " << meshes.size() << std::endl;
-
     int window_width,window_height;
     // gets the size of framebuffer of the window and stores it in 2nd and 3rd parameter
     // removes need to store window dimensions separately
