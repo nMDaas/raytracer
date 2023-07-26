@@ -15,6 +15,7 @@ using namespace std;
 #include "Material.h"
 #include "Object.h"
 #include "ObjectInstance.h"
+#include "Callbacks.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -38,7 +39,7 @@ public:
         std::cout << "VIEW COPY CONSTRUCTOR CALLED" << std::endl;
     }
 
-    void init(vector<util::PolygonMesh<VertexAttrib>>& meshes,vector<util::Material>& materials);
+    void init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>& meshes);
     bool shouldWindowClose();
     void display();
     void closeWindow();

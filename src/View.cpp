@@ -36,7 +36,7 @@ void View::reshape(GLFWwindow* window, int width, int height)
     projection = glm::ortho(-400.0f,400.0f,-400.0f,400.0f,0.1f,10000.0f);
 }
 
-void View::init(vector<util::PolygonMesh<VertexAttrib>>& meshes,vector<util::Material>& materials) {
+void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>& meshes) {
 
     // This function initializes the GLFW library because before GLFW functions can be used, GLFW must be initialized
     if (!glfwInit())
@@ -56,7 +56,7 @@ void View::init(vector<util::PolygonMesh<VertexAttrib>>& meshes,vector<util::Mat
         glfwTerminate();
         exit(EXIT_FAILURE);
     }
-    glfwSetWindowUserPointer(window, this); // set pointer of window to this
+    glfwSetWindowUserPointer(window, (void *)callbacks); // set pointer of window to this
 
     //using C++ functions as callbacks to a C-style library
     glfwSetKeyCallback(window, 
