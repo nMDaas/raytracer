@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <vector>
+#include <stack>
 using namespace std;
 
 #ifndef GLFW_INCLUDE_NONE
@@ -19,6 +20,8 @@ using namespace std;
 
 #include "sgraph/IScenegraph.h"
 #include "sgraph/Scenegraph.h"
+#include "sgraph/SGNodeVisitor.h"
+#include "sgraph/GLScenegraphRenderer.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -55,8 +58,9 @@ private:
     int angleOfRotation;
     int frames;
     double time;
-    glm::mat4 modelview;
+    stack<glm::mat4> modelview;
     map<string,util::ObjectInstance *> objects;
+    SGNodeVisitor *renderer;
 
     void onkey(GLFWwindow* window, int key, int scancode, int action, int mods);
     void reshape(GLFWwindow* window, int width, int height);
