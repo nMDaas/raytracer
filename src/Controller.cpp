@@ -52,12 +52,12 @@ void Controller::run()
     vector<util::Material> materials = model.getMaterials();
     view.init(this, meshes);
 
-    /*
+
     while (!view.shouldWindowClose()) {
-        view.display();
+        view.display(scenegraph);
     }
 
-    view.closeWindow(); */
+    //view.closeWindow();
     exit(EXIT_SUCCESS);
 }
 

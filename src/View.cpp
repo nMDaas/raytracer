@@ -126,7 +126,7 @@ void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>
     time = glfwGetTime();
 }
 
-void View::display() {
+void View::display(IScenegraph *scenegraph) {
     program.enable();
     glClearColor(0, 0, 0, 1); // set background color to black
 
