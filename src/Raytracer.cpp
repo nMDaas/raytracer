@@ -10,5 +10,5 @@ int main(int argc,char *argv[])
     View view;
     Controller controller(model, view);
     controller.meshMaterialSetup(argv[1]);
-    //controller.run();
+    controller.run();
 }

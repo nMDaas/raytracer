@@ -14,7 +14,7 @@ bool View::shouldWindowClose() {
 
 void View::closeWindow() {
     for (int i=0;i<objects.size();i++) {
-        objects[i].object.cleanup();
+        //objects[i].object.cleanup();
        // delete objects[i].object;
     }
     objects.clear();
@@ -49,8 +49,7 @@ void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
     // Setup window and terminate the program if this is not successful
-    window_dimensions = glm::vec2(800,800);
-    window = glfwCreateWindow(window_dimensions.x,window_dimensions.y, "Raytracer", NULL, NULL);
+    window = glfwCreateWindow(800,800, "Raytracer", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -94,22 +93,22 @@ void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>
     // currently there are only two per-vertex attribute: position and color
     shaderVarsToVertexAttribs["vPosition"] = "position";
 
-    for (int i=0;i<meshes.size();i++) {
-        util::ObjectInstance obj("triangles");
-        obj.initPolygonMesh<VertexAttrib>(
-            program,                    // the shader program
-            shaderLocations,            // the shader locations
-            shaderVarsToVertexAttribs,  // the shader variable -> attrib map
-            meshes[i]);                 // the actual mesh object
-        Object objStruct;
-        objStruct.object = obj;
-        objStruct.material = materials[i];
-        objects.push_back(objStruct);
-
+    // meshes needs to be iterated like this because it is a map
+    // create an ObjectInstance for each mesh by passing in the name and polygon mesh (stored in meshes map)
+    for (typename map<string,util::PolygonMesh<VertexAttrib> >::iterator it=meshes.begin();
+           it!=meshes.end();
+           it++) {
+        util::ObjectInstance * obj = new util::ObjectInstance(it->first);
+        obj->initPolygonMesh(shaderLocations,shaderVarsToVertexAttribs,it->second);
+        objects[it->first] = obj; // ObjectInstance stored in map
     }
 
-    //prepare the projection matrix for orthographic projection
-	glViewport(0, 0, window_dimensions.x, window_dimensions.y);
+    std::cout << "View init: meshes map size: " << meshes.size() << std::endl;
+
+    int window_width,window_height;
+    // gets the size of framebuffer of the window and stores it in 2nd and 3rd parameter
+    // removes need to store window dimensions separately
+    glfwGetFramebufferSize(window,&window_width,&window_height); 
 
     // CAN UNCOMMENT THIS IF YOU WANT ORTHOGRAPHIC INSTEAD OF PERSPECTIVE PROJECTION
     // projection = glm::ortho(-400.0f,400.0f,-400.0f,400.0f,0.1f,10000.0f);
@@ -118,11 +117,13 @@ void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>
     // 60 degrees is how much you can see (if you don't move your head)
     // next parameter: aspect vision - aspect ratio of dimension to make sure window doesn't distort
     projection = glm::perspective((float)glm::radians(60.0f),
-            (float) window_dimensions.x/window_dimensions.y,
+            (float) window_width/window_height,
             0.1f, // near distance
             10000.0f); // far distance
 
-    angleOfRotation = 0;
+    //prepare the projection matrix for orthographic projection
+	glViewport(0, 0, window_width, window_height);
+
     frames = 0;
     time = glfwGetTime();
 }
@@ -151,14 +152,14 @@ void View::display() {
     glUniformMatrix4fv(shaderLocations.getLocation("modelview"), 1, GL_FALSE, glm::value_ptr(modelview));
     //send projection matrix to GPU    
     glUniformMatrix4fv(shaderLocations.getLocation("projection"), 1, GL_FALSE, glm::value_ptr(projection));
-
+    
     glPolygonMode(GL_FRONT_AND_BACK,GL_FILL); //OUTLINES
-    for (int i=0;i<objects.size();i++) {
+    /*for (int i=0;i<objects.size();i++) {
         //send color of triangle to GPU
         glUniform4fv(shaderLocations.getLocation("vColor"),1,glm::value_ptr(objects[i].material.getAmbient()));
    
         objects[i].object.draw();
-    }
+    }*/
 
     glFlush();
 

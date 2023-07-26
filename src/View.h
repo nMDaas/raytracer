@@ -45,16 +45,15 @@ public:
     void closeWindow();
 
 private:
-    glm::vec2 window_dimensions;
     GLFWwindow* window;
     util::ShaderProgram program;
     glm::mat4 projection;
     util::ShaderLocationsVault shaderLocations;
-    vector<Object> objects;
     int angleOfRotation;
     int frames;
     double time;
     glm::mat4 modelview;
+    map<string,util::ObjectInstance *> objects;
 
     void onkey(GLFWwindow* window, int key, int scancode, int action, int mods);
     void reshape(GLFWwindow* window, int width, int height);
