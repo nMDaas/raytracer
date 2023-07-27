@@ -207,6 +207,9 @@ void ScenegraphImporter::parseAssignMaterial(istream& input) {
     if ((leafNode!=NULL) && (materials.find(matname)!=materials.end())) {
         leafNode->setMaterial(materials[matname]);
     }
+    else {
+        throw runtime_error("Leaf node or material is null.");
+    }
 }
 
 void ScenegraphImporter::parseAddChild(istream& input) {
