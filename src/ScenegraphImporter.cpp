@@ -189,7 +189,7 @@ void ScenegraphImporter::parseCopy(istream& input) {
         nodes[nodename] = copy;
     }
     else {
-        throw runtime_error("Copy node \""+copyof+"\" not found");
+        throw runtime_error("Node with name \""+copyof+"\" not found");
     }
 }
 
@@ -207,8 +207,11 @@ void ScenegraphImporter::parseAssignMaterial(istream& input) {
     if ((leafNode!=NULL) && (materials.find(matname)!=materials.end())) {
         leafNode->setMaterial(materials[matname]);
     }
+    else if (leafNode==NULL) {
+        throw runtime_error("Leaf node with name \""+nodename+"\" not found");
+    }
     else {
-        throw runtime_error("Leaf node or material is null.");
+        throw runtime_error("Material with name \""+matname+"\" not found");
     }
 }
 
@@ -234,8 +237,11 @@ void ScenegraphImporter::parseAddChild(istream& input) {
     if ((parentNode!=NULL) && (childNode!=NULL)) {
         parentNode->addChild(childNode);
     }
+    else if (parentNode==NULL) {
+        throw runtime_error("Parent node with name \""+parentname+"\" not found");
+    }
     else {
-        throw runtime_error("Parent node or child node is null.");
+        throw runtime_error("Child node with name \""+childname+"\" not found");
     }
 }
 
@@ -247,7 +253,7 @@ void ScenegraphImporter::parseSetRoot(istream& input) {
         root = nodes[rootname];
     }
     else {
-        throw runtime_error("Root name not found.");
+        throw runtime_error("Root node with name \""+rootname+"\" not found");
     }
     
 }
