@@ -38,6 +38,10 @@ class TransformNode: public ParentSGNode {
           children[0]->setScenegraph(graph);
       }
     }
+
+    void accept(SGNodeVisitor* visitor) {
+      
+    }
 };
 
 #endif

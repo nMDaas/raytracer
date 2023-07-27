@@ -2,6 +2,9 @@
 #define _SGNODE_H_
 #include <string>
 
+#include "../SGNodeVisitor.h"
+#include "../GLScenegraphRenderer.h"
+
 class IScenegraph;
 
 /*
@@ -23,6 +26,9 @@ class SGNode {
     virtual std::string getName()=0;
 
     virtual void setScenegraph(IScenegraph *graph)=0;
+
+    // accepts visitor into this node
+    virtual void accept(SGNodeVisitor *visitor)=0;
 };
 
 #endif

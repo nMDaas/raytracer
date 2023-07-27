@@ -43,6 +43,10 @@ class LeafNode: public AbstractSGNode {
     {
         return material;
     }
+
+    void accept(SGNodeVisitor* visitor) {
+      
+    }
 };
 
 #endif

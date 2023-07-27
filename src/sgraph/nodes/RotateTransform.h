@@ -30,6 +30,10 @@ class RotateTransform: public TransformNode {
         float getAngleInRadians() {
             return angleInRadians;
         }
+
+        void accept(SGNodeVisitor* visitor) {
+            
+        }
 };
 
 #endif

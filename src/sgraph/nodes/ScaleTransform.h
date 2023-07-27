@@ -25,6 +25,10 @@ class ScaleTransform: public TransformNode {
         glm::vec3 getScale() {
             return glm::vec3(sx,sy,sz);
         }
+
+        void accept(SGNodeVisitor* visitor) {
+            
+        }
 };
 
 #endif

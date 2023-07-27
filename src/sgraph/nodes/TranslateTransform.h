@@ -25,6 +25,10 @@ class TranslateTransform: public TransformNode {
         glm::vec3 getTranslate() {
             return glm::vec3(tx,ty,tz);
         }
+
+        void accept(SGNodeVisitor* visitor) {
+            
+        }
 };
 
 #endif

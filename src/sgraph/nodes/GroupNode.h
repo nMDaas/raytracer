@@ -57,5 +57,9 @@ class GroupNode : public ParentSGNode {
       }
     }
 
+    void accept(SGNodeVisitor* visitor) {
+      std::cout << "Reached here" << std::endl;
+    }
+
 };
 #endif
