@@ -22,6 +22,10 @@ class GLScenegraphRenderer: public SGNodeVisitor {
         std::cout << "GLScenegraphRenderer COPY CONSTRUCTOR CALLED" << std::endl;
     }
 
+    void visitGroupNode(GroupNode *groupNode) {
+        std::cout << "In visitGroupNode() in GLScenegraphRender()" << std::endl;
+    }
+
 };
 
 #endif
