@@ -122,6 +122,8 @@ void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>
     //prepare the projection matrix for orthographic projection
 	glViewport(0, 0, window_width, window_height);
 
+    renderer = new GLScenegraphRenderer();
+
     frames = 0;
     time = glfwGetTime();
 }
@@ -134,39 +136,22 @@ void View::display(IScenegraph *scenegraph) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
 
-    angleOfRotation = (angleOfRotation+1)%360;
+    modelview.push(glm::mat4(1.0));
 
-    modelview = glm::mat4(1.0); // model view starts off as identity
+    modelview.top() = modelview.top() * glm::lookAt(glm::vec3(100.0f,150.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
 
-    // CAMERA SETUP: position, looking at ?, orientation 
-    modelview = modelview * glm::lookAt(glm::vec3(0.0f,200.0f,200.0f),glm::vec3(0.0f,
-            0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
-
-    modelview = modelview 
-                * glm::scale(glm::mat4(1.0),glm::vec3(200.0f,200.0f,200.0f))
-                * glm::rotate(glm::mat4(1.0f),(float)glm::radians((float)angleOfRotation),glm::vec3(0.0f,1.0f,0.0f));
-
-    //send modelview matrix to GPU  
-    glUniformMatrix4fv(shaderLocations.getLocation("modelview"), 1, GL_FALSE, glm::value_ptr(modelview));
     //send projection matrix to GPU    
     glUniformMatrix4fv(shaderLocations.getLocation("projection"), 1, GL_FALSE, glm::value_ptr(projection));
     
-    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL); //OUTLINES
-    /*for (int i=0;i<objects.size();i++) {
-        //send color of triangle to GPU
-        glUniform4fv(shaderLocations.getLocation("vColor"),1,glm::value_ptr(objects[i].material.getAmbient()));
-   
-        objects[i].object.draw();
-    }*/
+    //draw scene graph here
+    scenegraph->getRoot()->accept(renderer);
 
+    modelview.pop();
     glFlush();
-
-    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL); //BACK TO FILL
     program.disable();
 
     glfwSwapBuffers(window);
     glfwPollEvents();
-
     frames++;
     double currenttime = glfwGetTime();
     if ((currenttime-time)>1.0) {
