@@ -12,11 +12,11 @@ end-material
 
 #the root
 group root2 root2
-translate s1 s1 100 50 6
-leaf l1 l1 instanceof cone 
+translate t1 t1 100 50 6
+leaf l2 l2 instanceof cone 
 
-assign-material l1 mat2
-add-child l1 s1
-add-child s1 root2
+assign-material l2 mat2
+add-child l2 t1
+add-child t1 root2
 
 assign-root root2
