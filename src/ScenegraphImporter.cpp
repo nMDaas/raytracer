@@ -197,6 +197,13 @@ void ScenegraphImporter::parseImport(istream& input) {
     string nodename,filepath;
     input >> nodename >> filepath;
     //std::cout << "command: import " << nodename << " " << filepath << std::endl;
+    ifstream external_scenegraph_file(filepath);
+    if (external_scenegraph_file.is_open()) {
+        IScenegraph *importedSG = parse(external_scenegraph_file);
+        nodes[nodename] = importedSG->getRoot();
+        importedSG->makeScenegraph(NULL);
+        delete importedSG;
+    }
 }
 
 void ScenegraphImporter::parseAssignMaterial(istream& input) {
