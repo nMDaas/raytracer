@@ -188,6 +188,9 @@ void ScenegraphImporter::parseCopy(istream& input) {
         SGNode * copy = nodes[copyof]->clone();
         nodes[nodename] = copy;
     }
+    else {
+        throw runtime_error("Copy node \""+copyof+"\" not found");
+    }
 }
 
 void ScenegraphImporter::parseImport(istream& input) {
