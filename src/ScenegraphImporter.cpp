@@ -243,7 +243,13 @@ void ScenegraphImporter::parseSetRoot(istream& input) {
     string rootname;
     input >> rootname;
     //std::cout << "command: assign-root " << rootname << std::endl;
-    root = nodes[rootname];
+    if (nodes.find(rootname)!=nodes.end()) {
+        root = nodes[rootname];
+    }
+    else {
+        throw runtime_error("Root name not found.");
+    }
+    
 }
 
 // parseAddChild() and parseAssignMaterial() is implicitly tested
