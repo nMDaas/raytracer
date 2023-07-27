@@ -212,16 +212,24 @@ void ScenegraphImporter::parseAddChild(istream& input) {
     //std::cout << "command: add-child" << " " << childname << " " << parentname << std::endl;
 
     // find parent node in array and cast to parentSGNode
-    ParentSGNode * parentNode = dynamic_cast<ParentSGNode *>(nodes[parentname]);
+    ParentSGNode * parentNode = NULL;
     SGNode * childNode = NULL;
+
     // if the child node is found in array, set childNode
-     if (nodes.find(childname)!=nodes.end()) {
+    if (nodes.find(parentname)!=nodes.end()) {
+        parentNode = dynamic_cast<ParentSGNode *>(nodes[parentname]);
+    }
+    // if the child node is found in array, set childNode
+    if (nodes.find(childname)!=nodes.end()) {
         childNode = nodes[childname];
-     }
+    }
 
     // if parent node and child node are not invalid, set parent of child node to be parent node
     if ((parentNode!=NULL) && (childNode!=NULL)) {
         parentNode->addChild(childNode);
+    }
+    else {
+        throw runtime_error("Parent node or child node is null.");
     }
 }
 
