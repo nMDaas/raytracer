@@ -19,8 +19,8 @@ assign-material l1 mat
 add-child l1 s1
 add-child s1 root
 
-import anotherscene scenegraphs/secondScene.txt
-add-child anotherscene root
+# import anotherscene scenegraphs/secondScene.txt
+# add-child anotherscene root
 
 assign-root root
 
