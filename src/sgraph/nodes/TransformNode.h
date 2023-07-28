@@ -26,6 +26,8 @@ class TransformNode: public ParentSGNode {
       void setScenegraph(IScenegraph *graph);
       
       void accept(SGNodeVisitor* visitor);
+
+      glm::mat4 getTransform();
 };
 
 #endif

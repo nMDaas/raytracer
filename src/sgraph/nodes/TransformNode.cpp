@@ -31,3 +31,7 @@ void TransformNode::setScenegraph(IScenegraph *graph) {
 void TransformNode::accept(SGNodeVisitor* visitor) {
     std::cout << "In TransformNode" << std::endl; 
 }
+
+glm::mat4 TransformNode::getTransform() {
+    return transform;
+}
