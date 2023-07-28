@@ -3,6 +3,9 @@
 
 #include "SGNodeVisitor.h"
 #include "nodes/GroupNode.h"
+#include "nodes/RotateTransform.h"
+#include "nodes/ScaleTransform.h"
+#include "nodes/TranslateTransform.h"
 
 /*
     GLScenegraphRenderer is a visitor that implements SGNodeVisitor and will be
@@ -19,6 +22,9 @@ class GLScenegraphRenderer: public SGNodeVisitor {
     GLScenegraphRenderer (GLScenegraphRenderer &t);
 
     void visitGroupNode(GroupNode *groupNode);
+    void visitScaleTransform(ScaleTransform *scaleNode);
+    void visitRotateTransform(RotateTransform *rotateNode);
+    void visitTranslateTransform(TranslateTransform *translateNode);
 
 };
 
