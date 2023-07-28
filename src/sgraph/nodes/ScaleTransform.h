@@ -1,34 +1,25 @@
 #ifndef _SCALETRANSFORM_H_
 #define _SCALETRANSFORM_H_
 
-#include "../IScenegraph.h"
-#include "TransformNode.h"
+#include <glm/gtc/matrix_transform.hpp>
 
-class ScaleTransform: public TransformNode {
+#include "../IScenegraph.h"
+#include "../SGNodeVisitor.h"
+
+#include "TransformNode.h"
+#include "ParentSGNode.h"
+
+class ScaleTransform : public TransformNode {
     protected:
         float sx,sy,sz;
-
-        ParentSGNode *copyNode() {
-            return new ScaleTransform(sx,sy,sz,name,scenegraph);
-        } 
+        ParentSGNode *copyNode();
 
     public:
-        ScaleTransform(float sx,float sy,float sz,const std::string& name,IScenegraph *graph) 
-                :TransformNode(name,graph) {
-                this->sx = sx;
-                this->sy = sy;
-                this->sz = sz;
-                glm::mat4 transform = glm::scale(glm::mat4(1.0),glm::vec3(sx,sy,sz));
-                setTransform(transform);
-        }
+        ScaleTransform(float sx,float sy,float sz,const std::string& name,IScenegraph *graph);
 
-        glm::vec3 getScale() {
-            return glm::vec3(sx,sy,sz);
-        }
+        glm::vec3 getScale();
 
-        void accept(SGNodeVisitor* visitor) {
-            
-        }
+        void accept(SGNodeVisitor* visitor);
 };
 
 #endif

@@ -16,30 +16,16 @@ class AbstractSGNode : public SGNode {
     IScenegraph *scenegraph;
 
     public:
-    AbstractSGNode(const std::string& name,IScenegraph *graph) {
-      this->parent = NULL;
-      scenegraph = graph;
-      setName(name);
-    }
+    AbstractSGNode(const std::string& name,IScenegraph *graph);
 
     // set parent of this node
-    void setParent(SGNode *parent) {
-      this->parent = parent;
-    }
+    void setParent(SGNode *parent);
 
     // set name of this node
-    void setName(const std::string& name) {
-      this->name = name;
-    }
+    void setName(const std::string& name);
 
-    std::string getName() { 
-      return name;
-    }
-
-    void setScenegraph(IScenegraph *graph) {
-      this->scenegraph = graph;
-      graph->addNode(this->name,this);
-    }
+    std::string getName();
+    void setScenegraph(IScenegraph *graph);
 
 };
 

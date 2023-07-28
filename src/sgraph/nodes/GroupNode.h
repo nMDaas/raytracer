@@ -1,66 +1,27 @@
 #ifndef _GROUPNODE_H_
 #define _GROUPNODE_H_
-#include <iostream>
-#include <vector>
-
 #include "../IScenegraph.h"
 #include "ParentSGNode.h"
+#include "../SGNodeVisitor.h"
+#include "SGNode.h"
 
 class GroupNode : public ParentSGNode {
     protected:
-    ParentSGNode *copyNode() {
-      return new GroupNode(name,scenegraph);
-    }
+    ParentSGNode *copyNode();
 
     public:
-    GroupNode(const std::string& name,IScenegraph *graph)
-      :ParentSGNode(name,graph) {      
-    }
+    GroupNode(const std::string& name,IScenegraph *graph);
 	
-    ~GroupNode() {
-      
-    }
+    ~GroupNode();
 
     // add another child to this node
-    void addChild(SGNode *child) {
-      children.push_back(child);
-      child->setParent(this);
-    }
+    void addChild(SGNode *child);
 
-    SGNode *clone() {
-      std::vector<SGNode *> newc;
+    SGNode *clone();
 
-      for (int i=0;i<children.size();i++) {
-          newc.push_back(children[i]->clone());
-      }
+    void setScenegraph(IScenegraph *graph);
 
-      GroupNode *newgroup = new GroupNode(name,scenegraph);
-
-      for (int i=0;i<children.size();i++) {
-          try
-          {
-            newgroup->addChild(newc[i]);
-          }
-          catch (std::runtime_error e)
-          {
-
-          }
-      }
-      return newgroup;
-    }
-
-    void setScenegraph(IScenegraph *graph) {
-      AbstractSGNode::setScenegraph(graph);
-      for (int i=0;i<children.size();i++)
-      {
-        children[i]->setScenegraph(graph);
-      }
-    }
-
-    void accept(SGNodeVisitor* visitor) {
-      std::cout << "Reached here" << std::endl;
-      visitor->visitGroupNode(this);
-    }
+    void accept(SGNodeVisitor* visitor);
 
 };
 #endif

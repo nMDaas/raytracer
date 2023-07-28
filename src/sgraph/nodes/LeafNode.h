@@ -5,6 +5,7 @@
 
 #include "AbstractSGNode.h"
 #include "../IScenegraph.h"
+#include "SGNode.h"
 
 class LeafNode: public AbstractSGNode {
     protected: 
@@ -12,41 +13,22 @@ class LeafNode: public AbstractSGNode {
     string objInstanceName;
 
     public: 
-    LeafNode(const std::string& instanceOf,util::Material& material,const std::string& name,IScenegraph *graph)
-        :AbstractSGNode(name,graph) {
-        this->objInstanceName = instanceOf;
-        this->material = material;
-    }
+    LeafNode(const std::string& instanceOf,util::Material& material,const std::string& name,IScenegraph *graph);
 
-    LeafNode(const std::string& instanceOf,const std::string& name,IScenegraph *graph)
-        :AbstractSGNode(name,graph) {
-        this->objInstanceName = instanceOf;
-    }
+    LeafNode(const std::string& instanceOf,const std::string& name,IScenegraph *graph);
 	
-	~LeafNode(){}
+	~LeafNode();
 
     // sets material of all vertices in this object
-    void setMaterial(const util::Material& mat) {
-        material = mat;
-    }
+    void setMaterial(const util::Material& mat);
 
-    SGNode *clone() {
-        LeafNode *newclone = new LeafNode(this->objInstanceName,material,name,scenegraph);
-        return newclone;
-    }
+    SGNode *clone();
 
-    string getInstanceOf() {
-        return this->objInstanceName;
-    }
+    string getInstanceOf();
 
-    util::Material getMaterial()
-    {
-        return material;
-    }
+    util::Material getMaterial();
 
-    void accept(SGNodeVisitor* visitor) {
-      
-    }
+    void accept(SGNodeVisitor* visitor);
 };
 
 #endif

@@ -2,7 +2,10 @@
 #define _ROTATETRANSFORM_H_
 
 #include "../IScenegraph.h"
+#include "../SGNodeVisitor.h"
+
 #include "TransformNode.h"
+#include "ParentSGNode.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -10,30 +13,16 @@ class RotateTransform: public TransformNode {
     protected:
             float angleInRadians;
             glm::vec3 axis;
+            ParentSGNode *copyNode();
 
-            ParentSGNode *copyNode() {
-                return new RotateTransform(angleInRadians,axis[0],axis[1],axis[2],name,scenegraph);
-            }
     public:
-        RotateTransform(float angleInRadians,float ax,float ay,float az,const std::string& name,IScenegraph *graph) 
-                :TransformNode(name,graph) {
-                    this->angleInRadians = angleInRadians;
-                    this->axis = glm::vec3(ax,ay,az);
-                    glm::mat4 transform = glm::rotate(glm::mat4(1.0),this->angleInRadians,this->axis);
-                    setTransform(transform);
-        }
+        RotateTransform(float angleInRadians,float ax,float ay,float az,const std::string& name,IScenegraph *graph);
 
-        glm::vec3 getRotationAxis() {
-            return axis;
-        }
+        glm::vec3 getRotationAxis();
 
-        float getAngleInRadians() {
-            return angleInRadians;
-        }
+        float getAngleInRadians();
 
-        void accept(SGNodeVisitor* visitor) {
-            
-        }
+        void accept(SGNodeVisitor* visitor);
 };
 
 #endif

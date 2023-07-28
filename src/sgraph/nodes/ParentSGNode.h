@@ -1,10 +1,10 @@
 #ifndef _PARENTSGNODE_H_
 #define _PARENTSGNODE_H_
-#include <iostream>
 #include <vector>
 
 #include "../IScenegraph.h"
 #include "AbstractSGNode.h"
+#include "SGNode.h"
 
 /*
     This class represents a SGNode that can have children.
@@ -15,33 +15,18 @@ class ParentSGNode: public AbstractSGNode {
         std::vector<SGNode *> children;
 
     public:
-        ParentSGNode(const std::string& name,IScenegraph *scenegraph)
-        : AbstractSGNode(name,scenegraph) {}
+        ParentSGNode(const std::string& name,IScenegraph *scenegraph);
 
-        ~ParentSGNode() {
-            for (int i=0;i<children.size();i++) {
-                delete children[i];
-            }
-        }
+        ~ParentSGNode();
 
         // add another child to this node
         virtual void addChild(SGNode *child)=0;
 
         virtual ParentSGNode *copyNode()=0;
 
-        SGNode *clone() {
-            ParentSGNode * newtransform = copyNode();
+        SGNode *clone();
 
-            for (int i=0;i<children.size();i=i+1) {
-                    newtransform->addChild(children[i]->clone());
-            }
-
-            return newtransform;
-        }
-
-        vector<SGNode *> getChildren() {
-            return children;
-        }
+        vector<SGNode *> getChildren();
 };
 
 #endif

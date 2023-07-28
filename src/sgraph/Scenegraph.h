@@ -4,59 +4,38 @@
 #include <map>
 
 #include "IScenegraph.h"
+#include "nodes/SGNode.h"
+#include "PolygonMesh.h"
+#include "../VertexAttrib.h"
 
 
 // an implementation of IScenegraph
 class Scenegraph: public IScenegraph {
     protected:
-        SGNode *root;
-        std::map<std::string,SGNode *> nodes; // to keep track of all nodes in this scenegraph
-        std::map<std::string,util::PolygonMesh<VertexAttrib> > meshes;
-        map<string,string> meshPaths;
+      SGNode *root;
+      std::map<std::string,SGNode *> nodes; // to keep track of all nodes in this scenegraph
+      std::map<std::string,util::PolygonMesh<VertexAttrib> > meshes;
+      map<string,string> meshPaths;
 
     public:
-    Scenegraph() {
-      root = NULL;
-    }
+    Scenegraph();
 
-    ~Scenegraph() {
-      if (root!=NULL) {
-          delete root;
-          root = NULL;
-      }
-    }
+    ~Scenegraph();
 
     // add a node to the scenegraph to keep track of all nodes
-    void addNode(const std::string& name, SGNode *node) {
-      nodes[name]=node;
-    }
+    void addNode(const std::string& name, SGNode *node);
 
-    void makeScenegraph(SGNode *root) {
-      this->root = root;
-      if (root!=NULL) {
-        this->root->setScenegraph(this);
-      }
-    }
+    void makeScenegraph(SGNode *root);
 
-    void setMeshPaths(map<string,string>& meshPaths) {
-      this->meshPaths = meshPaths;
-    }
+    void setMeshPaths(map<string,string>& meshPaths);
 
-     map<string,string> getMeshPaths() {
-      return this->meshPaths;
-    }
+    map<string,string> getMeshPaths();
 
-    void setMeshes(map<string,util::PolygonMesh<VertexAttrib> >& meshes) {
-      this->meshes = meshes;
-    }
+    void setMeshes(map<string,util::PolygonMesh<VertexAttrib> >& meshes);
 
-    map<string,util::PolygonMesh<VertexAttrib> > getMeshes() {
-      return this->meshes;
-    }
+    map<string,util::PolygonMesh<VertexAttrib> > getMeshes();
 
-    SGNode *getRoot() {
-      return root;
-    }
+    SGNode *getRoot();
 };
 
 #endif

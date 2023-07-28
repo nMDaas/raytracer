@@ -1,4 +1,4 @@
-OBJS = Raytracer.o ScenegraphImporter.o Controller.o Model.o View.o 
+OBJS = Raytracer.o ScenegraphImporter.o Controller.o Model.o View.o AbstractSGNode.o GroupNode.o LeafNode.o ParentSGNode.o RotateTransform.o ScaleTransform.o TransformNode.o TranslateTransform.o GLScenegraphRenderer.o Scenegraph.o
 INCLUDES = -I../include
 LIBS = -L../lib
 LDFLAGS = -lglad -lglfw3
@@ -30,6 +30,36 @@ Model.o: Model.cpp Model.h
 
 View.o: View.cpp View.h
 	$(COMPILER) $(INCLUDES) $(CFLAGS) -c View.cpp	
+
+AbstractSGNode.o: sgraph/nodes/AbstractSGNode.cpp 
+	$(COMPILER) $(INCLUDES) $(CFLAGS) -c sgraph/nodes/AbstractSGNode.cpp
+
+GroupNode.o: sgraph/nodes/GroupNode.cpp 
+	$(COMPILER) $(INCLUDES) $(CFLAGS) -c sgraph/nodes/GroupNode.cpp
+
+LeafNode.o: sgraph/nodes/LeafNode.cpp 
+	$(COMPILER) $(INCLUDES) $(CFLAGS) -c sgraph/nodes/LeafNode.cpp
+
+ParentSGNode.o: sgraph/nodes/ParentSGNode.cpp 
+	$(COMPILER) $(INCLUDES) $(CFLAGS) -c sgraph/nodes/ParentSGNode.cpp
+
+RotateTransform.o: sgraph/nodes/RotateTransform.cpp 
+	$(COMPILER) $(INCLUDES) $(CFLAGS) -c sgraph/nodes/RotateTransform.cpp
+
+ScaleTransform.o: sgraph/nodes/ScaleTransform.cpp 
+	$(COMPILER) $(INCLUDES) $(CFLAGS) -c sgraph/nodes/ScaleTransform.cpp
+
+TransformNode.o: sgraph/nodes/TransformNode.cpp 
+	$(COMPILER) $(INCLUDES) $(CFLAGS) -c sgraph/nodes/TransformNode.cpp
+
+TranslateTransform.o: sgraph/nodes/TranslateTransform.cpp 
+	$(COMPILER) $(INCLUDES) $(CFLAGS) -c sgraph/nodes/TranslateTransform.cpp
+
+GLScenegraphRenderer.o: sgraph/GLScenegraphRenderer.cpp 
+	$(COMPILER) $(INCLUDES) $(CFLAGS) -c sgraph/GLScenegraphRenderer.cpp
+
+Scenegraph.o: sgraph/Scenegraph.cpp 
+	$(COMPILER) $(INCLUDES) $(CFLAGS) -c sgraph/Scenegraph.cpp
 	
 RM = rm	-f
 ifeq ($(OS),Windows_NT)     # is Windows_NT on XP, 2000, 7, Vista, 10...

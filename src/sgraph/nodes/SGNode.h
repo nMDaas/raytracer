@@ -3,7 +3,6 @@
 #include <string>
 
 #include "../SGNodeVisitor.h"
-#include "../GLScenegraphRenderer.h"
 
 class IScenegraph;
 
