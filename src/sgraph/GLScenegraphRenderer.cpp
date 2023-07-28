@@ -21,3 +21,22 @@ void GLScenegraphRenderer::visitGroupNode(GroupNode *groupNode) {
         groupNode->getChildren()[i]->accept(this);
     }
 }
+
+void GLScenegraphRenderer::visitScaleTransform(ScaleTransform *scaleNode) {
+    std::cout << "ScaleTransform: " << scaleNode->getName() << std::endl;
+    visitTransformNode(scaleNode);
+}
+
+void GLScenegraphRenderer::visitRotateTransform(RotateTransform *rotateNode) {
+    std::cout << "RotateTransform: " << rotateNode->getName() << std::endl;
+    visitTransformNode(rotateNode);
+}
+
+void GLScenegraphRenderer::visitTranslateTransform(TranslateTransform *translateNode) {
+    std::cout << "TranslateTransform: " << translateNode->getName() << std::endl;
+    visitTransformNode(translateNode);
+}
+
+void GLScenegraphRenderer::visitTransformNode(TransformNode *transformNode) {
+    std::cout << "Transform: " << transformNode->getName() << std::endl;
+}

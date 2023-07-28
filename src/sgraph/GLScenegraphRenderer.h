@@ -25,6 +25,7 @@ class GLScenegraphRenderer: public SGNodeVisitor {
     void visitScaleTransform(ScaleTransform *scaleNode);
     void visitRotateTransform(RotateTransform *rotateNode);
     void visitTranslateTransform(TranslateTransform *translateNode);
+    void visitTransformNode(TransformNode *transformNode);
 
 };
 
