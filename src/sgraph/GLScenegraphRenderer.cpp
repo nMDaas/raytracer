@@ -43,3 +43,7 @@ void GLScenegraphRenderer::visitTransformNode(TransformNode *transformNode) {
         transformNode->getChildren()[0]->accept(this);
     }
 }
+
+void GLScenegraphRenderer::visitLeafNode(LeafNode *leafNode) {
+    std::cout << "LeafNode to draw: " << leafNode->getName() << std::endl;
+}
