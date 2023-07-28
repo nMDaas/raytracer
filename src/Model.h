@@ -20,7 +20,9 @@ public:
         std::cout << "MODEL COPY CONSTRUCTOR CALLED" << std::endl;
     }
 
-    void addMesh(util::PolygonMesh<VertexAttrib>& mesh,util::Material& mat);
+    // can be used if we wanted to add a mesh NOT via importing a txt file 
+    void addMesh(util::PolygonMesh<VertexAttrib>& mesh,util::Material& mat); 
+
     vector<util::Material> getMaterials();
     void setScenegraph(IScenegraph *scenegraph);
     IScenegraph *getScenegraph();

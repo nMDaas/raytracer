@@ -27,6 +27,10 @@ void Controller::meshMaterialSetup(char* filePath) {
     model.setScenegraph(scenegraph);
 
     /*
+        The below comment is for if we wanted to add a mesh NOT via importing a txt file 
+    */
+
+    /*
     util::PolygonMesh<VertexAttrib> mesh;
 
     //import an OBJ model from file
