@@ -6,6 +6,7 @@
 #include "nodes/RotateTransform.h"
 #include "nodes/ScaleTransform.h"
 #include "nodes/TranslateTransform.h"
+#include "nodes/TransformNode.h"
 
 /*
     GLScenegraphRenderer is a visitor that implements SGNodeVisitor and will be
