@@ -1,6 +1,7 @@
 #ifndef _GLSCENEGRAPHRENDERER_H_
 #define _GLSCENEGRAPHRENDERER_H_
 #include <stack>
+#include <map>
 
 #include "SGNodeVisitor.h"
 #include "nodes/GroupNode.h"
@@ -10,12 +11,15 @@
 #include "nodes/TransformNode.h"
 #include "nodes/LeafNode.h"
 
+#include "ShaderLocationsVault.h"
+#include "ObjectInstance.h"
+
 /*
     GLScenegraphRenderer is a visitor that implements SGNodeVisitor and will be
     used to traverse the scenegraph and render it */
 class GLScenegraphRenderer: public SGNodeVisitor {
     public:
-    GLScenegraphRenderer(stack<glm::mat4>& mv);
+    GLScenegraphRenderer(stack<glm::mat4>& mv, map<string,util::ObjectInstance *>& os, util::ShaderLocationsVault& shaderLocs);
 
     ~GLScenegraphRenderer();
 
@@ -33,6 +37,8 @@ class GLScenegraphRenderer: public SGNodeVisitor {
 
     private: 
     stack<glm::mat4>& modelview;
+    util::ShaderLocationsVault shaderLocations;
+    map<string,util::ObjectInstance *> objects;
 
 };
 

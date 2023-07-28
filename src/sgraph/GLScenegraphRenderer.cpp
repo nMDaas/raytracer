@@ -2,7 +2,8 @@
 
 #include <iostream>
 
-GLScenegraphRenderer::GLScenegraphRenderer(stack<glm::mat4>& mv) : modelview(mv) {
+GLScenegraphRenderer::GLScenegraphRenderer(stack<glm::mat4>& mv, map<string,util::ObjectInstance *>& os, util::ShaderLocationsVault& shaderLocs) 
+    : modelview(mv), objects(os), shaderLocations(shaderLocs) {
     std::cout << "scenegraph constructor called" << std::endl;
 }
 

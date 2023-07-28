@@ -122,7 +122,7 @@ void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>
     //prepare the projection matrix for orthographic projection
 	glViewport(0, 0, window_width, window_height);
 
-    renderer = new GLScenegraphRenderer(modelview);
+    renderer = new GLScenegraphRenderer(modelview, objects, shaderLocations);
 
     frames = 0;
     time = glfwGetTime();
