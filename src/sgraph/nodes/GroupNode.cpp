@@ -50,6 +50,5 @@ void GroupNode::setScenegraph(IScenegraph *graph) {
 }
 
 void GroupNode::accept(SGNodeVisitor* visitor) {
-    std::cout << "Reached here" << std::endl;
     visitor->visitGroupNode(this);
 }
