@@ -39,4 +39,7 @@ void GLScenegraphRenderer::visitTranslateTransform(TranslateTransform *translate
 
 void GLScenegraphRenderer::visitTransformNode(TransformNode *transformNode) {
     std::cout << "Transform: " << transformNode->getName() << std::endl;
+    if (transformNode->getChildren().size()>0) {
+        transformNode->getChildren()[0]->accept(this);
+    }
 }
