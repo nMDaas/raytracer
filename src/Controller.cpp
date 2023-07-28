@@ -57,7 +57,7 @@ void Controller::run()
         view.display(scenegraph);
     }
 
-    //view.closeWindow();
+    view.closeWindow();
     exit(EXIT_SUCCESS);
 }
 

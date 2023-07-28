@@ -13,11 +13,12 @@ bool View::shouldWindowClose() {
 }
 
 void View::closeWindow() {
-    for (int i=0;i<objects.size();i++) {
-        //objects[i].object.cleanup();
-       // delete objects[i].object;
-    }
-    objects.clear();
+    for (map<string,util::ObjectInstance *>::iterator it=objects.begin();
+           it!=objects.end();
+           it++) {
+          it->second->cleanup();
+          delete it->second;
+    } 
     glfwDestroyWindow(window);
 
     glfwTerminate();
