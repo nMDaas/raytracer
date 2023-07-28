@@ -1,5 +1,7 @@
 #include "GLScenegraphRenderer.h"
 
+#include <glm/gtc/type_ptr.hpp>
+
 #include <iostream>
 
 GLScenegraphRenderer::GLScenegraphRenderer(stack<glm::mat4>& mv, map<string,util::ObjectInstance *>& os, util::ShaderLocationsVault& shaderLocs) 
@@ -50,4 +52,8 @@ void GLScenegraphRenderer::visitTransformNode(TransformNode *transformNode) {
 
 void GLScenegraphRenderer::visitLeafNode(LeafNode *leafNode) {
     std::cout << "LeafNode to draw: " << leafNode->getName() << std::endl;
+     //send modelview matrix to GPU  
+    glUniformMatrix4fv(shaderLocations.getLocation("modelview"), 1, GL_FALSE, glm::value_ptr(modelview.top()));
+    glUniform4fv(shaderLocations.getLocation("vColor"),1,glm::value_ptr(leafNode->getMaterial().getAmbient()));
+    objects[leafNode->getInstanceOf()]->draw();
 }

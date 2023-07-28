@@ -11,6 +11,7 @@
 #include "nodes/TransformNode.h"
 #include "nodes/LeafNode.h"
 
+#include "ShaderProgram.h"
 #include "ShaderLocationsVault.h"
 #include "ObjectInstance.h"
 
