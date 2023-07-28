@@ -18,5 +18,5 @@ glm::vec3 ScaleTransform::getScale() {
 }
 
 void ScaleTransform::accept(SGNodeVisitor* visitor) {
-    std::cout << "In ScaleTransform" << std::endl; 
+    return visitor->visitScaleTransform(this);
 }

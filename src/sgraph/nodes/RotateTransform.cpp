@@ -21,5 +21,5 @@ float RotateTransform::getAngleInRadians() {
 }
 
 void RotateTransform::accept(SGNodeVisitor* visitor) {
-    std::cout << "In RotateTransform" << std::endl; 
+    return visitor->visitRotateTransform(this);
 }
