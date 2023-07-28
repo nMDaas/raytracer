@@ -33,5 +33,5 @@ util::Material LeafNode::getMaterial()
 }
 
 void LeafNode::accept(SGNodeVisitor* visitor) {
-    
+    visitor->visitLeafNode(this);
 }

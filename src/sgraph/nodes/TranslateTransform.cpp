@@ -18,5 +18,5 @@ glm::vec3 TranslateTransform::getTranslate() {
 }
 
 void TranslateTransform::accept(SGNodeVisitor* visitor) {
-    
+    std::cout << "In TranslateTransform" << std::endl; 
 }
