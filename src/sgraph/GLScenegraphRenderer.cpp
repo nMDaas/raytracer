@@ -16,5 +16,8 @@ GLScenegraphRenderer::GLScenegraphRenderer (GLScenegraphRenderer &t) {
 }
 
 void GLScenegraphRenderer::visitGroupNode(GroupNode *groupNode) {
-    std::cout << "In visitGroupNode() in GLScenegraphRender(): " << groupNode->getName() <<  std::endl;
+    std::cout << "GroupNode: " << groupNode->getName() << std::endl;
+    for (int i=0;i<groupNode->getChildren().size();i=i+1) {
+        groupNode->getChildren()[i]->accept(this);
+    }
 }
