@@ -1,5 +1,6 @@
 #ifndef _GLSCENEGRAPHRENDERER_H_
 #define _GLSCENEGRAPHRENDERER_H_
+#include <stack>
 
 #include "SGNodeVisitor.h"
 #include "nodes/GroupNode.h"
@@ -14,7 +15,7 @@
     used to traverse the scenegraph and render it */
 class GLScenegraphRenderer: public SGNodeVisitor {
     public:
-    GLScenegraphRenderer();
+    GLScenegraphRenderer(stack<glm::mat4>& mv);
 
     ~GLScenegraphRenderer();
 
@@ -29,6 +30,9 @@ class GLScenegraphRenderer: public SGNodeVisitor {
     void visitTranslateTransform(TranslateTransform *translateNode);
     void visitTransformNode(TransformNode *transformNode);
     void visitLeafNode(LeafNode *leafNode);
+
+    private: 
+    stack<glm::mat4>& modelview;
 
 };
 

@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-GLScenegraphRenderer::GLScenegraphRenderer() {
+GLScenegraphRenderer::GLScenegraphRenderer(stack<glm::mat4>& mv) : modelview(mv) {
     std::cout << "scenegraph constructor called" << std::endl;
 }
 
@@ -39,9 +39,12 @@ void GLScenegraphRenderer::visitTranslateTransform(TranslateTransform *translate
 
 void GLScenegraphRenderer::visitTransformNode(TransformNode *transformNode) {
     std::cout << "Transform: " << transformNode->getName() << std::endl;
+    modelview.push(modelview.top());
+    modelview.top() = modelview.top() * transformNode->getTransform();
     if (transformNode->getChildren().size()>0) {
         transformNode->getChildren()[0]->accept(this);
     }
+    modelview.pop();
 }
 
 void GLScenegraphRenderer::visitLeafNode(LeafNode *leafNode) {
