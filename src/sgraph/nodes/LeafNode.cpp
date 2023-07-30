@@ -1,17 +1,15 @@
 #include "LeafNode.h"
 
 LeafNode::LeafNode(const std::string& instanceOf,util::Material& material,const std::string& name,IScenegraph *graph)
-    :AbstractSGNode(name,graph) {
+    :ChildSGNode(name,graph) {
     this->objInstanceName = instanceOf;
     this->material = material;
 }
 
 LeafNode::LeafNode(const std::string& instanceOf,const std::string& name,IScenegraph *graph)
-    :AbstractSGNode(name,graph) {
+    :ChildSGNode(name,graph) {
     this->objInstanceName = instanceOf;
 }
-
-LeafNode::~LeafNode(){}
 
 // sets material of all vertices in this object
 void LeafNode::setMaterial(const util::Material& mat) {

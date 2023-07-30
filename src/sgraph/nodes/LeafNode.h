@@ -3,11 +3,11 @@
 
 #include "Material.h"
 
-#include "AbstractSGNode.h"
+#include "ChildSGNode.h"
 #include "../IScenegraph.h"
 #include "SGNode.h"
 
-class LeafNode: public AbstractSGNode {
+class LeafNode: public ChildSGNode {
     protected: 
     util::Material material;
     string objInstanceName;
@@ -16,8 +16,6 @@ class LeafNode: public AbstractSGNode {
     LeafNode(const std::string& instanceOf,util::Material& material,const std::string& name,IScenegraph *graph);
 
     LeafNode(const std::string& instanceOf,const std::string& name,IScenegraph *graph);
-	
-	~LeafNode();
 
     // sets material of all vertices in this object
     void setMaterial(const util::Material& mat);
