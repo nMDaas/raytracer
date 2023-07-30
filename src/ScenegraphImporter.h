@@ -22,6 +22,7 @@ using namespace std;
 #include "sgraph/nodes/AbstractSGNode.h"
 #include "sgraph/nodes/GroupNode.h"
 #include "sgraph/nodes/LeafNode.h"
+#include "sgraph/nodes/LightNode.h"
 #include "sgraph/nodes/TransformNode.h"
 #include "sgraph/nodes/ScaleTransform.h"
 #include "sgraph/nodes/RotateTransform.h"
@@ -53,6 +54,7 @@ class ScenegraphImporter {
         void parseInstance(istream& input);
         void parseGroup(istream& input);
         void parseLeaf(istream& input);
+        void parseLight(istream& input);
         void parseMaterial(istream& input);
         void parseScale(istream& input);
         void parseRotate(istream& input);

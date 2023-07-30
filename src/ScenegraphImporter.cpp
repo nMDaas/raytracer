@@ -36,6 +36,9 @@ IScenegraph* ScenegraphImporter::parse(std::istream& input) {
         else if (command == "leaf") {
             parseLeaf(inputWithOutComments);
         }
+        else if (command == "light") {
+            parseLight(inputWithOutComments);
+        }
         else if (command == "material") {
             parseMaterial(inputWithOutComments);
         }
@@ -109,6 +112,14 @@ void ScenegraphImporter::parseLeaf(istream& input) {
     //std::cout << "command: leaf " << varname << " " << name << " " << command << " " << instanceof << std::endl;
     SGNode *leaf = new LeafNode(instanceof,name,NULL);
     nodes[varname] = leaf;
+}
+
+void ScenegraphImporter::parseLight(istream& input) {
+    string varname,name;
+    input >> varname >> name;
+    std::cout << "command: light " << varname << " " << name << " " << std::endl;
+    SGNode *light = new LightNode(name,NULL);
+    nodes[varname] = light;
 }
 
 void ScenegraphImporter::parseMaterial(istream& input) {
