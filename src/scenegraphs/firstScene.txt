@@ -16,6 +16,7 @@ scale s1 s1 50 50 50
 leaf l1 one-box instanceof box 
 
 light li1 li1 
+add-child li1 root
 
 assign-material l1 mat
 add-child l1 s1

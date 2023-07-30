@@ -117,7 +117,7 @@ void ScenegraphImporter::parseLeaf(istream& input) {
 void ScenegraphImporter::parseLight(istream& input) {
     string varname,name;
     input >> varname >> name;
-    std::cout << "command: light " << varname << " " << name << " " << std::endl;
+    //std::cout << "command: light " << varname << " " << name << " " << std::endl;
     SGNode *light = new LightNode(name,NULL);
     nodes[varname] = light;
 }
@@ -319,6 +319,19 @@ void ScenegraphImporter::testParse(IScenegraph* scenegraph) {
             std::cout << "      leaf node: " << leafNode->getName() << std::endl;
             std::cout << "      instance of: " << leafNode->getInstanceOf() << std::endl;
             std::cout << "      material ambient: " << glm::to_string(leafNode->getMaterial().getAmbient()) << std::endl;
+            std::cout << std::endl;
+            }
+    }
+
+    std::cout << std::endl;
+
+    // test for parseLight
+    std::cout << "   LIGHT NODES:"<< std::endl;
+     for (auto i : nodes) {
+        string nodeName = typeid(*i.second).name();
+        if (nodeName.find("LightNode") != std::string::npos) {
+            LightNode* lightNode = dynamic_cast<LightNode *> (i.second);
+            std::cout << "      light node: " << lightNode->getName() << std::endl;
             std::cout << std::endl;
             }
     }
