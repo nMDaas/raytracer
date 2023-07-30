@@ -1,4 +1,4 @@
-OBJS = Raytracer.o ScenegraphImporter.o Controller.o Model.o View.o AbstractSGNode.o GroupNode.o LeafNode.o ParentSGNode.o RotateTransform.o ScaleTransform.o TransformNode.o TranslateTransform.o GLScenegraphRenderer.o Scenegraph.o
+OBJS = Raytracer.o ScenegraphImporter.o Controller.o Model.o View.o AbstractSGNode.o GroupNode.o ChildSGNode.o LeafNode.o ParentSGNode.o RotateTransform.o ScaleTransform.o TransformNode.o TranslateTransform.o GLScenegraphRenderer.o Scenegraph.o
 INCLUDES = -I../include
 LIBS = -L../lib
 LDFLAGS = -lglad -lglfw3
@@ -36,6 +36,9 @@ AbstractSGNode.o: sgraph/nodes/AbstractSGNode.cpp
 
 GroupNode.o: sgraph/nodes/GroupNode.cpp 
 	$(COMPILER) $(INCLUDES) $(CFLAGS) -c sgraph/nodes/GroupNode.cpp
+
+ChildSGNode.o: sgraph/nodes/ChildSGNode.cpp 
+	$(COMPILER) $(INCLUDES) $(CFLAGS) -c sgraph/nodes/ChildSGNode.cpp
 
 LeafNode.o: sgraph/nodes/LeafNode.cpp 
 	$(COMPILER) $(INCLUDES) $(CFLAGS) -c sgraph/nodes/LeafNode.cpp
