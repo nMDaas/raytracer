@@ -10,6 +10,7 @@
 #include "nodes/TranslateTransform.h"
 #include "nodes/TransformNode.h"
 #include "nodes/LeafNode.h"
+#include "nodes/LightNode.h"
 
 #include "ShaderProgram.h"
 #include "ShaderLocationsVault.h"
@@ -35,6 +36,7 @@ class GLScenegraphRenderer: public SGNodeVisitor {
     void visitTranslateTransform(TranslateTransform *translateNode);
     void visitTransformNode(TransformNode *transformNode);
     void visitLeafNode(LeafNode *leafNode);
+    void visitLightNode(LightNode *lightNode);
 
     private: 
     stack<glm::mat4>& modelview;

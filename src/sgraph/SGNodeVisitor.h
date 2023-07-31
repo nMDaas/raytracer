@@ -7,6 +7,7 @@ class TranslateTransform;
 class RotateTransform;
 class TransformNode;
 class LeafNode;
+class LightNode;
 
 // this is an interface for any visitor that will be accepted by the scenegraph
 class SGNodeVisitor {
@@ -17,6 +18,7 @@ class SGNodeVisitor {
         virtual void visitRotateTransform(RotateTransform *node)=0;
         virtual void visitTransformNode(TransformNode *node)=0;
         virtual void visitLeafNode(LeafNode *node)=0;
+        virtual void visitLightNode(LightNode *node)=0;
 };
 
 #endif

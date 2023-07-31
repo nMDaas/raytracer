@@ -57,3 +57,7 @@ void GLScenegraphRenderer::visitLeafNode(LeafNode *leafNode) {
     glUniform4fv(shaderLocations.getLocation("vColor"),1,glm::value_ptr(leafNode->getMaterial().getAmbient()));
     objects[leafNode->getInstanceOf()]->draw();
 }
+
+void GLScenegraphRenderer::visitLightNode(LightNode *lightNode) {
+    std::cout << "Light Node: " << std::endl;
+}
