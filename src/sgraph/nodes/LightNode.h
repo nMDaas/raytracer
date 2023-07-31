@@ -9,10 +9,10 @@
 
 class LightNode: public ChildSGNode {
     protected: 
-    util::Light light;
+    util::Light* light;
 
     public: 
-    LightNode(const std::string& name,IScenegraph *graph);
+    LightNode(const std::string& name,IScenegraph *graph,glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular);
 
     SGNode *clone();
 
