@@ -15,7 +15,7 @@ group root root
 scale s1 s1 50 50 50
 leaf l1 one-box instanceof box 
 
-light li1 li1 
+light li1 li1 1.0 0.5 0.3 0.0 1.0 0.0 0.0 0.0 1.0
 add-child li1 root
 
 assign-material l1 mat

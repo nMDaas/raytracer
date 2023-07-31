@@ -118,7 +118,15 @@ void ScenegraphImporter::parseLight(istream& input) {
     string varname,name;
     input >> varname >> name;
     //std::cout << "command: light " << varname << " " << name << " " << std::endl;
-    SGNode *light = new LightNode(name,NULL);
+    float ambientR,ambientG,ambientB;
+    input >> ambientR >> ambientG >> ambientB;
+    float diffuseR,diffuseG,diffuseB;
+    input >> diffuseR >> diffuseG >> diffuseB;
+    float specularR,specularG,specularB;
+    input >> specularR >> specularG >> specularB;
+
+    SGNode *light = new LightNode(name,NULL,glm::vec3(ambientR,ambientG,ambientB),
+        glm::vec3(diffuseR,diffuseG,diffuseB),glm::vec3(diffuseR,diffuseG,diffuseB));
     nodes[varname] = light;
 }
 
