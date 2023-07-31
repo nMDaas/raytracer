@@ -21,6 +21,7 @@ using namespace std;
 #include "sgraph/nodes/ParentSGNode.h"
 #include "sgraph/nodes/AbstractSGNode.h"
 #include "sgraph/nodes/GroupNode.h"
+#include "sgraph/nodes/ChildSGNode.h"
 #include "sgraph/nodes/LeafNode.h"
 #include "sgraph/nodes/LightNode.h"
 #include "sgraph/nodes/TransformNode.h"
