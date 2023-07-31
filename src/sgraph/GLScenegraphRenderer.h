@@ -21,7 +21,7 @@
     used to traverse the scenegraph and render it */
 class GLScenegraphRenderer: public SGNodeVisitor {
     public:
-    GLScenegraphRenderer(stack<glm::mat4>& mv, map<string,util::ObjectInstance *>& os, util::ShaderLocationsVault& shaderLocs);
+    GLScenegraphRenderer(stack<glm::mat4>& mv, map<string,util::ObjectInstance *>& os, util::ShaderLocationsVault& shaderLocs,vector<util::Light>& lights, vector<string>& lightCoordinateSystems);
 
     ~GLScenegraphRenderer();
 
@@ -42,6 +42,8 @@ class GLScenegraphRenderer: public SGNodeVisitor {
     stack<glm::mat4>& modelview;
     util::ShaderLocationsVault shaderLocations;
     map<string,util::ObjectInstance *> objects;
+    vector<util::Light>& _lights;
+    vector<string>& _lightCoordinateSystems;
 
 };
 

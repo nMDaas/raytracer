@@ -4,8 +4,8 @@
 
 #include <iostream>
 
-GLScenegraphRenderer::GLScenegraphRenderer(stack<glm::mat4>& mv, map<string,util::ObjectInstance *>& os, util::ShaderLocationsVault& shaderLocs) 
-    : modelview(mv), objects(os), shaderLocations(shaderLocs) {
+GLScenegraphRenderer::GLScenegraphRenderer(stack<glm::mat4>& mv, map<string,util::ObjectInstance *>& os, util::ShaderLocationsVault& shaderLocs,vector<util::Light>& lights, vector<string>& lightCoordinateSystems) 
+    : modelview(mv), objects(os), shaderLocations(shaderLocs), _lights(lights), _lightCoordinateSystems(lightCoordinateSystems) {
     //std::cout << "scenegraph constructor called" << std::endl;
 }
 
@@ -14,7 +14,7 @@ GLScenegraphRenderer::~GLScenegraphRenderer() {}
 /*
     to check for copy constructors
 */
-GLScenegraphRenderer::GLScenegraphRenderer (GLScenegraphRenderer &t) : modelview(t.modelview) {
+GLScenegraphRenderer::GLScenegraphRenderer (GLScenegraphRenderer &t) : modelview(t.modelview), _lights(t._lights), _lightCoordinateSystems(t._lightCoordinateSystems){
     std::cout << "GLScenegraphRenderer COPY CONSTRUCTOR CALLED" << std::endl;
 }
 
