@@ -126,7 +126,7 @@ void ScenegraphImporter::parseLight(istream& input) {
     input >> specularR >> specularG >> specularB;
 
     SGNode *light = new LightNode(name,NULL,glm::vec3(ambientR,ambientG,ambientB),
-        glm::vec3(diffuseR,diffuseG,diffuseB),glm::vec3(diffuseR,diffuseG,diffuseB));
+        glm::vec3(diffuseR,diffuseG,diffuseB),glm::vec3(specularR,specularG,specularB));
     nodes[varname] = light;
 }
 
@@ -340,6 +340,9 @@ void ScenegraphImporter::testParse(IScenegraph* scenegraph) {
         if (nodeName.find("LightNode") != std::string::npos) {
             LightNode* lightNode = dynamic_cast<LightNode *> (i.second);
             std::cout << "      light node: " << lightNode->getName() << std::endl;
+            std::cout << "      light ambient: " << glm::to_string(lightNode->getLight()->getAmbient()) << std::endl;
+            std::cout << "      light diffuse: " << glm::to_string(lightNode->getLight()->getDiffuse()) << std::endl;
+            std::cout << "      light specular: " << glm::to_string(lightNode->getLight()->getSpecular()) << std::endl;
             std::cout << std::endl;
             }
     }
