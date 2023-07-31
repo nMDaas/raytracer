@@ -1,5 +1,5 @@
 #ifndef _LIGHTNODE_H_
-#define __LIGHTNODE_H_
+#define _LIGHTNODE_H_
 
 #include "Light.h"
 
