@@ -17,6 +17,8 @@ class LightNode: public ChildSGNode {
     SGNode *clone();
 
     void accept(SGNodeVisitor* visitor);
+
+    util::Light* getLight();
 };
 
 #endif

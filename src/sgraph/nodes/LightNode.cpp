@@ -17,3 +17,7 @@ SGNode* LightNode::clone() {
 void LightNode::accept(SGNodeVisitor* visitor) {
     //visitor->visitLightNode(this);
 }
+
+util::Light* LightNode::getLight() {
+    return light;
+}
