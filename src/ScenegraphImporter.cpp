@@ -1,6 +1,7 @@
 #include "ScenegraphImporter.h"
 
 ScenegraphImporter::ScenegraphImporter() {
+    root = NULL;
 }
 
 ScenegraphImporter::~ScenegraphImporter()
