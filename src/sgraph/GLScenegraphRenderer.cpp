@@ -4,8 +4,8 @@
 
 #include <iostream>
 
-GLScenegraphRenderer::GLScenegraphRenderer(stack<glm::mat4>& mv, map<string,util::ObjectInstance *>& os, util::ShaderLocationsVault& shaderLocs,vector<util::Light>& lights, vector<string>& lightCoordinateSystems) 
-    : modelview(mv), objects(os), shaderLocations(shaderLocs), _lights(lights), _lightCoordinateSystems(lightCoordinateSystems) {
+GLScenegraphRenderer::GLScenegraphRenderer(stack<glm::mat4>& mv, map<string,util::ObjectInstance *>& os, util::ShaderLocationsVault& shaderLocs) 
+    : modelview(mv), objects(os), shaderLocations(shaderLocs){
     //std::cout << "scenegraph constructor called" << std::endl;
 }
 
@@ -14,15 +14,17 @@ GLScenegraphRenderer::~GLScenegraphRenderer() {}
 /*
     to check for copy constructors
 */
-GLScenegraphRenderer::GLScenegraphRenderer (GLScenegraphRenderer &t) : modelview(t.modelview), _lights(t._lights), _lightCoordinateSystems(t._lightCoordinateSystems){
+GLScenegraphRenderer::GLScenegraphRenderer (GLScenegraphRenderer &t) : modelview(t.modelview) {
     std::cout << "GLScenegraphRenderer COPY CONSTRUCTOR CALLED" << std::endl;
 }
 
 void GLScenegraphRenderer::visitGroupNode(GroupNode *groupNode) {
     //std::cout << "GroupNode: " << groupNode->getName() << std::endl;
     for (int i=0;i<groupNode->getChildren().size();i=i+1) {
+        std::cout << "new child: " << groupNode->getChildren()[i]->getName() << std::endl;
         groupNode->getChildren()[i]->accept(this);
     }
+    //std::cout << "exiting group node: " << groupNode->getName() << std::endl;
 }
 
 void GLScenegraphRenderer::visitScaleTransform(ScaleTransform *scaleNode) {
@@ -59,5 +61,6 @@ void GLScenegraphRenderer::visitLeafNode(LeafNode *leafNode) {
 }
 
 void GLScenegraphRenderer::visitLightNode(LightNode *lightNode) {
-    std::cout << "Light Node: " << std::endl;
+    //std::cout << "Light Node to draw: " << lightNode->getName() << std::endl;
+    lightCoordinateSystems.push_back("world");
 }
