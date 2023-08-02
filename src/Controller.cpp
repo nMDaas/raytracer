@@ -17,7 +17,6 @@ Controller::~Controller()
 }
 
 void Controller::meshMaterialSetup(char* filePath) {
-
     ifstream inFile(filePath);
     ScenegraphImporter importer;
     IScenegraph *scenegraph = importer.parse(inFile);
