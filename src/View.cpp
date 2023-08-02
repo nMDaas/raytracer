@@ -78,10 +78,14 @@ void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     glfwSwapInterval(1);
 
-    // create shader program with a vertex and fragment shader
-    program.createProgram(string("shaders/default.vert"),
-                          string("shaders/default.frag"));
-    program.enable(); // set this program to be in use
+    // debugger - create shader program with a vertex and fragment shader 
+    // program.createProgram(string("shaders/default.vert"),
+    //                      string("shaders/default.frag"));
+
+    // terminal - create shader program with a vertex and fragment shader 
+    program.createProgram(string("src/shaders/default.vert"),
+                          string("src/shaders/default.frag"));
+    //program.enable(); // set this program to be in use
     shaderLocations = program.getAllShaderVariables();
   
     /*
@@ -123,9 +127,7 @@ void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>
     //prepare the projection matrix for orthographic projection
 	glViewport(0, 0, window_width, window_height);
 
-    vector<util::Light> lights;
-    vector<string> lightCoordinateSystems;
-    renderer = new GLScenegraphRenderer(modelview, objects, shaderLocations,lights,lightCoordinateSystems);
+    renderer = new GLScenegraphRenderer(modelview, objects, shaderLocations);
 
     frames = 0;
     time = glfwGetTime();
@@ -148,6 +150,7 @@ void View::display(IScenegraph *scenegraph) {
     
     //draw scene graph here
     scenegraph->getRoot()->accept(renderer);
+    
 
     modelview.pop();
     glFlush();
