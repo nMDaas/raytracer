@@ -21,7 +21,6 @@ GLScenegraphRenderer::GLScenegraphRenderer (GLScenegraphRenderer &t) : modelview
 void GLScenegraphRenderer::visitGroupNode(GroupNode *groupNode) {
     //std::cout << "GroupNode: " << groupNode->getName() << std::endl;
     for (int i=0;i<groupNode->getChildren().size();i=i+1) {
-        std::cout << "new child: " << groupNode->getChildren()[i]->getName() << std::endl;
         groupNode->getChildren()[i]->accept(this);
     }
     //std::cout << "exiting group node: " << groupNode->getName() << std::endl;
@@ -62,5 +61,11 @@ void GLScenegraphRenderer::visitLeafNode(LeafNode *leafNode) {
 
 void GLScenegraphRenderer::visitLightNode(LightNode *lightNode) {
     //std::cout << "Light Node to draw: " << lightNode->getName() << std::endl;
+    util::Light nodeLight = *lightNode->getLight();
+    std::cout << "lights size: " << lights.size() << std::endl;
+    std::cout << "lcs size: " << lightCoordinateSystems.size() << std::endl;
+    lights.push_back(nodeLight);
     lightCoordinateSystems.push_back("world");
+    std::cout << "lights size: " << lights.size() << std::endl;
+    std::cout << "lcs size: " << lightCoordinateSystems.size() << std::endl;
 }
