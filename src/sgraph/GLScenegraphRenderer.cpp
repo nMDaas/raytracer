@@ -21,6 +21,7 @@ GLScenegraphRenderer::GLScenegraphRenderer (GLScenegraphRenderer &t) : modelview
 void GLScenegraphRenderer::visitGroupNode(GroupNode *groupNode) {
     //std::cout << "GroupNode: " << groupNode->getName() << std::endl;
     for (int i=0;i<groupNode->getChildren().size();i=i+1) {
+        //std::cout << "new child: " << groupNode->getChildren()[i]->getName() << std::endl;
         groupNode->getChildren()[i]->accept(this);
     }
     //std::cout << "exiting group node: " << groupNode->getName() << std::endl;
