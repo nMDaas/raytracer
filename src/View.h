@@ -17,6 +17,7 @@ using namespace std;
 #include "Object.h"
 #include "ObjectInstance.h"
 #include "Callbacks.h"
+#include "LightLocation.h"
 
 #include "sgraph/IScenegraph.h"
 #include "sgraph/Scenegraph.h"
@@ -61,12 +62,14 @@ private:
     stack<glm::mat4> modelview;
     map<string,util::ObjectInstance *> objects;
     SGNodeVisitor *renderer;
+    vector<LightLocation> lightLocations; // shader locations for lights
 
     void onkey(GLFWwindow* window, int key, int scancode, int action, int mods);
     void reshape(GLFWwindow* window, int width, int height);
     void error_callback(int error, const char* description);
     void dispose(GLFWwindow* window);
     void initObjects(map<string,util::PolygonMesh<VertexAttrib>>& meshes);
+    void initShaderVariables(vector<util::Light>& lights);
     
 };
 
