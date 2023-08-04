@@ -138,6 +138,17 @@ void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>
     time = glfwGetTime();
 }
 
+void View::initShaderVariables(vector<util::Light>& lights) {
+    for (int i = 0; i < lights.size(); i++) {
+    LightLocation ll;
+    stringstream name;
+
+    name << "light[" << i << "]";
+    ll.ambient = shaderLocations.getLocation(name.str() + "" +".ambient");
+    lightLocations.push_back(ll);
+    }
+}
+
 void View::display(IScenegraph *scenegraph) {
     program.enable();
     glClearColor(0, 0, 0, 1); // set background color to black
