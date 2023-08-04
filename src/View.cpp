@@ -146,13 +146,17 @@ void View::display(IScenegraph *scenegraph) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
 
+    //send projection matrix to GPU    
+    glUniformMatrix4fv(shaderLocations.getLocation("projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+    while (!modelview.empty()) {
+        modelview.pop();
+    }
+
     modelview.push(glm::mat4(1.0));
 
     modelview.top() = modelview.top() * glm::lookAt(glm::vec3(100.0f,150.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
-
-    //send projection matrix to GPU    
-    glUniformMatrix4fv(shaderLocations.getLocation("projection"), 1, GL_FALSE, glm::value_ptr(projection));
-    
+      
     //draw scene graph here
     scenegraph->getRoot()->accept(renderer);
     
