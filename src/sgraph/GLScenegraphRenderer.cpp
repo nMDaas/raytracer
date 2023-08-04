@@ -70,3 +70,7 @@ void GLScenegraphRenderer::visitLightNode(LightNode *lightNode) {
     std::cout << "lights size: " << lights.size() << std::endl;
     std::cout << "lcs size: " << lightCoordinateSystems.size() << std::endl;
 }
+
+vector<util::Light> GLScenegraphRenderer::getLights() {
+    return lights;
+}

@@ -1,5 +1,8 @@
 #ifndef _SGNODEVISITOR_H_
 #define _SGNODEVISITOR_H_
+#include <vector>
+
+#include "Light.h"
 
 class GroupNode;
 class ScaleTransform;
@@ -19,6 +22,7 @@ class SGNodeVisitor {
         virtual void visitTransformNode(TransformNode *node)=0;
         virtual void visitLeafNode(LeafNode *node)=0;
         virtual void visitLightNode(LightNode *node)=0;
+        virtual std::vector<util::Light> getLights()=0;
 };
 
 #endif
