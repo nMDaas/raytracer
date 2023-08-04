@@ -171,6 +171,9 @@ void View::display(IScenegraph *scenegraph) {
     //draw scene graph here
     scenegraph->getRoot()->accept(renderer);
     
+    vector<util::Light> sceneLights = renderer->getLights();
+
+    initShaderVariables(sceneLights);
 
     modelview.pop();
     glFlush();
