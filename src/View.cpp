@@ -37,6 +37,29 @@ void View::reshape(GLFWwindow* window, int width, int height)
     projection = glm::ortho(-400.0f,400.0f,-400.0f,400.0f,0.1f,10000.0f);
 }
 
+void View::initObjects(map<string,util::PolygonMesh<VertexAttrib>>& meshes) {
+    /*
+        In the mesh we have attributes for each vertex. In the shader, 
+        we have variables for each vertex attribute. We need to create a 
+        connection between attribute name in the mesh and corresponding
+        shader variable name.
+    */
+    map<string, string> shaderVarsToVertexAttribs;
+    // currently there are only two per-vertex attribute: position and color
+    shaderVarsToVertexAttribs["vPosition"] = "position";
+    shaderVarsToVertexAttribs["vNormal"] = "normal";
+
+    // meshes needs to be iterated like this because it is a map
+    // create an ObjectInstance for each mesh by passing in the name and polygon mesh (stored in meshes map)
+    for (typename map<string,util::PolygonMesh<VertexAttrib> >::iterator it=meshes.begin();
+           it!=meshes.end();
+           it++) {
+        util::ObjectInstance * obj = new util::ObjectInstance(it->first);
+        obj->initPolygonMesh(shaderLocations,shaderVarsToVertexAttribs,it->second);
+        objects[it->first] = obj; // ObjectInstance stored in map
+    }
+}
+
 void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>& meshes) {
 
     // This function initializes the GLFW library because before GLFW functions can be used, GLFW must be initialized
@@ -87,26 +110,8 @@ void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>
                           string("src/shaders/default.frag"));
     //program.enable(); // set this program to be in use
     shaderLocations = program.getAllShaderVariables();
-  
-    /*
-        In the mesh we have attributes for each vertex. In the shader, 
-        we have variables for each vertex attribute. We need to create a 
-        connection between attribute name in the mesh and corresponding
-        shader variable name.
-    */
-    map<string, string> shaderVarsToVertexAttribs;
-    // currently there are only two per-vertex attribute: position and color
-    shaderVarsToVertexAttribs["vPosition"] = "position";
 
-    // meshes needs to be iterated like this because it is a map
-    // create an ObjectInstance for each mesh by passing in the name and polygon mesh (stored in meshes map)
-    for (typename map<string,util::PolygonMesh<VertexAttrib> >::iterator it=meshes.begin();
-           it!=meshes.end();
-           it++) {
-        util::ObjectInstance * obj = new util::ObjectInstance(it->first);
-        obj->initPolygonMesh(shaderLocations,shaderVarsToVertexAttribs,it->second);
-        objects[it->first] = obj; // ObjectInstance stored in map
-    }
+    initObjects(meshes);
 
     int window_width,window_height;
     // gets the size of framebuffer of the window and stores it in 2nd and 3rd parameter

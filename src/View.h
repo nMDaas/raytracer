@@ -66,6 +66,7 @@ private:
     void reshape(GLFWwindow* window, int width, int height);
     void error_callback(int error, const char* description);
     void dispose(GLFWwindow* window);
+    void initObjects(map<string,util::PolygonMesh<VertexAttrib>>& meshes);
     
 };
 
