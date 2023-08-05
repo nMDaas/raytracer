@@ -60,6 +60,9 @@ void GLScenegraphRenderer::visitLeafNode(LeafNode *leafNode) {
     glUniformMatrix4fv(shaderLocations.getLocation("normalmatrix"), 1, false,glm::value_ptr(normalmatrix));
     util::Material mat = leafNode->getMaterial();
     glUniform3fv(shaderLocations.getLocation("material.ambient"), 1, glm::value_ptr(mat.getAmbient()));
+    std::cout << "LeafNode diffuse: " << glm::to_string(mat.getDiffuse()) << std::endl;
+    glUniform3fv(shaderLocations.getLocation("material.diffuse"), 1, glm::value_ptr(mat.getDiffuse()));
+
     objects[leafNode->getInstanceOf()]->draw();
 }
 
