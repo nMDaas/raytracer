@@ -10,9 +10,9 @@
 material mat
 emission 0 0 0
 ambient 1 0 0
-diffuse 0 0 0
+diffuse 0 1 0
 specular 0 0 0
-shininess 0
+shininess 100
 end-material
 
 #the root
@@ -21,7 +21,7 @@ translate t1 t1 0 0 0
 scale s1 s1 50 50 50
 leaf l1 one-box instanceof box 
 
-light li1 li1 1 0 1 1 1 1 1 1 1
+light li1 li1 1 1 1 1 1 1 1 1 1
 add-child li1 root
 
 assign-material l1 mat

@@ -3,6 +3,8 @@
 #include <stack>
 #include <map>
 
+#include <glm/gtx/string_cast.hpp>
+
 #include "SGNodeVisitor.h"
 #include "nodes/GroupNode.h"
 #include "nodes/RotateTransform.h"
