@@ -13,7 +13,7 @@ int main(int argc,char *argv[])
     controller.meshMaterialSetup(argv[1]);
 
     // when running via debug: 
-    //controller.meshMaterialSetup("scenegraphs/simpleScene.txt");
+    // controller.meshMaterialSetup("scenegraphs/firstScene.txt");
 
     // when running via terminal: 
     // controller.meshMaterialSetup("src/scenegraphs/simpleScene.txt");
