@@ -30,6 +30,7 @@ using namespace std;
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <ShaderProgram.h>
+#include <glm/gtx/string_cast.hpp>
 
 
 class View
