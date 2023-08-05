@@ -102,12 +102,12 @@ void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>
     glfwSwapInterval(1);
 
     // debugger - create shader program with a vertex and fragment shader 
-    // program.createProgram(string("shaders/default.vert"),
-    //                      string("shaders/default.frag"));
+    // program.createProgram(string("shaders/phong-multiple.vert"),
+    //                    string("shaders/phong-multiple.frag"));
 
     // terminal - create shader program with a vertex and fragment shader 
-    program.createProgram(string("src/shaders/default.vert"),
-                          string("src/shaders/default.frag"));
+     program.createProgram(string("src/shaders/phong-multiple.vert"),
+                          string("src/shaders/phong-multiple.frag"));
     //program.enable(); // set this program to be in use
     shaderLocations = program.getAllShaderVariables();
 
