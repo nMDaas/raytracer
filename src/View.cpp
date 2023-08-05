@@ -145,6 +145,7 @@ void View::initShaderVariables(vector<util::Light>& lights) {
 
     name << "light[" << i << "]";
     ll.ambient = shaderLocations.getLocation(name.str() + "" +".ambient");
+    ll.position = shaderLocations.getLocation(name.str() + ".position");
     lightLocations.push_back(ll);
     }
 }
@@ -174,6 +175,24 @@ void View::display(IScenegraph *scenegraph) {
     vector<util::Light> sceneLights = renderer->getLights();
 
     initShaderVariables(sceneLights);
+
+    for (int i = 0; i < sceneLights.size(); i++) {
+        std::cout << "light pos: " << glm::to_string(sceneLights[i].getPosition()) << std::endl;
+        //glm::vec4 pos = sceneLights[i].getPosition();
+        //glUniform4fv(lightLocations[i].position, 1, glm::value_ptr(pos));
+    }
+
+    //pass light color properties to shader
+    glUniform1i(shaderLocations.getLocation("numLights"),sceneLights.size());
+
+    //pass light colors to the shader
+    for (int i = 0; i < sceneLights.size(); i++) {
+        std::cout << "light ambient: " << glm::to_string(sceneLights[i].getAmbient()) << std::endl;
+        glUniform3fv(lightLocations[i].ambient, 1, glm::value_ptr(sceneLights[i].getAmbient()));
+    }
+
+    std::cout << "-------------" << std::endl;
+    renderer->clearLights();
 
     modelview.pop();
     glFlush();
