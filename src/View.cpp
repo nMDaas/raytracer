@@ -144,7 +144,8 @@ void View::initShaderVariables(vector<util::Light>& lights) {
     stringstream name;
 
     name << "light[" << i << "]";
-    ll.ambient = shaderLocations.getLocation(name.str() + "" +".ambient");
+    ll.ambient = shaderLocations.getLocation(name.str() + ".ambient");
+    ll.diffuse = shaderLocations.getLocation(name.str() + ".diffuse");
     ll.position = shaderLocations.getLocation(name.str() + ".position");
     lightLocations.push_back(ll);
     }
@@ -178,8 +179,8 @@ void View::display(IScenegraph *scenegraph) {
 
     for (int i = 0; i < sceneLights.size(); i++) {
         std::cout << "light pos: " << glm::to_string(sceneLights[i].getPosition()) << std::endl;
-        //glm::vec4 pos = sceneLights[i].getPosition();
-        //glUniform4fv(lightLocations[i].position, 1, glm::value_ptr(pos));
+        glm::vec4 pos = modelview.top() * sceneLights[i].getPosition();
+        glUniform4fv(lightLocations[i].position, 1, glm::value_ptr(pos));
     }
 
     //pass light color properties to shader
@@ -189,6 +190,10 @@ void View::display(IScenegraph *scenegraph) {
     for (int i = 0; i < sceneLights.size(); i++) {
         std::cout << "light ambient: " << glm::to_string(sceneLights[i].getAmbient()) << std::endl;
         glUniform3fv(lightLocations[i].ambient, 1, glm::value_ptr(sceneLights[i].getAmbient()));
+        //glm::vec4 pos = sceneLights[i].getPosition();
+        //glUniform4fv(lightLocations[i].position, 1, glm::value_ptr(pos));
+        std::cout << "light diffuse: " << glm::to_string(sceneLights[i].getDiffuse()) << std::endl;
+        glUniform3fv(lightLocations[i].diffuse, 1, glm::value_ptr(sceneLights[i].getDiffuse()));
     }
 
     std::cout << "-------------" << std::endl;
