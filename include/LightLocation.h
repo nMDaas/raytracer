@@ -3,10 +3,10 @@
 
 class LightLocation {
     public: 
-    int ambient,position;
+    int position,ambient,diffuse;
 
     LightLocation() {
-        ambient = -1;
+        position = ambient = diffuse = -1;
     }
 };
 
