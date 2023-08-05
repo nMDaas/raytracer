@@ -39,6 +39,7 @@ class GLScenegraphRenderer: public SGNodeVisitor {
     void visitLeafNode(LeafNode *leafNode);
     void visitLightNode(LightNode *lightNode);
     vector<util::Light> getLights();
+    void clearLights();
 
     vector<util::Light> lights;
     vector<string> lightCoordinateSystems;

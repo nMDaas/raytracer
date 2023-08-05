@@ -63,14 +63,14 @@ void GLScenegraphRenderer::visitLeafNode(LeafNode *leafNode) {
 void GLScenegraphRenderer::visitLightNode(LightNode *lightNode) {
     //std::cout << "Light Node to draw: " << lightNode->getName() << std::endl;
     util::Light nodeLight = *lightNode->getLight();
-    std::cout << "lights size: " << lights.size() << std::endl;
-    std::cout << "lcs size: " << lightCoordinateSystems.size() << std::endl;
     lights.push_back(nodeLight);
     lightCoordinateSystems.push_back("world");
-    std::cout << "lights size: " << lights.size() << std::endl;
-    std::cout << "lcs size: " << lightCoordinateSystems.size() << std::endl;
 }
 
 vector<util::Light> GLScenegraphRenderer::getLights() {
     return lights;
+}
+
+void GLScenegraphRenderer::clearLights() {
+    lights.clear();
 }
