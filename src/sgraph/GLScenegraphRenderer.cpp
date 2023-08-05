@@ -56,7 +56,10 @@ void GLScenegraphRenderer::visitLeafNode(LeafNode *leafNode) {
     //std::cout << "LeafNode to draw: " << leafNode->getName() << std::endl;
      //send modelview matrix to GPU  
     glUniformMatrix4fv(shaderLocations.getLocation("modelview"), 1, GL_FALSE, glm::value_ptr(modelview.top()));
-    glUniform4fv(shaderLocations.getLocation("vColor"),1,glm::value_ptr(leafNode->getMaterial().getAmbient()));
+    glm::mat4 normalmatrix = glm::inverse(glm::transpose((modelview.top())));
+    glUniformMatrix4fv(shaderLocations.getLocation("normalmatrix"), 1, false,glm::value_ptr(normalmatrix));
+    util::Material mat = leafNode->getMaterial();
+    glUniform3fv(shaderLocations.getLocation("material.ambient"), 1, glm::value_ptr(mat.getAmbient()));
     objects[leafNode->getInstanceOf()]->draw();
 }
 
