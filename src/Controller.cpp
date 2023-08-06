@@ -17,6 +17,12 @@ Controller::~Controller()
 }
 
 void Controller::meshMaterialSetup(char* filePath) {
+    std::ifstream test(filePath); 
+    if (!test)
+    {
+        throw runtime_error("The file doesn't exist");
+    }
+
     ifstream inFile(filePath);
     ScenegraphImporter importer;
     IScenegraph *scenegraph = importer.parse(inFile);
