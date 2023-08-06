@@ -6,6 +6,9 @@
 #include <ObjImporter.h>
 #include "ScenegraphImporter.h"
 
+#include "spdlog/spdlog.h"
+#include "spdlog/cfg/env.h"
+
 Controller::Controller(Model& m, View& v) {
     model = m;
     view = v;
@@ -26,7 +29,7 @@ void Controller::meshMaterialSetup(char* filePath) {
     ifstream inFile(filePath);
     ScenegraphImporter importer;
     IScenegraph *scenegraph = importer.parse(inFile);
-    cout << "Scenegraph made" << endl;   
+    spdlog::debug("Scenegraph made.");
     //importer.testParse(scenegraph);
 
     model.setScenegraph(scenegraph);
