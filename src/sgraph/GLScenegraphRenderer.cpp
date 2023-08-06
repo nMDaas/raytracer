@@ -62,7 +62,8 @@ void GLScenegraphRenderer::visitLeafNode(LeafNode *leafNode) {
     glUniform3fv(shaderLocations.getLocation("material.ambient"), 1, glm::value_ptr(mat.getAmbient()));
     std::cout << "LeafNode diffuse: " << glm::to_string(mat.getDiffuse()) << std::endl;
     glUniform3fv(shaderLocations.getLocation("material.diffuse"), 1, glm::value_ptr(mat.getDiffuse()));
-    glUniform1f(shaderLocations.getLocation("material.shininess"), 1);
+    glUniform3fv(shaderLocations.getLocation("material.specular"), 1,glm::value_ptr(mat.getSpecular()));
+    glUniform1f(shaderLocations.getLocation("material.shininess"), 100);
 
     objects[leafNode->getInstanceOf()]->draw();
 }

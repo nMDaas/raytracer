@@ -3,7 +3,7 @@
 LightNode::LightNode(const std::string& name,IScenegraph *graph,glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular)
     :ChildSGNode(name,graph) {
     light = new util::Light();
-    light->setPosition(0.0f,55.0f,0.0f);
+    light->setPosition(50.0f,0.0f,70.0f);
     light->setAmbient(ambient.x,ambient.y,ambient.z);
     light->setDiffuse(diffuse.x,diffuse.y,diffuse.z);
     light->setSpecular(specular.x,specular.y,specular.z);

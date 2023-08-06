@@ -5,13 +5,14 @@
 
 # terminal
  instance box src/models/box.obj
+ instance sphere src/models/sphere.obj
 
 #material
 material mat
 emission 0 0 0
 ambient 1 0 0
 diffuse 0 1 0
-specular 0 0 0
+specular 1 1 1
 shininess 100
 end-material
 
@@ -19,7 +20,7 @@ end-material
 group root root
 translate t1 t1 0 0 0
 scale s1 s1 50 50 50
-leaf l1 one-box instanceof box 
+leaf l1 one-box instanceof sphere 
 
 light li1 li1 1 1 1 1 1 1 1 1 1
 add-child li1 root

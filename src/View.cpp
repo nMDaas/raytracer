@@ -146,6 +146,7 @@ void View::initShaderVariables(vector<util::Light>& lights) {
     name << "light[" << i << "]";
     ll.ambient = shaderLocations.getLocation(name.str() + ".ambient");
     ll.diffuse = shaderLocations.getLocation(name.str() + ".diffuse");
+    ll.specular = shaderLocations.getLocation(name.str() + ".specular");
     ll.position = shaderLocations.getLocation(name.str() + ".position");
     lightLocations.push_back(ll);
     }
@@ -168,7 +169,7 @@ void View::display(IScenegraph *scenegraph) {
 
     modelview.push(glm::mat4(1.0));
 
-    modelview.top() = modelview.top() * glm::lookAt(glm::vec3(100.0f,150.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
+    modelview.top() = modelview.top() * glm::lookAt(glm::vec3(0.0f,0.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
       
     //draw scene graph here
     scenegraph->getRoot()->accept(renderer);
@@ -194,6 +195,7 @@ void View::display(IScenegraph *scenegraph) {
         //glUniform4fv(lightLocations[i].position, 1, glm::value_ptr(pos));
         std::cout << "light diffuse: " << glm::to_string(sceneLights[i].getDiffuse()) << std::endl;
         glUniform3fv(lightLocations[i].diffuse, 1, glm::value_ptr(sceneLights[i].getDiffuse()));
+        glUniform3fv(lightLocations[i].specular, 1,glm::value_ptr(sceneLights[i].getSpecular()));
     }
 
     std::cout << "-------------" << std::endl;
