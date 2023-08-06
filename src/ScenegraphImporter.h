@@ -43,6 +43,7 @@ class ScenegraphImporter {
 
         IScenegraph* parse(std::istream& input);
         void testParse(IScenegraph* scenegraph);
+        void addInstance(string name, string path); // to manually add instances when using debugger
 
         private: 
         std::string stripComments(std::istream& input); // to remove lines with comments (lines starting with "#...")

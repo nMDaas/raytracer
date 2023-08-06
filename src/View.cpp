@@ -60,7 +60,7 @@ void View::initObjects(map<string,util::PolygonMesh<VertexAttrib>>& meshes) {
     }
 }
 
-void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>& meshes) {
+void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>& meshes, bool debugger) {
 
     // This function initializes the GLFW library because before GLFW functions can be used, GLFW must be initialized
     if (!glfwInit())
@@ -101,13 +101,18 @@ void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     glfwSwapInterval(1);
 
-    // debugger - create shader program with a vertex and fragment shader 
-    // program.createProgram(string("shaders/phong-multiple.vert"),
-    //                    string("shaders/phong-multiple.frag"));
-
-    // terminal - create shader program with a vertex and fragment shader 
-     program.createProgram(string("src/shaders/phong-multiple.vert"),
+    // create shader program with a vertex and fragment shader 
+    if (debugger) {
+        // using debugger
+        program.createProgram(string("shaders/phong-multiple.vert"),
+                        string("shaders/phong-multiple.frag"));
+    }
+    else {
+        // using terminal
+        program.createProgram(string("src/shaders/phong-multiple.vert"),
                           string("src/shaders/phong-multiple.frag"));
+    }
+
     //program.enable(); // set this program to be in use
     shaderLocations = program.getAllShaderVariables();
 

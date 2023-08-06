@@ -85,16 +85,32 @@ IScenegraph* ScenegraphImporter::parse(std::istream& input) {
 
 }
 
-void ScenegraphImporter::parseInstance(istream& input) {
-    string name,path;
-    input >> name >> path;
-    //std::cout << "command: instance " << name << " " << path << std::endl;
+void ScenegraphImporter::addInstance(string name, string path) {
     meshPaths[name] = path;
     ifstream in(path);
     if (in.is_open()) {
         util::PolygonMesh<VertexAttrib> mesh = util::ObjImporter<VertexAttrib>::importFile(in,false);
         meshes[name] = mesh;         
     } 
+}
+
+void ScenegraphImporter::parseInstance(istream& input) {
+    string name,path;
+    input >> name >> path;
+    //std::cout << "command: instance " << name << " " << path << std::endl;
+    meshPaths[name] = path;
+
+    // add instance only if path is valid
+    std::ifstream test(path); 
+    if (test)
+    {
+        ifstream in(path);
+        if (in.is_open()) {
+            util::PolygonMesh<VertexAttrib> mesh = util::ObjImporter<VertexAttrib>::importFile(in,false);
+            meshes[name] = mesh;         
+        } 
+    }
+    
 }
 
 void ScenegraphImporter::parseGroup(istream& input) {

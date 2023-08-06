@@ -47,7 +47,7 @@ public:
         std::cout << "VIEW COPY CONSTRUCTOR CALLED" << std::endl;
     }
 
-    void init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>& meshes);
+    void init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>& meshes, bool debugger);
     bool shouldWindowClose();
     void display(IScenegraph *scenegraph);
     void closeWindow();

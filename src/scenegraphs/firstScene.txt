@@ -1,11 +1,6 @@
-#all the instances
-
-# debugging: 
-# instance box models/box.obj
-
-# terminal
- instance box src/models/box.obj
- instance sphere src/models/sphere.obj
+# these instances will be ignored if debugger is being used
+instance box src/models/box.obj
+instance sphere src/models/sphere.obj
 
 #material
 material mat

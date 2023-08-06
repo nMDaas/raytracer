@@ -22,8 +22,8 @@ public:
         std::cout << "CONTROLLER COPY CONSTRUCTOR CALLED" << std::endl;
     }
 
-    void meshMaterialSetup(char* filePath);
-    void run();
+    void meshMaterialSetup(char* filePath, bool debugger);
+    void run(bool debugger);
 
     virtual void reshape(int width, int height);
     virtual void dispose();

@@ -14,13 +14,14 @@ int main(int argc,char *argv[])
     View view;
     Controller controller(model, view);
 
-    controller.meshMaterialSetup(argv[1]);
-
-    // when running via debug: 
-    // controller.meshMaterialSetup("scenegraphs/firstScene.txt");
-
-    // when running via terminal: 
-    // controller.meshMaterialSetup("src/scenegraphs/simpleScene.txt");
-
-    controller.run();
+    if (argc > 1) {
+        // run via terminal
+        controller.meshMaterialSetup(argv[1], false);
+        controller.run(false);
+    }
+    else {
+        // run via debugger
+        controller.meshMaterialSetup("scenegraphs/firstScene.txt", true);
+        controller.run(true);
+    }
 }
