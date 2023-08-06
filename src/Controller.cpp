@@ -34,26 +34,6 @@ void Controller::meshMaterialSetup(char* filePath) {
 
     model.setScenegraph(scenegraph);
 
-    /*
-        The below comment is for if we wanted to add a mesh NOT via importing a txt file 
-    */
-
-    /*
-    util::PolygonMesh<VertexAttrib> mesh;
-
-    //import an OBJ model from file
-    ifstream in("models/box.obj");
-    mesh = util::ObjImporter<VertexAttrib>::importFile(in,true);
-
-    //give a material for it.
-    util::Material material;
-    material.setAmbient(1,1,1);
-    material.setDiffuse(1,1,1);
-    material.setSpecular(1,1,1);
-    
-    model.addMesh(mesh,material);
-    */
-
 }
 
 void Controller::run()
@@ -61,7 +41,6 @@ void Controller::run()
     IScenegraph* scenegraph = model.getScenegraph();
     std::map<string,util::PolygonMesh<VertexAttrib> > meshes = scenegraph->getMeshes();
 
-    vector<util::Material> materials = model.getMaterials();
     view.init(this, meshes);
 
 
