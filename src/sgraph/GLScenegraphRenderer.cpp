@@ -74,7 +74,6 @@ void GLScenegraphRenderer::visitLightNode(LightNode *lightNode) {
     glm::vec4 pos = nodeLight.getPosition();
     nodeLight.setPosition(modelview.top() * pos);
     lights.push_back(nodeLight);
-    lightCoordinateSystems.push_back("world");
 }
 
 vector<util::Light> GLScenegraphRenderer::getLights() {

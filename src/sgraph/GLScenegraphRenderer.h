@@ -44,7 +44,6 @@ class GLScenegraphRenderer: public SGNodeVisitor {
     void clearLights();
 
     vector<util::Light> lights;
-    vector<string> lightCoordinateSystems;
 
     private: 
     stack<glm::mat4>& modelview;
