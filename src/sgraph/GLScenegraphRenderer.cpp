@@ -46,6 +46,9 @@ void GLScenegraphRenderer::visitTransformNode(TransformNode *transformNode) {
     //std::cout << "Transform: " << transformNode->getName() << std::endl;
     modelview.push(modelview.top());
     modelview.top() = modelview.top() * transformNode->getTransform();
+    //std::cout << "Modelviewtop: " << glm::to_string(modelview.top()) << std::endl;
+    //std::cout << "Transform: " << glm::to_string(transformNode->getTransform()) << std::endl;
+    //std::cout << "Modelviewtop: " << glm::to_string(modelview.top()) << std::endl;
     if (transformNode->getChildren().size()>0) {
         transformNode->getChildren()[0]->accept(this);
     }
@@ -60,7 +63,7 @@ void GLScenegraphRenderer::visitLeafNode(LeafNode *leafNode) {
     glUniformMatrix4fv(shaderLocations.getLocation("normalmatrix"), 1, false,glm::value_ptr(normalmatrix));
     util::Material mat = leafNode->getMaterial();
     glUniform3fv(shaderLocations.getLocation("material.ambient"), 1, glm::value_ptr(mat.getAmbient()));
-    std::cout << "LeafNode diffuse: " << glm::to_string(mat.getDiffuse()) << std::endl;
+    //std::cout << "LeafNode diffuse: " << glm::to_string(mat.getDiffuse()) << std::endl;
     glUniform3fv(shaderLocations.getLocation("material.diffuse"), 1, glm::value_ptr(mat.getDiffuse()));
     glUniform3fv(shaderLocations.getLocation("material.specular"), 1,glm::value_ptr(mat.getSpecular()));
     glUniform1f(shaderLocations.getLocation("material.shininess"), mat.getShininess());
@@ -69,8 +72,13 @@ void GLScenegraphRenderer::visitLeafNode(LeafNode *leafNode) {
 }
 
 void GLScenegraphRenderer::visitLightNode(LightNode *lightNode) {
-    //std::cout << "Light Node to draw: " << lightNode->getName() << std::endl;
+    std::cout << "Light Node to draw: " << lightNode->getName() << std::endl;
     util::Light nodeLight = *lightNode->getLight();
+    glm::vec4 pos = nodeLight.getPosition();
+    nodeLight.setPosition(modelview.top() * pos);
+    std::cout << "light pos: " << glm::to_string(pos) << std::endl;
+    std::cout << "modelview.top: " << glm::to_string(modelview.top()) << std::endl;
+    std::cout << "mult: " << glm::to_string( modelview.top() * pos) << std::endl;
     lights.push_back(nodeLight);
     lightCoordinateSystems.push_back("world");
 }
