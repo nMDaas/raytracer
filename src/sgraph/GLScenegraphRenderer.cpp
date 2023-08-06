@@ -4,6 +4,9 @@
 
 #include <iostream>
 
+#include "spdlog/spdlog.h"
+#include "spdlog/cfg/env.h"
+
 GLScenegraphRenderer::GLScenegraphRenderer(stack<glm::mat4>& mv, map<string,util::ObjectInstance *>& os, util::ShaderLocationsVault& shaderLocs) 
     : modelview(mv), objects(os), shaderLocations(shaderLocs){
     //std::cout << "scenegraph constructor called" << std::endl;
@@ -19,36 +22,31 @@ GLScenegraphRenderer::GLScenegraphRenderer (GLScenegraphRenderer &t) : modelview
 }
 
 void GLScenegraphRenderer::visitGroupNode(GroupNode *groupNode) {
-    //std::cout << "GroupNode: " << groupNode->getName() << std::endl;
+    spdlog::debug("Group Node to draw: " +groupNode->getName());
     for (int i=0;i<groupNode->getChildren().size();i=i+1) {
-        //std::cout << "new child: " << groupNode->getChildren()[i]->getName() << std::endl;
         groupNode->getChildren()[i]->accept(this);
     }
-    //std::cout << "exiting group node: " << groupNode->getName() << std::endl;
 }
 
 void GLScenegraphRenderer::visitScaleTransform(ScaleTransform *scaleNode) {
-    //std::cout << "ScaleTransform: " << scaleNode->getName() << std::endl;
+    spdlog::debug("ScaleTransform Node to draw: " +scaleNode->getName());
     visitTransformNode(scaleNode);
 }
 
 void GLScenegraphRenderer::visitRotateTransform(RotateTransform *rotateNode) {
-    //std::cout << "RotateTransform: " << rotateNode->getName() << std::endl;
+    spdlog::debug("RotateTransform Node to draw: " +rotateNode->getName());
     visitTransformNode(rotateNode);
 }
 
 void GLScenegraphRenderer::visitTranslateTransform(TranslateTransform *translateNode) {
-    //std::cout << "TranslateTransform: " << translateNode->getName() << std::endl;
+    spdlog::debug("TranslateTransform Node to draw: " +translateNode->getName());
     visitTransformNode(translateNode);
 }
 
 void GLScenegraphRenderer::visitTransformNode(TransformNode *transformNode) {
-    //std::cout << "Transform: " << transformNode->getName() << std::endl;
+    spdlog::debug("Transform Node to draw: " +transformNode->getName());
     modelview.push(modelview.top());
     modelview.top() = modelview.top() * transformNode->getTransform();
-    //std::cout << "Modelviewtop: " << glm::to_string(modelview.top()) << std::endl;
-    //std::cout << "Transform: " << glm::to_string(transformNode->getTransform()) << std::endl;
-    //std::cout << "Modelviewtop: " << glm::to_string(modelview.top()) << std::endl;
     if (transformNode->getChildren().size()>0) {
         transformNode->getChildren()[0]->accept(this);
     }
@@ -56,14 +54,13 @@ void GLScenegraphRenderer::visitTransformNode(TransformNode *transformNode) {
 }
 
 void GLScenegraphRenderer::visitLeafNode(LeafNode *leafNode) {
-    //std::cout << "LeafNode to draw: " << leafNode->getName() << std::endl;
+    spdlog::debug("Leaf Node to draw: " +leafNode->getName());
      //send modelview matrix to GPU  
     glUniformMatrix4fv(shaderLocations.getLocation("modelview"), 1, GL_FALSE, glm::value_ptr(modelview.top()));
     glm::mat4 normalmatrix = glm::inverse(glm::transpose((modelview.top())));
     glUniformMatrix4fv(shaderLocations.getLocation("normalmatrix"), 1, false,glm::value_ptr(normalmatrix));
     util::Material mat = leafNode->getMaterial();
     glUniform3fv(shaderLocations.getLocation("material.ambient"), 1, glm::value_ptr(mat.getAmbient()));
-    //std::cout << "LeafNode diffuse: " << glm::to_string(mat.getDiffuse()) << std::endl;
     glUniform3fv(shaderLocations.getLocation("material.diffuse"), 1, glm::value_ptr(mat.getDiffuse()));
     glUniform3fv(shaderLocations.getLocation("material.specular"), 1,glm::value_ptr(mat.getSpecular()));
     glUniform1f(shaderLocations.getLocation("material.shininess"), mat.getShininess());
@@ -72,13 +69,10 @@ void GLScenegraphRenderer::visitLeafNode(LeafNode *leafNode) {
 }
 
 void GLScenegraphRenderer::visitLightNode(LightNode *lightNode) {
-    std::cout << "Light Node to draw: " << lightNode->getName() << std::endl;
+    spdlog::debug("Light Node to draw: " +lightNode->getName());
     util::Light nodeLight = *lightNode->getLight();
     glm::vec4 pos = nodeLight.getPosition();
     nodeLight.setPosition(modelview.top() * pos);
-    std::cout << "light pos: " << glm::to_string(pos) << std::endl;
-    std::cout << "modelview.top: " << glm::to_string(modelview.top()) << std::endl;
-    std::cout << "mult: " << glm::to_string( modelview.top() * pos) << std::endl;
     lights.push_back(nodeLight);
     lightCoordinateSystems.push_back("world");
 }
