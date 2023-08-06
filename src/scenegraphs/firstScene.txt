@@ -11,9 +11,9 @@
 material mat
 emission 0 0 0
 ambient 1 0 0
-diffuse 0 1 0
-specular 1 1 1
-shininess 100
+diffuse 0 0 0
+specular 0 1 1
+shininess 5
 end-material
 
 #the root
