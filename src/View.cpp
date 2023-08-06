@@ -179,9 +179,7 @@ void View::display(IScenegraph *scenegraph) {
     initShaderVariables(sceneLights);
 
     for (int i = 0; i < sceneLights.size(); i++) {
-        //glm::vec4 pos = modelview.top() * sceneLights[i].getPosition();
         glm::vec4 pos = sceneLights[i].getPosition();
-        std::cout << "LIGHT POS: " << glm::to_string(pos) << std::endl;
         glUniform4fv(lightLocations[i].position, 1, glm::value_ptr(pos));
     }
 
@@ -199,7 +197,6 @@ void View::display(IScenegraph *scenegraph) {
         glUniform3fv(lightLocations[i].specular, 1,glm::value_ptr(sceneLights[i].getSpecular()));
     }
 
-    std::cout << "-------------" << std::endl;
     renderer->clearLights();
 
     modelview.pop();
