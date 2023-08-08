@@ -86,7 +86,7 @@ void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>
     glfwSetKeyCallback(window, 
     [](GLFWwindow* window, int key, int scancode, int action, int mods)
     {
-        static_cast<View*>(glfwGetWindowUserPointer(window))->onkey(window,key,scancode,action,mods);
+        static_cast<Callbacks*>(glfwGetWindowUserPointer(window))->onkey(key,scancode,action,mods);
     });
 
     // callback to reshape() method
