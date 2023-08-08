@@ -215,7 +215,6 @@ void View::display(IScenegraph *scenegraph) {
 }
 
 void View::raytrace(bool debugging) {
-    std::cout << "In raytrace method!" << std::endl;
     ofstream out;
     if (debugging) {
         out.open("images/out.ppm");
