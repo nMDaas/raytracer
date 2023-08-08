@@ -224,6 +224,14 @@ void View::raytrace(bool debugging) {
         out.open("src/images/out.ppm");
     }
     out << "P3" << std::endl;
+    out << WIDTH << " " << HEIGHT << std::endl;
+    out << "255" << std::endl;
+
+    for (int hh = 0; hh < HEIGHT; hh++) {
+        for (int ww = 0; ww < WIDTH; ww++) {
+             out << 85 << " " << 10 << " " << 20 << endl;
+        }
+    }
 }
 
 void View::error_callback(int error, const char* description)
