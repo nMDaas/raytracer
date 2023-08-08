@@ -81,6 +81,6 @@ void Controller::error_callback(int error, const char* description)
 
 void Controller::onkey(int key, int scancode, int action, int mods) {
     if (key == GLFW_KEY_R && action == 0) {
-        view.raytrace();
+        view.raytrace(debugging);
      }
 }

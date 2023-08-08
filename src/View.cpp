@@ -214,8 +214,16 @@ void View::display(IScenegraph *scenegraph) {
     }
 }
 
-void View::raytrace() {
+void View::raytrace(bool debugging) {
     std::cout << "In raytrace method!" << std::endl;
+    ofstream out;
+    if (debugging) {
+        out.open("images/out.ppm");
+    }
+    else {
+        out.open("src/images/out.ppm");
+    }
+    out << "P3" << std::endl;
 }
 
 void View::error_callback(int error, const char* description)
