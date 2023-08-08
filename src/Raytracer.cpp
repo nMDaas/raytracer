@@ -17,11 +17,10 @@ int main(int argc,char *argv[])
     if (argc > 1) {
         // run via terminal
         controller.meshMaterialSetup(argv[1], false);
-        controller.run(false);
     }
     else {
         // run via debugger
         controller.meshMaterialSetup("scenegraphs/firstScene.txt", true);
-        controller.run(true);
     }
+    controller.run();
 }

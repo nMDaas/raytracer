@@ -33,6 +33,10 @@ void Controller::meshMaterialSetup(char* filePath, bool debugger) {
     if (debugger) {
         importer.addInstance("sphere","models/sphere.obj");
         importer.addInstance("box","models/box.obj");
+        debugging = true;
+    }
+    else {
+        debugging = false;
     }
     IScenegraph *scenegraph = importer.parse(inFile);
     spdlog::debug("Scenegraph made.");
@@ -42,12 +46,12 @@ void Controller::meshMaterialSetup(char* filePath, bool debugger) {
 
 }
 
-void Controller::run(bool debugger)
+void Controller::run()
 {
     IScenegraph* scenegraph = model.getScenegraph();
     std::map<string,util::PolygonMesh<VertexAttrib> > meshes = scenegraph->getMeshes();
 
-    view.init(this, meshes, debugger);
+    view.init(this, meshes, debugging);
 
 
     while (!view.shouldWindowClose()) {

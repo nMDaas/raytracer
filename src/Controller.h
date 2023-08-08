@@ -23,7 +23,7 @@ public:
     }
 
     void meshMaterialSetup(char* filePath, bool debugger);
-    void run(bool debugger);
+    void run();
 
     virtual void reshape(int width, int height);
     virtual void dispose();
@@ -33,6 +33,7 @@ public:
 private:
     Model model;
     View view;
+    bool debugging; // is program running in debug mode?
 };
 
 #endif
