@@ -48,6 +48,7 @@ public:
     }
 
     void init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>& meshes, bool debugger);
+    void raytrace();
     bool shouldWindowClose();
     void display(IScenegraph *scenegraph);
     void closeWindow();

@@ -214,6 +214,10 @@ void View::display(IScenegraph *scenegraph) {
     }
 }
 
+void View::raytrace() {
+    
+}
+
 void View::error_callback(int error, const char* description)
 {
     fprintf(stderr, "Error: %s\n", description);
