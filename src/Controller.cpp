@@ -74,4 +74,8 @@ void Controller::error_callback(int error, const char* description)
     fprintf(stderr, "Error: %s\n", description);
 }
 
-void Controller::onkey(int key, int scancode, int action, int mods) {}
+void Controller::onkey(int key, int scancode, int action, int mods) {
+    if (key == GLFW_KEY_R) {
+        std::cout << "key pressed!" << std::endl;
+     }
+}

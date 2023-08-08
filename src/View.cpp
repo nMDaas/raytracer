@@ -24,11 +24,6 @@ void View::closeWindow() {
     glfwTerminate();
 }
 
-void View::onkey(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-    glfwSetWindowShouldClose(window, GLFW_TRUE);
-}
-
 void View::reshape(GLFWwindow* window, int width, int height) 
 {
     glViewport(0, 0, width, height);
