@@ -215,7 +215,7 @@ void View::display(IScenegraph *scenegraph) {
 }
 
 void View::raytrace() {
-    
+    std::cout << "In raytrace method!" << std::endl;
 }
 
 void View::error_callback(int error, const char* description)
