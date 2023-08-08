@@ -20,7 +20,8 @@ Controller::~Controller()
 }
 
 void Controller::meshMaterialSetup(char* filePath, bool debugger) {
-    std::cout << "filePath: " << filePath << std::endl;
+    string file = filePath;
+    spdlog::debug("filePath: " + file);
     std::ifstream test(filePath); 
     if (!test)
     {
