@@ -227,7 +227,18 @@ void View::raytrace(bool debugging) {
 
     for (int hh = 0; hh < HEIGHT; hh++) {
         for (int ww = 0; ww < WIDTH; ww++) {
-             out << 85 << " " << 10 << " " << 20 << endl;
+
+            float dx = (float)ww - (0.5f * WIDTH);
+            float dy =  (0.5f * HEIGHT) - (float)hh ;
+            float dz = -(0.5f * HEIGHT) / tan(cameraFOV/2);
+
+            // ray origin and direction (s,v)
+            glm::vec4 origin(0.0f, 0.0f, 0.0f, 1.0f);
+            glm::vec4 direction(dx, dy, dz, 0.0f);
+
+            Ray newRay(origin,direction);
+
+            out << 85 << " " << 10 << " " << 20 << endl;
         }
     }
 }
