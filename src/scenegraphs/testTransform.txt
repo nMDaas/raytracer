@@ -11,13 +11,13 @@ shininess 5
 end-material
 
 #the root
-group root root
-translate t0 t0 0 50 0
+group root
+translate t0 0 50 0
 
 #group leaf1
-leaf l1 l1 instanceof box 
-scale s1 s1 10 10 10
-translate t1 t1 -20 0 0
+leaf l1 instanceof box 
+scale s1 10 10 10
+translate t1 -20 0 0
 assign-material l1 mat
 add-child l1 s1
 add-child s1 t1
@@ -25,9 +25,9 @@ add-child t1 t0
 add-child t0 root
 
 #group leaf2
-leaf l2 l2 instanceof box 
-scale s2 s2 10 10 10
-translate t2 t2 20 0 0
+leaf l2 instanceof box 
+scale s2 10 10 10
+translate t2 20 0 0
 assign-material l2 mat
 add-child l2 s2
 add-child s2 t2
@@ -35,9 +35,9 @@ add-child t2 t0
 add-child t0 root
 
 
-translate tlight tlight 0 30 0
-translate tlight2 tlight2 50 0 70
-light li1 li1 1 1 1 1 1 1 1 1 1
+translate tlight 0 30 0
+translate tlight2 50 0 70
+light li1 1 1 1 1 1 1 1 1 1
 add-child li1 tlight
 add-child tlight tlight2
 add-child tlight2 root
