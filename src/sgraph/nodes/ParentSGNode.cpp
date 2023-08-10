@@ -16,6 +16,14 @@ void ParentSGNode::addChild(SGNode *child) {
     child->setParent(this);
 }
 
+void ParentSGNode::setScenegraph(IScenegraph *graph) {
+    AbstractSGNode::setScenegraph(graph);
+    for (int i=0;i<children.size();i++)
+    {
+        children[i]->setScenegraph(graph);
+    }
+}
+
 SGNode* ParentSGNode::clone() {
     ParentSGNode * newtransform = copyNode();
 

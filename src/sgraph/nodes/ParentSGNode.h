@@ -22,6 +22,8 @@ class ParentSGNode: public AbstractSGNode {
         // add another child to this node
         void addChild(SGNode *child);
 
+        void setScenegraph(IScenegraph *graph);
+
         virtual ParentSGNode *copyNode()=0;
 
         SGNode *clone();

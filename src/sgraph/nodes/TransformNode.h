@@ -19,8 +19,6 @@ class TransformNode: public ParentSGNode {
       TransformNode(const std::string& name,IScenegraph *graph);
       
       ~TransformNode();
-
-      void setScenegraph(IScenegraph *graph);
       
       void accept(SGNodeVisitor* visitor);
 

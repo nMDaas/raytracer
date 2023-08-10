@@ -13,14 +13,6 @@ TransformNode::~TransformNode()	{
 
 }
 
-void TransformNode::setScenegraph(IScenegraph *graph) {
-    AbstractSGNode::setScenegraph(graph);
-    for (int i=0;i<children.size();i++)
-    {
-        children[i]->setScenegraph(graph);
-    }
-}
-
 void TransformNode::accept(SGNodeVisitor* visitor) {
     std::cout << "In TransformNode" << std::endl; 
 }

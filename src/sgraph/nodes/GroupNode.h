@@ -16,8 +16,6 @@ class GroupNode : public ParentSGNode {
 
     SGNode *clone();
 
-    void setScenegraph(IScenegraph *graph);
-
     void accept(SGNodeVisitor* visitor);
 
 };

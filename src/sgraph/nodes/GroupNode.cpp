@@ -35,14 +35,6 @@ SGNode* GroupNode::clone() {
     return newgroup;
 }
 
-void GroupNode::setScenegraph(IScenegraph *graph) {
-    AbstractSGNode::setScenegraph(graph);
-    for (int i=0;i<children.size();i++)
-    {
-        children[i]->setScenegraph(graph);
-    }
-}
-
 void GroupNode::accept(SGNodeVisitor* visitor) {
     visitor->visitGroupNode(this);
 }
