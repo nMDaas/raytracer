@@ -1,5 +1,8 @@
 #include "RaytracerRenderer.h"
 
+#include "spdlog/spdlog.h"
+#include "spdlog/cfg/env.h"
+
 RaytracerRenderer::RaytracerRenderer(){}
 RaytracerRenderer::~RaytracerRenderer(){}
 
@@ -10,20 +13,44 @@ RaytracerRenderer::RaytracerRenderer (RaytracerRenderer &t) {
     std::cout << "RAYTRACERRENDERER COPY CONSTRUCTOR CALLED" << std::endl;
 }
 
-void RaytracerRenderer::visitGroupNode(GroupNode *groupNode);
+void RaytracerRenderer::visitGroupNode(GroupNode *groupNode) {
+    spdlog::debug("RaytracerRenderer - Group Node to draw: " +groupNode->getName());
+    for (int i=0;i<groupNode->getChildren().size();i=i+1) {
+        groupNode->getChildren()[i]->accept(this);
+    }
+}
 
-void RaytracerRenderer::visitScaleTransform(ScaleTransform *scaleNode);
+void RaytracerRenderer::visitScaleTransform(ScaleTransform *scaleNode) {
+    spdlog::debug("RaytracerRenderer - ScaleTransform Node to draw: " +scaleNode->getName());
+    visitTransformNode(scaleNode);
+}
 
-void RaytracerRenderer::visitRotateTransform(RotateTransform *rotateNode);
+void RaytracerRenderer::visitRotateTransform(RotateTransform *rotateNode) {
+    spdlog::debug("RaytracerRenderer - RotateTransform Node to draw: " +rotateNode->getName());
+    visitTransformNode(rotateNode);
+}
 
-void RaytracerRenderer::visitTranslateTransform(TranslateTransform *translateNode);
+void RaytracerRenderer::visitTranslateTransform(TranslateTransform *translateNode) {
+    spdlog::debug("RaytracerRenderer - TranslateTransform Node to draw: " +translateNode->getName());
+    visitTransformNode(translateNode);
+}
 
-void RaytracerRenderer::visitTransformNode(TransformNode *transformNode);
+void RaytracerRenderer::visitTransformNode(TransformNode *transformNode) {
+    spdlog::debug("RaytracerRenderer - Transform Node to draw: " +transformNode->getName());
+    if (transformNode->getChildren().size()>0) {
+        transformNode->getChildren()[0]->accept(this);
+    }
+}
 
-void RaytracerRenderer::visitLeafNode(LeafNode *leafNode);
+void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
+    spdlog::debug("RaytracerRenderer - Leaf Node to draw: " +leafNode->getName());
 
-void RaytracerRenderer::visitLightNode(LightNode *lightNode);
+}
 
-vector<util::Light> RaytracerRenderer::getLights();
+void RaytracerRenderer::visitLightNode(LightNode *lightNode) {
+    spdlog::debug("RaytracerRenderer - Light Node to draw: " +lightNode->getName());
+}
 
-void RaytracerRenderer::clearLights();
+vector<util::Light> RaytracerRenderer::getLights(){}
+
+void RaytracerRenderer::clearLights(){}
