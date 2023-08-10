@@ -20,7 +20,7 @@ class TransformNode: public ParentSGNode {
       
       ~TransformNode();
       
-      void accept(SGNodeVisitor* visitor);
+      virtual void accept(SGNodeVisitor* visitor)=0;
 
       glm::mat4 getTransform();
 };
