@@ -114,26 +114,26 @@ void ScenegraphImporter::parseInstance(istream& input) {
 }
 
 void ScenegraphImporter::parseGroup(istream& input) {
-    string varname,name;
-    input >> varname >> name;
+    string name;
+    input >> name;
     SGNode *group = new GroupNode(name,NULL);
-    nodes[varname] = group;
+    nodes[name] = group;
 }
 
 void ScenegraphImporter::parseLeaf(istream& input) {
-    string varname,name,command,instanceof;
-    input >> varname >> name >> command;
+    string name,command,instanceof;
+    input >> name >> command;
     if (command == "instanceof") {
         input >> instanceof;
     }
     //std::cout << "command: leaf " << varname << " " << name << " " << command << " " << instanceof << std::endl;
     SGNode *leaf = new LeafNode(instanceof,name,NULL);
-    nodes[varname] = leaf;
+    nodes[name] = leaf;
 }
 
 void ScenegraphImporter::parseLight(istream& input) {
-    string varname,name;
-    input >> varname >> name;
+    string name;
+    input >> name;
     //std::cout << "command: light " << varname << " " << name << " " << std::endl;
     float ambientR,ambientG,ambientB;
     input >> ambientR >> ambientG >> ambientB;
@@ -144,7 +144,7 @@ void ScenegraphImporter::parseLight(istream& input) {
 
     SGNode *light = new LightNode(name,NULL,glm::vec3(ambientR,ambientG,ambientB),
         glm::vec3(diffuseR,diffuseG,diffuseB),glm::vec3(specularR,specularG,specularB));
-    nodes[varname] = light;
+    nodes[name] = light;
 }
 
 void ScenegraphImporter::parseMaterial(istream& input) {
@@ -187,33 +187,33 @@ void ScenegraphImporter::parseMaterial(istream& input) {
 }
 
 void ScenegraphImporter::parseScale(istream& input) {
-    string varname,name;
-    input >> varname >> name;
+    string name;
+    input >> name;
     float sx,sy,sz;
     input >> sx >> sy >> sz;
     //std::cout << "command: scale " << varname << " " << name << " " << sx << " " << sy << " " << sz << std::endl;
     SGNode *scaleNode = new ScaleTransform(sx,sy,sz,name,NULL);
-    nodes[varname] = scaleNode;
+    nodes[name] = scaleNode;
 }
 
 void ScenegraphImporter::parseRotate(istream& input) {
-    string varname,name;
-    input >> varname >> name;
+    string name;
+    input >> name;
     float angleInDegrees,ax,ay,az;
     input >> angleInDegrees >> ax >> ay >> az;
     //std::cout << "command: rotate " << varname << " " << name << " " << angleInDegrees << " " << ax << " " << ay << " " << az <<std::endl;
     SGNode *rotateNode = new RotateTransform(glm::radians(angleInDegrees),ax,ay,az,name,NULL);
-    nodes[varname] = rotateNode;  
+    nodes[name] = rotateNode;  
 }
 
 void ScenegraphImporter::parseTranslate(istream& input) {
-    string varname,name;
-    input >> varname >> name;
+    string name;
+    input >> name;
     float tx,ty,tz;
     input >> tx >> ty >> tz;
     //std::cout << "command: translate " << varname << " " << name << " " << tx << " " << ty << " " << tz << std::endl;
     SGNode *translateNode = new TranslateTransform(tx,ty,tz,name,NULL);
-    nodes[varname] = translateNode;  
+    nodes[name] = translateNode;  
 }
 
 void ScenegraphImporter::parseCopy(istream& input) {
