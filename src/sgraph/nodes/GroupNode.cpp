@@ -13,12 +13,6 @@ GroupNode::GroupNode(const std::string& name,IScenegraph *graph)
 
 GroupNode::~GroupNode() {}
 
-// add another child to this node
-void GroupNode::addChild(SGNode *child) {
-    children.push_back(child);
-    child->setParent(this);
-}
-
 SGNode* GroupNode::clone() {
     std::vector<SGNode *> newc;
 

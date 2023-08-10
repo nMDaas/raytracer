@@ -13,11 +13,6 @@ TransformNode::~TransformNode()	{
 
 }
 
-void TransformNode::addChild(SGNode *child) {
-    this->children.push_back(child);
-    child->setParent(this);
-}
-
 void TransformNode::setScenegraph(IScenegraph *graph) {
     AbstractSGNode::setScenegraph(graph);
     for (int i=0;i<children.size();i++)

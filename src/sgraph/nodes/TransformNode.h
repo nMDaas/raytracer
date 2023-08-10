@@ -20,9 +20,6 @@ class TransformNode: public ParentSGNode {
       
       ~TransformNode();
 
-      // add another child to this node ONLY if this node doesn't already have a child
-      void addChild(SGNode *child);
-
       void setScenegraph(IScenegraph *graph);
       
       void accept(SGNodeVisitor* visitor);

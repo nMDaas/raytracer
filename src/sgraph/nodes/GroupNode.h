@@ -14,9 +14,6 @@ class GroupNode : public ParentSGNode {
 	
     ~GroupNode();
 
-    // add another child to this node
-    void addChild(SGNode *child);
-
     SGNode *clone();
 
     void setScenegraph(IScenegraph *graph);

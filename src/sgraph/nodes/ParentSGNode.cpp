@@ -11,6 +11,11 @@ ParentSGNode::~ParentSGNode() {
     }
 }
 
+void ParentSGNode::addChild(SGNode *child) {
+    children.push_back(child);
+    child->setParent(this);
+}
+
 SGNode* ParentSGNode::clone() {
     ParentSGNode * newtransform = copyNode();
 
