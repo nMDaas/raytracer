@@ -47,8 +47,8 @@ void GLScenegraphRenderer::visitTransformNode(TransformNode *transformNode) {
     spdlog::debug("Transform Node to draw: " +transformNode->getName());
     modelview.push(modelview.top());
     modelview.top() = modelview.top() * transformNode->getTransform();
-    if (transformNode->getChildren().size()>0) {
-        transformNode->getChildren()[0]->accept(this);
+    for (int i=0;i<transformNode->getChildren().size();i=i+1) {
+        transformNode->getChildren()[i]->accept(this);
     }
     modelview.pop();
 }

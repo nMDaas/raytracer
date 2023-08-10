@@ -37,8 +37,8 @@ void RaytracerRenderer::visitTranslateTransform(TranslateTransform *translateNod
 
 void RaytracerRenderer::visitTransformNode(TransformNode *transformNode) {
     spdlog::debug("RaytracerRenderer - Transform Node to draw: " +transformNode->getName());
-    if (transformNode->getChildren().size()>0) {
-        transformNode->getChildren()[0]->accept(this);
+    for (int i=0;i<transformNode->getChildren().size();i=i+1) {
+        transformNode->getChildren()[i]->accept(this);
     }
 }
 
