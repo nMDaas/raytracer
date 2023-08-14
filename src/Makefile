@@ -1,4 +1,4 @@
-OBJS = Raytracer.o ScenegraphImporter.o Controller.o Model.o View.o AbstractSGNode.o GroupNode.o ChildSGNode.o LeafNode.o LightNode.o ParentSGNode.o RotateTransform.o ScaleTransform.o TransformNode.o TranslateTransform.o GLScenegraphRenderer.o Scenegraph.o RaytracerRenderer.o
+OBJS = Raytracer.o ScenegraphImporter.o Controller.o Model.o View.o AbstractSGNode.o GroupNode.o ChildSGNode.o LeafNode.o LightNode.o ParentSGNode.o RotateTransform.o ScaleTransform.o TransformNode.o TranslateTransform.o GLScenegraphRenderer.o RaytracerRenderer.o Scenegraph.o 
 INCLUDES = -I../include
 LIBS = -L../lib
 LDFLAGS = -lglad -lglfw3
@@ -64,11 +64,11 @@ TranslateTransform.o: sgraph/nodes/TranslateTransform.cpp
 GLScenegraphRenderer.o: sgraph/GLScenegraphRenderer.cpp 
 	$(COMPILER) $(INCLUDES) $(CFLAGS) -c sgraph/GLScenegraphRenderer.cpp
 
-Scenegraph.o: sgraph/Scenegraph.cpp 
-	$(COMPILER) $(INCLUDES) $(CFLAGS) -c sgraph/Scenegraph.cpp
-
 RaytracerRenderer.o: sgraph/RaytracerRenderer.cpp 
 	$(COMPILER) $(INCLUDES) $(CFLAGS) -c sgraph/RaytracerRenderer.cpp
+
+Scenegraph.o: sgraph/Scenegraph.cpp 
+	$(COMPILER) $(INCLUDES) $(CFLAGS) -c sgraph/Scenegraph.cpp
 	
 RM = rm	-f
 ifeq ($(OS),Windows_NT)     # is Windows_NT on XP, 2000, 7, Vista, 10...
