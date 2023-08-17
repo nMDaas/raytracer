@@ -42,8 +42,11 @@ class GLScenegraphRenderer: public SGNodeVisitor {
     void visitLightNode(LightNode *lightNode);
     vector<util::Light> getLights();
     void clearLights();
+    float getHitRecord();
 
     vector<util::Light> lights;
+
+ 
 
     private: 
     stack<glm::mat4>& modelview;

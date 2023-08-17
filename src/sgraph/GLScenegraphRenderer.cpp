@@ -83,3 +83,5 @@ vector<util::Light> GLScenegraphRenderer::getLights() {
 void GLScenegraphRenderer::clearLights() {
     lights.clear();
 }
+
+float GLScenegraphRenderer::getHitRecord() {}
