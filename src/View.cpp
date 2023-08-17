@@ -213,7 +213,7 @@ void View::display(IScenegraph *scenegraph) {
     }
 }
 
-void View::raytrace(bool debugging) {
+void View::raytrace(bool debugging,IScenegraph *scenegraph) {
     ofstream out;
     if (debugging) {
         out.open("images/out.ppm");
