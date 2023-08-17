@@ -13,6 +13,7 @@
 #include "nodes/TransformNode.h"
 #include "nodes/LeafNode.h"
 #include "nodes/LightNode.h"
+#include "../objects/Box.h"
 
 /*
     RaytraceRenderer is a visitor that implements SGNodeVisitor and will be
@@ -45,6 +46,7 @@ class RaytracerRenderer: public SGNodeVisitor {
     glm::vec4 s;
     glm::vec4 v;
     Box box;
+    float minTime = INFINITY;
 
 };
 

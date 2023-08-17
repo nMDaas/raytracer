@@ -54,6 +54,22 @@ void RaytracerRenderer::visitTransformNode(TransformNode *transformNode) {
 void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
     spdlog::debug("RaytracerRenderer - Leaf Node to draw: " +leafNode->getName());
 
+    // inverse of modelview.top() are the transforms to convert back to Object Coordinate System
+    glm::mat4 inverseTransform = glm::inverse(modelview.top()); 
+    spdlog::debug("modelview top: " + glm::to_string(modelview.top()));
+    spdlog::debug("inverseTransform: " + glm::to_string(inverseTransform));
+    glm::vec4 _s = inverseTransform * s; // s transformed to Object Coordinate System
+    glm::vec4 _v = inverseTransform * v; // s transformed to Object Coordinate System
+    spdlog::debug("inverseS: " + glm::to_string(_s));
+    spdlog::debug("inverseV: " + glm::to_string(_v));
+
+    if (box.calcTime(_s,_v)) {
+        float newTime = box.getTime();
+        if (newTime < minTime) {
+            minTime = newTime;
+        }
+    }
+
 }
 
 void RaytracerRenderer::visitLightNode(LightNode *lightNode) {
@@ -65,6 +81,5 @@ vector<util::Light> RaytracerRenderer::getLights(){}
 void RaytracerRenderer::clearLights(){}
 
 float RaytracerRenderer::getHitRecord() {
-    std::cout << "minTIme: " << minTime << std::endl;
     return minTime;
 }
