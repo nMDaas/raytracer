@@ -63,7 +63,7 @@ void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
     spdlog::debug("inverseS: " + glm::to_string(_s));
     spdlog::debug("inverseV: " + glm::to_string(_v));
 
-    if (box.calcTime(_s,_v)) {
+    if (box.calcTimes(_s,_v)) {
         float newTime = box.getTime();
         if (newTime < minTime) {
             minTime = newTime;
