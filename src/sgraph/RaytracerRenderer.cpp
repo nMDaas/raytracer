@@ -3,7 +3,9 @@
 #include "spdlog/spdlog.h"
 #include "spdlog/cfg/env.h"
 
-RaytracerRenderer::RaytracerRenderer(){}
+RaytracerRenderer::RaytracerRenderer(stack<glm::mat4>& mv, glm::vec4& in_s, glm::vec4& in_v)
+: modelview(mv), s(in_s), v(in_v){}
+
 RaytracerRenderer::~RaytracerRenderer(){}
 
 /*

@@ -20,7 +20,7 @@
 class RaytracerRenderer: public SGNodeVisitor {
     public:
 
-    RaytracerRenderer();
+    RaytracerRenderer(stack<glm::mat4>& mv, glm::vec4& in_s, glm::vec4& in_v);
     ~RaytracerRenderer();
 
     /*
@@ -39,6 +39,10 @@ class RaytracerRenderer: public SGNodeVisitor {
     void clearLights();
 
     private: 
+    stack<glm::mat4> modelview;
+    glm::vec4 s;
+    glm::vec4 v;
+    Box box;
 
 };
 
