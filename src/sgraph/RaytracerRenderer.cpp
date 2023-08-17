@@ -39,9 +39,16 @@ void RaytracerRenderer::visitTranslateTransform(TranslateTransform *translateNod
 
 void RaytracerRenderer::visitTransformNode(TransformNode *transformNode) {
     spdlog::debug("RaytracerRenderer - Transform Node to draw: " +transformNode->getName());
+    modelview.push(modelview.top());
+    spdlog::debug("modelview top: " + glm::to_string(modelview.top()));
+    modelview.top() = modelview.top() * transformNode->getTransform();
+    spdlog::debug("transform matrix: " + glm::to_string(transformNode->getTransform()));
+    spdlog::debug("modelview top with transform: " + glm::to_string(modelview.top()));
+
     for (int i=0;i<transformNode->getChildren().size();i=i+1) {
         transformNode->getChildren()[i]->accept(this);
     }
+    modelview.pop();
 }
 
 void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
