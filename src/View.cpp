@@ -1,5 +1,8 @@
 #include "View.h"
 
+#include "spdlog/spdlog.h"
+#include "spdlog/cfg/env.h"
+
 View::View() {
 
 }
@@ -238,9 +241,36 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
 
             Ray newRay(origin,direction);
 
-            out << 85 << " " << 10 << " " << 20 << endl;
+            while (!raytracer_modelview.empty()) {
+                raytracer_modelview.pop();
+            }
+
+            raytracer_modelview.push(glm::mat4(1.0));
+            spdlog::debug("modelview top: " + glm::to_string(raytracer_modelview.top()));
+            spdlog::debug("lookat: " + glm::to_string(glm::lookAt(glm::vec3(0.0f,0.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f))));
+            raytracer_modelview.top() = raytracer_modelview.top() * glm::lookAt(glm::vec3(0.0f,0.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
+            raytracerRenderer = new RaytracerRenderer(raytracer_modelview,origin,direction);
+            spdlog::debug( "modelview top * lookat: " + glm::to_string(raytracer_modelview.top()));
+            spdlog::debug("origin: " + glm::to_string(origin));
+            spdlog::debug("direction: " + glm::to_string(direction));
+            scenegraph->getRoot()->accept(raytracerRenderer); 
+
+            float t = raytracerRenderer->getHitRecord();
+
+            std::cout << "(" << hh << "," << ww << "): time: " << t << std::endl;
+
+            if (isinf(t)) {
+                out << 0 << " " << 0 << " " << 0 << endl;
+            }
+            else {
+                out << 255 << " " << 255 << " " << 255 << endl;
+            }
+
+            spdlog::debug("----");
+
         }
     }
+    std::cout << "Completed raytracing!" << std::endl;
 }
 
 void View::error_callback(int error, const char* description)
