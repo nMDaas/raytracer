@@ -56,3 +56,8 @@ void RaytracerRenderer::visitLightNode(LightNode *lightNode) {
 vector<util::Light> RaytracerRenderer::getLights(){}
 
 void RaytracerRenderer::clearLights(){}
+
+float RaytracerRenderer::getHitRecord() {
+    std::cout << "minTIme: " << minTime << std::endl;
+    return minTime;
+}
