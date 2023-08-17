@@ -10,7 +10,8 @@ Box::Box (Box &t){
     std::cout << "BOX COPY CONSTRUCTOR CALLED" << std::endl;
 }
 
-bool Box::calcTime(glm::vec4 s, glm::vec4 v) {
+// calculates tmin and tmax of a ray's intersection with a unit box
+bool Box::calcTimes(glm::vec4 s, glm::vec4 v) {
     float tMinX = (vmin.x - s.x)/v.x; 
     float tMaxX = (vmax.x - s.x)/v.x;
 
@@ -50,6 +51,7 @@ bool Box::calcTime(glm::vec4 s, glm::vec4 v) {
     tmax = (tMaxZ < tmax) ? tMaxZ : tmax;
 }
 
+// returns the time of first intersection of the ray with the unit box
 float Box::getTime() {
     // if tmin and tmax are both positive, tmin and tmax both are in front of camera 
     // return smaller value
