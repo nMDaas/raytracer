@@ -82,4 +82,11 @@ void RaytracerRenderer::clearLights(){}
 
 float RaytracerRenderer::getHitRecord() {
     return minTime;
+
+glm::vec4 RaytracerRenderer::getIntersection(float time){
+    return s + (v * time);
+}
+
+glm::vec4 RaytracerRenderer::getNormal(glm::vec4 intersectionPoint) {
+    return box.getNormal(intersectionPoint);
 }

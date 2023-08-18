@@ -48,6 +48,9 @@ class RaytracerRenderer: public SGNodeVisitor {
     Box box;
     float minTime = INFINITY;
 
+    glm::vec4 getIntersection(float time);
+    glm::vec4 getNormal(glm::vec4 intersectionPoint);
+
 };
 
 #endif
