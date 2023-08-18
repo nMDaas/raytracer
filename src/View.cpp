@@ -255,15 +255,16 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
             spdlog::debug("direction: " + glm::to_string(direction));
             scenegraph->getRoot()->accept(raytracerRenderer); 
 
-            float t = raytracerRenderer->getHitRecord();
+            HitRecord hitRecord = raytracerRenderer->getHitRecord();
 
-            std::cout << "(" << hh << "," << ww << "): time: " << t << std::endl;
+            std::cout << "(" << hh << "," << ww << "): time: " << hitRecord.t << std::endl;
 
-            if (isinf(t)) {
+            if (isinf(hitRecord.t)) {
                 out << 0 << " " << 0 << " " << 0 << endl;
             }
             else {
-                out << 255 << " " << 255 << " " << 255 << endl;
+                util::Material mat = hitRecord.object_mat;
+                out << mat.getAmbient().x * 255 << " " << mat.getAmbient().y * 255 << " " << mat.getAmbient().z * 255 << endl;
             }
 
             spdlog::debug("----");
