@@ -71,3 +71,39 @@ float Box::getTime() {
     }
     
 }
+
+glm::vec4 Box::getNormal(glm::vec4 intersectionPoint) {
+    glm::vec4 normal(0,0,0,0);
+
+    if ((intersectionPoint.x < 0.5001f) && (intersectionPoint.x > 0.4999f)) {
+        normal.x = 1;
+    }
+    else if ((intersectionPoint.x > -0.5001f) && (intersectionPoint.x < -0.4999f)) {
+        normal.x = -1;
+    }
+    else {
+        normal.x = 0;
+    }
+
+    if ((intersectionPoint.y < 0.5001f) && (intersectionPoint.y > 0.4999f)) {
+        normal.y = 1;
+    }
+    else if ((intersectionPoint.y > -0.5001f) && (intersectionPoint.y < -0.4999f)) {
+        normal.y = -1;
+    }
+    else {
+        normal.y = 0;
+    }
+
+    if ((intersectionPoint.z < 0.5001f) && (intersectionPoint.z > 0.4999f)) {
+        normal.z = 1;
+    }
+    else if ((intersectionPoint.z > -0.5001f) && (intersectionPoint.z < -0.4999f)) {
+        normal.z = -1;
+    }
+    else {
+        normal.z = 0;
+    }
+
+    return normal;
+}
