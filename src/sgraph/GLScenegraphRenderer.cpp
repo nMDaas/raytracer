@@ -84,4 +84,4 @@ void GLScenegraphRenderer::clearLights() {
     lights.clear();
 }
 
-float GLScenegraphRenderer::getHitRecord() {}
+HitRecord GLScenegraphRenderer::getHitRecord() {}

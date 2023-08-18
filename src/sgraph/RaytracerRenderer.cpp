@@ -90,8 +90,9 @@ vector<util::Light> RaytracerRenderer::getLights(){}
 
 void RaytracerRenderer::clearLights(){}
 
-float RaytracerRenderer::getHitRecord() {
-    return minTime;
+HitRecord RaytracerRenderer::getHitRecord() {
+    return hitRecordWithMinTime;
+}
 
 glm::vec4 RaytracerRenderer::getIntersection(float time){
     return s + (v * time);

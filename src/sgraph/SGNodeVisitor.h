@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "Light.h"
+#include "HitRecord.h"
 
 class GroupNode;
 class ScaleTransform;
@@ -24,7 +25,7 @@ class SGNodeVisitor {
         virtual void visitLightNode(LightNode *node)=0;
         virtual std::vector<util::Light> getLights()=0;
         virtual void clearLights()=0;
-        virtual float getHitRecord()=0;
+        virtual HitRecord getHitRecord()=0;
 };
 
 #endif
