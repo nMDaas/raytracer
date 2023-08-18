@@ -14,6 +14,7 @@
 #include "nodes/LeafNode.h"
 #include "nodes/LightNode.h"
 #include "../objects/Box.h"
+#include "HitRecord.h"
 
 /*
     RaytraceRenderer is a visitor that implements SGNodeVisitor and will be
@@ -47,6 +48,7 @@ class RaytracerRenderer: public SGNodeVisitor {
     glm::vec4 v;
     Box box;
     float minTime = INFINITY;
+    HitRecord hitRecordWithMinTime = {minTime,glm::vec4(0,0,0,0),glm::vec4(0,0,0,0),util::Material()};
 
     glm::vec4 getIntersection(float time);
     glm::vec4 getNormal(glm::vec4 intersectionPoint);
