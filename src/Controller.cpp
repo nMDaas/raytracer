@@ -49,7 +49,7 @@ void Controller::meshMaterialSetup(char* filePath, bool debugger) {
 void Controller::run()
 {
     IScenegraph* scenegraph = model.getScenegraph();
-    std::map<string,util::PolygonMesh<VertexAttrib> > meshes = scenegraph->getMeshes();
+    std::map<string,util::PolygonMesh<VertexAttrib>>& meshes = scenegraph->getMeshes();
 
     view.init(this, meshes, debugging);
 

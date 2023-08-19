@@ -1,5 +1,7 @@
 #include "Scenegraph.h"
 
+#include <iostream>
+
 Scenegraph::Scenegraph() {
     root = NULL;
 }
@@ -35,7 +37,7 @@ void Scenegraph::setMeshes(map<string,util::PolygonMesh<VertexAttrib> >& meshes)
     this->meshes = meshes;
 }
 
-map<string,util::PolygonMesh<VertexAttrib> > Scenegraph::getMeshes() {
+map<string,util::PolygonMesh<VertexAttrib>>& Scenegraph::getMeshes() {
     return this->meshes;
 }
 
