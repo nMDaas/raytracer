@@ -20,7 +20,6 @@ public:
         std::cout << "MODEL COPY CONSTRUCTOR CALLED" << std::endl;
     }
 
-    vector<util::Material> getMaterials();
     void setScenegraph(IScenegraph *scenegraph);
     IScenegraph *getScenegraph();
     
