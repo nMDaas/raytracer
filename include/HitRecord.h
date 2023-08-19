@@ -9,7 +9,7 @@ typedef struct HitRecord {
     float t;
     glm::vec4 intersection_position; // in view coordinate system
     glm::vec4 intersection_normal; // in view coordinate system
-    util::Material object_mat;
+    util::Material* object_mat;
 } HitRecord;
 
 #endif

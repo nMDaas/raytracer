@@ -59,11 +59,11 @@ void GLScenegraphRenderer::visitLeafNode(LeafNode *leafNode) {
     glUniformMatrix4fv(shaderLocations.getLocation("modelview"), 1, GL_FALSE, glm::value_ptr(modelview.top()));
     glm::mat4 normalmatrix = glm::inverse(glm::transpose((modelview.top())));
     glUniformMatrix4fv(shaderLocations.getLocation("normalmatrix"), 1, false,glm::value_ptr(normalmatrix));
-    util::Material mat = leafNode->getMaterial();
-    glUniform3fv(shaderLocations.getLocation("material.ambient"), 1, glm::value_ptr(mat.getAmbient()));
-    glUniform3fv(shaderLocations.getLocation("material.diffuse"), 1, glm::value_ptr(mat.getDiffuse()));
-    glUniform3fv(shaderLocations.getLocation("material.specular"), 1,glm::value_ptr(mat.getSpecular()));
-    glUniform1f(shaderLocations.getLocation("material.shininess"), mat.getShininess());
+    util::Material* mat = leafNode->getMaterial();
+    glUniform3fv(shaderLocations.getLocation("material.ambient"), 1, glm::value_ptr(mat->getAmbient()));
+    glUniform3fv(shaderLocations.getLocation("material.diffuse"), 1, glm::value_ptr(mat->getDiffuse()));
+    glUniform3fv(shaderLocations.getLocation("material.specular"), 1,glm::value_ptr(mat->getSpecular()));
+    glUniform1f(shaderLocations.getLocation("material.shininess"), mat->getShininess());
 
     objects[leafNode->getInstanceOf()]->draw();
 }

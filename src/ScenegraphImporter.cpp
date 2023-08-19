@@ -343,7 +343,7 @@ void ScenegraphImporter::testParse(IScenegraph* scenegraph) {
             LeafNode* leafNode = dynamic_cast<LeafNode *> (i.second);
             std::cout << "      leaf node: " << leafNode->getName() << std::endl;
             std::cout << "      instance of: " << leafNode->getInstanceOf() << std::endl;
-            std::cout << "      material ambient: " << glm::to_string(leafNode->getMaterial().getAmbient()) << std::endl;
+            std::cout << "      material ambient: " << glm::to_string(leafNode->getMaterial()->getAmbient()) << std::endl;
             std::cout << std::endl;
             }
     }

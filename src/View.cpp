@@ -261,8 +261,8 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
                 out << 0 << " " << 0 << " " << 0 << endl;
             }
             else {
-                util::Material mat = hitRecord.object_mat;
-                out << mat.getAmbient().x * 255 << " " << mat.getAmbient().y * 255 << " " << mat.getAmbient().z * 255 << endl;
+                util::Material* mat = hitRecord.object_mat;
+                out << mat->getAmbient().x * 255 << " " << mat->getAmbient().y * 255 << " " << mat->getAmbient().z * 255 << endl;
             }
 
             spdlog::debug("----");

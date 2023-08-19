@@ -25,9 +25,9 @@ string LeafNode::getInstanceOf() {
     return this->objInstanceName;
 }
 
-util::Material LeafNode::getMaterial()
+util::Material* LeafNode::getMaterial()
 {
-    return material;
+    return &material;
 }
 
 void LeafNode::accept(SGNodeVisitor* visitor) {

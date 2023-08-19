@@ -24,7 +24,7 @@ class LeafNode: public ChildSGNode {
 
     string getInstanceOf();
 
-    util::Material getMaterial();
+    util::Material* getMaterial();
 
     void accept(SGNodeVisitor* visitor);
 };
