@@ -42,7 +42,7 @@ class GLScenegraphRenderer: public SGNodeVisitor {
     void visitLightNode(LightNode *lightNode);
     vector<util::Light> getLights();
     void clearLights();
-    HitRecord getHitRecord();
+    HitRecord& getHitRecord();
 
     vector<util::Light> lights;
 

@@ -90,7 +90,7 @@ vector<util::Light> RaytracerRenderer::getLights(){}
 
 void RaytracerRenderer::clearLights(){}
 
-HitRecord RaytracerRenderer::getHitRecord() {
+HitRecord& RaytracerRenderer::getHitRecord() {
     return hitRecordWithMinTime;
 }
 

@@ -40,7 +40,7 @@ class RaytracerRenderer: public SGNodeVisitor {
     vector<util::Light> getLights();
     void clearLights();
 
-    HitRecord getHitRecord();
+    HitRecord& getHitRecord();
 
     private: 
     stack<glm::mat4> modelview;

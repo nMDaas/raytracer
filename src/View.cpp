@@ -253,7 +253,7 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
             spdlog::debug("direction: " + glm::to_string(direction));
             scenegraph->getRoot()->accept(raytracerRenderer); 
 
-            HitRecord hitRecord = raytracerRenderer->getHitRecord();
+            HitRecord& hitRecord = raytracerRenderer->getHitRecord();
 
             std::cout << "(" << hh << "," << ww << "): time: " << hitRecord.t << std::endl;
 
