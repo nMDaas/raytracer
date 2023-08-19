@@ -29,7 +29,7 @@ class Scenegraph: public IScenegraph {
 
     void setMeshPaths(map<string,string>& meshPaths);
 
-    map<string,string> getMeshPaths();
+    map<string,string>& getMeshPaths();
 
     void setMeshes(map<string,util::PolygonMesh<VertexAttrib> >& meshes);
 

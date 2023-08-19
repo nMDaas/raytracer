@@ -29,7 +29,7 @@ void Scenegraph::setMeshPaths(map<string,string>& meshPaths) {
     this->meshPaths = meshPaths;
 }
 
-map<string,string> Scenegraph::getMeshPaths() {
+map<string,string>& Scenegraph::getMeshPaths() {
     return this->meshPaths;
 }
 
