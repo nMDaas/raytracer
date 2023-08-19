@@ -49,6 +49,8 @@ bool Box::calcTimes(glm::vec4 s, glm::vec4 v) {
 
     tmin = (tMinZ > tmin) ? tMinZ : tmin;
     tmax = (tMaxZ < tmax) ? tMaxZ : tmax;
+
+    return true;
 }
 
 // returns the time of first intersection of the ray with the unit box
