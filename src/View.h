@@ -18,7 +18,6 @@ using namespace std;
 #include "ObjectInstance.h"
 #include "Callbacks.h"
 #include "LightLocation.h"
-#include "Ray.h"
 
 #include "sgraph/IScenegraph.h"
 #include "sgraph/Scenegraph.h"

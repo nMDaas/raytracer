@@ -239,8 +239,6 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
             glm::vec4 origin(0.0f, 0.0f, 0.0f, 1.0f);
             glm::vec4 direction(dx, dy, dz, 0.0f);
 
-            Ray newRay(origin,direction);
-
             while (!raytracer_modelview.empty()) {
                 raytracer_modelview.pop();
             }
