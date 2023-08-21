@@ -47,6 +47,7 @@ public:
      *         attribute names
      */
     virtual vector<string> getAllAttributes()=0;
+
 };
 }
 

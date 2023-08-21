@@ -15,12 +15,8 @@ public:
     Controller(Model& m, View& v);
     ~Controller();
 
-    /*
-        to check for copy constructors
-    */
-    Controller (Controller &t) {
-        std::cout << "CONTROLLER COPY CONSTRUCTOR CALLED" << std::endl;
-    }
+    // to check for copy constructors
+    Controller (Controller &t);
 
     void meshMaterialSetup(char* filePath, bool debugger);
     void run();

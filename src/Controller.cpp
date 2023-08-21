@@ -19,6 +19,11 @@ Controller::~Controller()
 
 }
 
+// to check for copy constructors
+Controller::Controller (Controller &t) {
+    std::cout << "CONTROLLER COPY CONSTRUCTOR CALLED" << std::endl;
+}
+
 void Controller::meshMaterialSetup(char* filePath, bool debugger) {
     string file = filePath;
     spdlog::debug("filePath: " + file);

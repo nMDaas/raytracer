@@ -9,6 +9,11 @@ Model::~Model()
 
 }
 
+// to check for copy constructors
+Model::Model (Model &t) {
+    std::cout << "MODEL COPY CONSTRUCTOR CALLED" << std::endl;
+}
+
 void Model::setScenegraph(IScenegraph *scenegraph) {
     this->scenegraph = scenegraph;
 }

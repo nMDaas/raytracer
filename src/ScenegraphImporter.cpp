@@ -9,6 +9,10 @@ ScenegraphImporter::~ScenegraphImporter()
     
 }
 
+ScenegraphImporter::ScenegraphImporter (ScenegraphImporter &t) {
+    std::cout << "SCENEGRAPH IMPORTER COPY CONSTRUCTOR CALLED" << std::endl;
+}
+
 std::string ScenegraphImporter::stripComments(std::istream& input) {
     std::string line;
     stringstream clean;

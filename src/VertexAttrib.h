@@ -28,8 +28,6 @@ public:
 
     ~VertexAttrib(){}
 
-
-
     bool hasData(string attribName)
     {
 

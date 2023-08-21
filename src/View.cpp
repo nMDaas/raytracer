@@ -12,6 +12,10 @@ View::~View(){
 
 }
 
+View::View (View &t) {
+    std::cout << "VIEW COPY CONSTRUCTOR CALLED" << std::endl;
+}
+
 bool View::shouldWindowClose() {
     return glfwWindowShouldClose(window);
 }

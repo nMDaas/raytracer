@@ -34,12 +34,8 @@ class ScenegraphImporter {
         ScenegraphImporter();
         ~ScenegraphImporter();
 
-        /*
-        to check for copy constructors
-         */
-        ScenegraphImporter (ScenegraphImporter &t) {
-            std::cout << "SCENEGRAPH IMPORTER COPY CONSTRUCTOR CALLED" << std::endl;
-        }
+        // to check for copy constructors
+        ScenegraphImporter (ScenegraphImporter &t);
 
         IScenegraph* parse(std::istream& input);
         void testParse(IScenegraph* scenegraph);

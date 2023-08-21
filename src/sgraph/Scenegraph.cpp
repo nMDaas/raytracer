@@ -13,6 +13,11 @@ Scenegraph::~Scenegraph() {
     }
 }
 
+// to check for copy constructors
+Scenegraph::Scenegraph (Scenegraph &t) {
+    std::cout << "SCENEGRAPH COPY CONSTRUCTOR CALLED" << std::endl;
+}
+
 // add a node to the scenegraph to keep track of all nodes
 void Scenegraph::addNode(const std::string& name, SGNode *node) {
     nodes[name]=node;

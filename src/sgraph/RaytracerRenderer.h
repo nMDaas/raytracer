@@ -25,9 +25,7 @@ class RaytracerRenderer: public SGNodeVisitor {
     RaytracerRenderer(stack<glm::mat4>& mv, glm::vec4& in_s, glm::vec4& in_v);
     ~RaytracerRenderer();
 
-    /*
-        to check for copy constructors
-    */
+    // to check for copy constructors
     RaytracerRenderer (RaytracerRenderer &t);
 
     void visitGroupNode(GroupNode *groupNode);

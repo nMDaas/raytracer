@@ -13,12 +13,8 @@ public:
     Model();
     ~Model();
 
-    /*
-        to check for copy constructors
-    */
-    Model (Model &t) {
-        std::cout << "MODEL COPY CONSTRUCTOR CALLED" << std::endl;
-    }
+    // to check for copy constructors
+    Model (Model &t);
 
     void setScenegraph(IScenegraph *scenegraph);
     IScenegraph *getScenegraph();

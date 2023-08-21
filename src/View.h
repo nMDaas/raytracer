@@ -41,12 +41,8 @@ public:
     View();
     ~View();
 
-    /*
-        to check for copy constructors
-    */
-    View (View &t) {
-        std::cout << "VIEW COPY CONSTRUCTOR CALLED" << std::endl;
-    }
+    // to check for copy constructors
+    View (View &t);
 
     void init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>& meshes, bool debugger);
     void raytrace(bool debugging,IScenegraph *scenegraph);

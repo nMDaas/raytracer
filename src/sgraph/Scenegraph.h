@@ -22,6 +22,9 @@ class Scenegraph: public IScenegraph {
 
     ~Scenegraph();
 
+    // to check for copy constructors
+    Scenegraph (Scenegraph &t);
+
     // add a node to the scenegraph to keep track of all nodes
     void addNode(const std::string& name, SGNode *node);
 
