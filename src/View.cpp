@@ -218,6 +218,9 @@ void View::display(IScenegraph *scenegraph) {
 
 void View::raytrace(bool debugging,IScenegraph *scenegraph) {
     ofstream out;
+    //ofstream debug;
+    //debug.open("src/images/debug.ppm", fstream::app);
+    //debug << "example" << ex << std::endl;
     if (debugging) {
         out.open("images/out.ppm");
     }
