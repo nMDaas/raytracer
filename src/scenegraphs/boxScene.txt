@@ -1,5 +1,6 @@
 # these instances will be ignored if debugger is being used
 instance box src/models/box.obj
+instance sphere src/models/sphere.obj
 
 #material
 material mat
