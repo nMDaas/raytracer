@@ -5,15 +5,16 @@ instance box src/models/box.obj
 material mat
 emission 0 0 0
 ambient 1 0 0
-diffuse 0 0 0
-specular 0 1 1
+diffuse 0 1 0
+specular 0 0 1
 shininess 5
 end-material
 
 #the root
 group root
 scale s1 25 25 25
-rotate r1 50 1 0 0
+rotate r1 30 0 1 0
+translate t1 0 0 0
 leaf l1 instanceof box 
 
 translate tlight 50 30 70
@@ -24,6 +25,7 @@ add-child tlight root
 assign-material l1 mat
 add-child l1 s1
 add-child s1 r1
-add-child r1 root
+add-child r1 t1
+add-child t1 root
 
 assign-root root
