@@ -77,7 +77,6 @@ private:
     void dispose(GLFWwindow* window);
     void initObjects(map<string,util::PolygonMesh<VertexAttrib>>& meshes);
     void initShaderVariables(vector<util::Light>& lights);
-    
     glm::vec3 getColor(HitRecord hitRecord, vector<util::Light> sceneLights);
     int clipValue(int val);
 };
