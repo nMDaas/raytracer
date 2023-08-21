@@ -235,6 +235,8 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
     for (int hh = 0; hh < HEIGHT; hh++) {
         for (int ww = 0; ww < WIDTH; ww++) {
 
+            std::cout << "(" << hh << "," << ww << ")" << std::endl;
+
             float dx = (float)ww - (0.5f * WIDTH);
             float dy =  (0.5f * HEIGHT) - (float)hh ;
             float dz = -(0.5f * HEIGHT) / tan(cameraFOV/2);
@@ -266,7 +268,11 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
             }
             else {
                 util::Material* mat = hitRecord.object_mat;
-                out << mat->getAmbient().x * 255 << " " << mat->getAmbient().y * 255 << " " << mat->getAmbient().z * 255 << endl;
+                vector<util::Light> sceneLights = raytracerRenderer->getLights();
+                glm::vec3 color = getColor(hitRecord,sceneLights);
+                raytracerRenderer->clearLights();
+                spdlog::debug("color in raytracer(): " + glm::to_string(color));
+                out << color.x << " " << color.y << " " << color.z << endl;
             }
 
             spdlog::debug("----");
