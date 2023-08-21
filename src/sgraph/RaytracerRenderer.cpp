@@ -1,5 +1,7 @@
 #include "RaytracerRenderer.h"
 
+#include <fstream>
+
 #include "spdlog/spdlog.h"
 #include "spdlog/cfg/env.h"
 
