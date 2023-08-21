@@ -14,8 +14,6 @@ class GroupNode : public ParentSGNode {
 	
     ~GroupNode();
 
-    SGNode *clone();
-
     void accept(SGNodeVisitor* visitor);
 
 };
