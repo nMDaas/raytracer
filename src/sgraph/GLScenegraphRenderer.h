@@ -28,9 +28,7 @@ class GLScenegraphRenderer: public SGNodeVisitor {
 
     ~GLScenegraphRenderer();
 
-    /*
-        to check for copy constructors
-    */
+    // to check for copy constructors
     GLScenegraphRenderer (GLScenegraphRenderer &t);
 
     void visitGroupNode(GroupNode *groupNode);

@@ -6,6 +6,11 @@ AbstractSGNode::AbstractSGNode(const std::string& name,IScenegraph *graph) {
     setName(name);
 }
 
+// to check for copy constructors
+AbstractSGNode::AbstractSGNode (AbstractSGNode &t) {
+    std::cout << "ABSTRACTSGNODE COPY CONSTRUCTOR CALLED" << std::endl;
+}
+
 // set parent of this node
 void AbstractSGNode::setParent(SGNode *parent) {
     this->parent = parent;

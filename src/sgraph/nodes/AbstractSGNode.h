@@ -18,6 +18,9 @@ class AbstractSGNode : public SGNode {
     public:
     AbstractSGNode(const std::string& name,IScenegraph *graph);
 
+    // to check for copy constructors
+    AbstractSGNode (AbstractSGNode &t);
+
     // set parent of this node
     void setParent(SGNode *parent);
 

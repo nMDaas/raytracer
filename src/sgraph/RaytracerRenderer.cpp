@@ -10,11 +10,8 @@ RaytracerRenderer::RaytracerRenderer(stack<glm::mat4>& mv, glm::vec4& in_s, glm:
 
 RaytracerRenderer::~RaytracerRenderer(){}
 
-/*
-    to check for copy constructors
-*/
 RaytracerRenderer::RaytracerRenderer (RaytracerRenderer &t) {
-    std::cout << "RAYTRACERRENDERER COPY CONSTRUCTOR CALLED" << std::endl;
+    std::cout << "RAYTRACER RENDERER COPY CONSTRUCTOR CALLED" << std::endl;
 }
 
 void RaytracerRenderer::visitGroupNode(GroupNode *groupNode) {

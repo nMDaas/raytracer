@@ -14,9 +14,6 @@ GLScenegraphRenderer::GLScenegraphRenderer(stack<glm::mat4>& mv, map<string,util
 
 GLScenegraphRenderer::~GLScenegraphRenderer() {}
 
-/*
-    to check for copy constructors
-*/
 GLScenegraphRenderer::GLScenegraphRenderer (GLScenegraphRenderer &t) : modelview(t.modelview) {
     std::cout << "GLScenegraphRenderer COPY CONSTRUCTOR CALLED" << std::endl;
 }
