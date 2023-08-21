@@ -102,8 +102,8 @@ HitRecord& RaytracerRenderer::getHitRecord() {
     return hitRecordWithMinTime;
 }
 
-glm::vec4 RaytracerRenderer::getIntersection(float time){
-    return s + (v * time);
+glm::vec4 RaytracerRenderer::getIntersection(float time, glm::vec4 _s, glm::vec4 _v){
+    return _s + (_v * time);
 }
 
 glm::vec4 RaytracerRenderer::getNormal(glm::vec4 intersectionPoint) {
