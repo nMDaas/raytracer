@@ -86,9 +86,13 @@ void RaytracerRenderer::visitLightNode(LightNode *lightNode) {
     spdlog::debug("RaytracerRenderer - Light Node to draw: " +lightNode->getName());
 }
 
-vector<util::Light> RaytracerRenderer::getLights(){}
+vector<util::Light> RaytracerRenderer::getLights() {
+    return lights;
+}
 
-void RaytracerRenderer::clearLights(){}
+void RaytracerRenderer::clearLights() {
+    lights.clear();
+}
 
 HitRecord& RaytracerRenderer::getHitRecord() {
     return hitRecordWithMinTime;

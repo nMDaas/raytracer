@@ -50,6 +50,7 @@ class RaytracerRenderer: public SGNodeVisitor {
     float minTime = INFINITY;
     util::Material* dummyMaterial;
     HitRecord hitRecordWithMinTime = {minTime,glm::vec4(0,0,0,0),glm::vec4(0,0,0,0),dummyMaterial};
+    vector<util::Light> lights;
 
     glm::vec4 getIntersection(float time);
     glm::vec4 getNormal(glm::vec4 intersectionPoint);
