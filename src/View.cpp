@@ -2,6 +2,7 @@
 
 #include "spdlog/spdlog.h"
 #include "spdlog/cfg/env.h"
+#include <math.h>
 
 View::View() {
 
