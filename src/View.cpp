@@ -275,6 +275,60 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
     std::cout << "Completed raytracing!" << std::endl;
 }
 
+glm::vec3 View::getColor(HitRecord hitRecord, vector<util::Light> sceneLights) {
+    glm::vec3 outColor(0,0,0);
+    glm::vec3 lightVec;
+    glm::vec4 fPosition = hitRecord.intersection_position;
+    glm::vec3 ambient,diffuse,specular;
+    util::Material* mat = hitRecord.object_mat;
+    glm::vec4 fNormal = hitRecord.intersection_normal;
+    glm::vec4 tNormal = fNormal;
+    glm::vec3 normalView = normalize(tNormal);
+    glm::vec3 viewVec = - fPosition;
+    viewVec = glm::normalize(viewVec);
+
+    spdlog::debug("sceneLights size: " + sceneLights.size());
+
+    for (int i = 0; i < sceneLights.size(); i++) {
+        if (sceneLights[i].getPosition().w != 0) {
+            lightVec = glm::normalize(sceneLights[i].getPosition() - fPosition);
+        }
+        else {
+            lightVec = glm::normalize(- sceneLights[i].getPosition());
+        }
+    
+        float nDotL = glm::dot(normalView,lightVec);
+
+        glm::vec3 reflectVec = glm::reflect(-lightVec,normalView);
+        reflectVec = glm::normalize(reflectVec);
+
+        float rDotV = std::max(dot(reflectVec,viewVec),0.0f);
+
+        ambient = glm::vec3(mat->getAmbient()) * sceneLights[i].getAmbient();
+        diffuse = glm::vec3(mat->getDiffuse()) * sceneLights[i].getDiffuse() * std::max(nDotL,0.0f);
+        if (nDotL > 0) {
+            specular = glm::vec3(mat->getSpecular()) * sceneLights[i].getSpecular() * pow(rDotV,mat->getShininess());
+        }
+        else {
+            specular = glm::vec3(0,0,0);
+        }
+        outColor = outColor + ambient + diffuse + specular;
+        spdlog::debug("light #" + i);
+        spdlog::debug("light ambient: " + glm::to_string(ambient));
+        spdlog::debug("light diffuse: " + glm::to_string(diffuse));
+        spdlog::debug("light specular: " + glm::to_string(specular));
+        spdlog::debug("light outColor: " + glm::to_string(outColor));
+    }
+
+    outColor = outColor * 255.0f;
+    
+    spdlog::debug("outColor before clipping(): " + glm::to_string(outColor));
+    outColor.x = clipValue(outColor.x);
+    outColor.y = clipValue(outColor.y);
+    outColor.z = clipValue(outColor.z);
+
+    return outColor;
+}
 
 int View::clipValue(int val) {
     if (val > 255) {
