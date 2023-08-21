@@ -275,6 +275,19 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
     std::cout << "Completed raytracing!" << std::endl;
 }
 
+
+int View::clipValue(int val) {
+    if (val > 255) {
+        return 255;
+    }
+    else if (val < 0) {
+        return 0;
+    }
+    else {
+        return val;
+    }
+}
+
 void View::error_callback(int error, const char* description)
 {
     fprintf(stderr, "Error: %s\n", description);

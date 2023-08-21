@@ -78,6 +78,7 @@ private:
     void initObjects(map<string,util::PolygonMesh<VertexAttrib>>& meshes);
     void initShaderVariables(vector<util::Light>& lights);
     
+    int clipValue(int val);
 };
 
 #endif
