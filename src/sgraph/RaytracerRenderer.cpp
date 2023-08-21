@@ -66,12 +66,20 @@ void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
     if (box.calcTimes(_s,_v)) {
         float newTime = box.getTime();
         if (newTime < hitRecordWithMinTime.t) {
-            glm::vec4 intersectionPoint = getIntersection(newTime);
-            glm::vec4 normal = glm::normalize(getNormal(intersectionPoint));
+            glm::vec4 intersectionPoint = getIntersection(newTime,_s,_v);
+            glm::vec4 normal = getNormal(intersectionPoint);
+            spdlog::debug("in RaytracerRenderer - visitLeafNode() - intersectionPoint: " + glm::to_string(intersectionPoint));
+            spdlog::debug("in RaytracerRenderer - visitLeafNode() - normal: " + glm::to_string(normal));
 
+            normal = glm::normalize(getNormal(intersectionPoint));
+            spdlog::debug("in RaytracerRenderer - visitLeafNode() - normal after normalizing: " + glm::to_string(normal));
+        
             // points transformed to convert from object coordinate system to view coordinate system
             intersectionPoint = modelview.top() * intersectionPoint; 
             normal = modelview.top() * normal;
+            spdlog::debug("in RaytracerRenderer - visitLeafNode() - intersectionPoint x modelview top: " + glm::to_string(intersectionPoint));
+            spdlog::debug("in RaytracerRenderer - visitLeafNode() - normal x modelview top: " + glm::to_string(normal));
+
             // another normalize required here?
 
             HitRecord newHitRecord = {newTime,intersectionPoint,normal,leafNode->getMaterial()};
