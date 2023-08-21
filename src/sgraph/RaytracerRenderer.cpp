@@ -84,6 +84,10 @@ void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
 
 void RaytracerRenderer::visitLightNode(LightNode *lightNode) {
     spdlog::debug("RaytracerRenderer - Light Node to draw: " +lightNode->getName());
+    util::Light nodeLight = *lightNode->getLight();
+    glm::vec4 pos = nodeLight.getPosition();
+    nodeLight.setPosition(modelview.top() * pos);
+    lights.push_back(nodeLight);
 }
 
 vector<util::Light> RaytracerRenderer::getLights() {
