@@ -302,10 +302,12 @@ glm::vec3 View::getColor(HitRecord hitRecord, vector<util::Light> sceneLights) {
 
     for (int i = 0; i < sceneLights.size(); i++) {
         if (sceneLights[i].getPosition().w != 0) {
+            std::cout << "W IS 1" << std::endl;
             // this is the vector from the light position to the point of intersection
             lightVec = glm::normalize(sceneLights[i].getPosition() - fPosition);
         }
         else {
+            std::cout << "W IS 0" << std::endl;
             lightVec = glm::normalize(- sceneLights[i].getPosition());
         }
     
@@ -318,6 +320,9 @@ glm::vec3 View::getColor(HitRecord hitRecord, vector<util::Light> sceneLights) {
 
         float rDotV = std::max(dot(reflectVec,viewVec),0.0f);
 
+        /* A 1x3 * 1x3 matrix can give a 1x3 matrix or a single value. We avoid the single value  
+        by multiplying the vectors together to give a 1x3 vector. If we wanted the single value, 
+        we could take glm::dot of the two vectors */
         ambient = glm::vec3(mat->getAmbient()) * sceneLights[i].getAmbient();
 
         /* nDotL is greater > 0 only if angle between normal and light vector is between 
