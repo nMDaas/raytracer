@@ -14,6 +14,7 @@
 #include "nodes/LeafNode.h"
 #include "nodes/LightNode.h"
 #include "../objects/Box.h"
+#include "../objects/Sphere.h"
 #include "HitRecord.h"
 
 /*
@@ -45,6 +46,7 @@ class RaytracerRenderer: public SGNodeVisitor {
     glm::vec4 s;
     glm::vec4 v;
     Box box;
+    Sphere sphere;
     float minTime = INFINITY;
     util::Material* dummyMaterial;
     HitRecord hitRecordWithMinTime = {minTime,glm::vec4(0,0,0,0),glm::vec4(0,0,0,0),dummyMaterial};
