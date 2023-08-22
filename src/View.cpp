@@ -302,12 +302,15 @@ glm::vec3 View::getColor(HitRecord hitRecord, vector<util::Light> sceneLights) {
 
     for (int i = 0; i < sceneLights.size(); i++) {
         if (sceneLights[i].getPosition().w != 0) {
+            // this is the vector from the light position to the point of intersection
             lightVec = glm::normalize(sceneLights[i].getPosition() - fPosition);
         }
         else {
             lightVec = glm::normalize(- sceneLights[i].getPosition());
         }
     
+        // nDotL is the dot product of the normal vector and the light vector 
+        // nDotL = normal vector * light vector * angle between normal and light vector
         float nDotL = glm::dot(normalView,lightVec);
 
         glm::vec3 reflectVec = glm::reflect(-lightVec,normalView);
@@ -316,6 +319,13 @@ glm::vec3 View::getColor(HitRecord hitRecord, vector<util::Light> sceneLights) {
         float rDotV = std::max(dot(reflectVec,viewVec),0.0f);
 
         ambient = glm::vec3(mat->getAmbient()) * sceneLights[i].getAmbient();
+
+        /* nDotL is greater > 0 only if angle between normal and light vector is between 
+        0° and 90° and between 270° and 360°. This ensures that the light direction is coming in 
+        front of point of intersection and not behind point of intersection. If behind, diffuse becomes 0
+        (multiplied by 0). Otherwise, diffuse is calculated to it's full amount (multiplied by 1). It also 
+        does not matter if lightVec is lightPosition - fPosition or fPosition - lightPosition because the dot 
+        product of either is the same because the cos of the angle between both vectors is the same. */
         diffuse = glm::vec3(mat->getDiffuse()) * sceneLights[i].getDiffuse() * std::max(nDotL,0.0f);
         if (nDotL > 0) {
             specular = glm::vec3(mat->getSpecular()) * sceneLights[i].getSpecular() * pow(rDotV,mat->getShininess());
