@@ -315,10 +315,15 @@ glm::vec3 View::getColor(HitRecord hitRecord, vector<util::Light> sceneLights) {
         // nDotL = normal vector * light vector * angle between normal and light vector
         float nDotL = glm::dot(normalView,lightVec);
 
+        /* glm::reflect calculates angle of reflection. -lightVec gives the vector of 
+        point of intersection - light position. glm::reflect uses this formula - 
+        result = I - 2.0 * dot(N, I) * N - where N is normal and I is -lightVec */
         glm::vec3 reflectVec = glm::reflect(-lightVec,normalView);
         reflectVec = glm::normalize(reflectVec);
 
-        float rDotV = std::max(dot(reflectVec,viewVec),0.0f);
+        std::cout << "fPosition: " << glm::to_string(fPosition) << std::endl;
+        std::cout << "viewVec: " << glm::to_string(viewVec) << std::endl;
+        std::cout << "reflectVec: " << glm::to_string(reflectVec) << std::endl;
 
         /* A 1x3 * 1x3 matrix can give a 1x3 matrix or a single value. We avoid the single value  
         by multiplying the vectors together to give a 1x3 vector. If we wanted the single value, 
@@ -332,7 +337,20 @@ glm::vec3 View::getColor(HitRecord hitRecord, vector<util::Light> sceneLights) {
         does not matter if lightVec is lightPosition - fPosition or fPosition - lightPosition because the dot 
         product of either is the same because the cos of the angle between both vectors is the same. */
         diffuse = glm::vec3(mat->getDiffuse()) * sceneLights[i].getDiffuse() * std::max(nDotL,0.0f);
+
+        // fPosition vector = 0 - pointOfIntersection 
+        // viewVec is the vector = pointOfIntersection - 0 in direction of the camera (from viewer's location)
+        /* the logic behind calculating rDotV is that when the reflected vector and viewVec are pointing 
+        in the same direction and angle between them = 0°, the light should be brightest. When the vectors are pointed
+        opposite to each other and angle between them is closer to 180°, light should be reflected the least. 
+        This is best represented by the cos graph. If the angle is between 180° and 270°, there should be no 
+        lighting (specular) */
+        float rDotV = std::max(dot(reflectVec,viewVec),0.0f);
+
+        /* check to make sure that light is coming in front of object and not behind (rDotV > 0 includes light 
+        coming from behind the object */
         if (nDotL > 0) {
+            // The closer the viewVec and reflectVec, the higher the value of rDotV, the higher the specular value
             specular = glm::vec3(mat->getSpecular()) * sceneLights[i].getSpecular() * pow(rDotV,mat->getShininess());
         }
         else {
