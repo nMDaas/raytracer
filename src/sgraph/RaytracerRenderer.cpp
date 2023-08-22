@@ -108,6 +108,10 @@ HitRecord& RaytracerRenderer::getHitRecord() {
 }
 
 glm::vec4 RaytracerRenderer::getIntersection(float time, glm::vec4 _s, glm::vec4 _v){
+    spdlog::debug("_s: " + glm::to_string(_s));
+    spdlog::debug("_v: " + glm::to_string(_v));
+    spdlog::debug("time: " + (int) time);
+    spdlog::debug("getIntersection: " + glm::to_string(_s + (_v * time)));
     return _s + (_v * time);
 }
 
