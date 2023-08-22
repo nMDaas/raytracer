@@ -1,0 +1,52 @@
+# these instances will be ignored if debugger is being used
+instance box src/models/box.obj
+instance sphere src/models/sphere.obj
+
+#material
+material mat
+emission 0 0 0
+ambient 1 0 0
+diffuse 0 0 0
+specular 0 1 1
+shininess 5
+end-material
+
+#the root
+group root2
+
+group onecopy
+add-child onecopy root2
+
+translate t1 0 0 0
+scale s1 10 10 10
+leaf l1 instanceof sphere 
+translate t2 0 -15 0
+scale s2 10 10 10
+leaf l2 instanceof box 
+
+translate tlight 0 30 0
+translate tlight2 50 0 70
+light li1 1 1 1 1 1 1 1 1 1
+add-child li1 tlight
+add-child tlight tlight2
+add-child tlight2 onecopy
+
+assign-material l1 mat
+add-child l1 s1
+add-child s1 t1
+add-child t1 onecopy
+
+assign-material l2 mat
+add-child l2 s2
+add-child s2 t2
+add-child t2 onecopy
+
+translate t3 50 0 0 
+copy secondcopy onecopy
+add-child secondcopy t3
+add-child t3 root2
+
+copy t32 t3
+
+assign-root root2
+
