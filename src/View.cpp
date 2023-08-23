@@ -140,6 +140,7 @@ void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>
 	glViewport(0, 0, window_width, window_height);
 
     renderer = new GLScenegraphRenderer(modelview, objects, shaderLocations);
+    testRenderer = new TestRenderer(modelview, objects, shaderLocations);
 
     frames = 0;
     time = glfwGetTime();
@@ -179,9 +180,9 @@ void View::display(IScenegraph *scenegraph) {
     modelview.top() = modelview.top() * glm::lookAt(glm::vec3(0.0f,0.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
       
     //draw scene graph here
-    scenegraph->getRoot()->accept(renderer);
+    scenegraph->getRoot()->accept(testRenderer);
     
-    vector<util::Light> sceneLights = renderer->getLights();
+    vector<util::Light> sceneLights = testRenderer->getLights();
 
     initShaderVariables(sceneLights);
 
@@ -204,7 +205,7 @@ void View::display(IScenegraph *scenegraph) {
         glUniform3fv(lightLocations[i].specular, 1,glm::value_ptr(sceneLights[i].getSpecular()));
     }
 
-    renderer->clearLights();
+    testRenderer->clearLights();
 
     modelview.pop();
     glFlush();
@@ -258,7 +259,6 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
             spdlog::debug("lookat: " + glm::to_string(glm::lookAt(glm::vec3(0.0f,0.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f))));
             raytracer_modelview.top() = raytracer_modelview.top() * glm::lookAt(glm::vec3(0.0f,0.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
             raytracerRenderer = new RaytracerRenderer(raytracer_modelview,origin,direction);
-            //testRenderer = new TestRenderer(raytracer_modelview, origin, direction);
             spdlog::debug( "modelview top * lookat: " + glm::to_string(raytracer_modelview.top()));
             spdlog::debug("origin: " + glm::to_string(origin));
             spdlog::debug("direction: " + glm::to_string(direction));

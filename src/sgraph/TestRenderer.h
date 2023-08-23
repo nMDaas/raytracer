@@ -8,17 +8,16 @@
 
 #include "AbstractRenderer.h"
 
-#include "Material.h"
-#include "HitRecord.h"
+#include "ShaderProgram.h"
+#include "ShaderLocationsVault.h"
+#include "ObjectInstance.h"
 
 #include "nodes/LeafNode.h"
-#include "../objects/Box.h"
-#include "../objects/Sphere.h"
 
 class TestRenderer : public AbstractRenderer {
     
     public:
-        TestRenderer(stack<glm::mat4>& mv, glm::vec4& in_s, glm::vec4& in_v);
+        TestRenderer(stack<glm::mat4>& mv, map<string,util::ObjectInstance *>& os, util::ShaderLocationsVault& shaderLocs);
 
         ~TestRenderer();
 
@@ -29,16 +28,8 @@ class TestRenderer : public AbstractRenderer {
         HitRecord& getHitRecord();
 
     private: 
-        glm::vec4 s;
-        glm::vec4 v;
-        Box box;
-        Sphere sphere;
-        float minTime = INFINITY;
-        util::Material* dummyMaterial;
-        HitRecord hitRecordWithMinTime = {minTime,glm::vec4(0,0,0,0),glm::vec4(0,0,0,0),dummyMaterial};
-
-        glm::vec4 getIntersection(float time, glm::vec4 _s, glm::vec4 _v);
-        glm::vec4 getNormal(glm::vec4 intersectionPoint,string instanceOf);
+        util::ShaderLocationsVault shaderLocations;
+        map<string,util::ObjectInstance *> objects;
 };
 
 #endif
