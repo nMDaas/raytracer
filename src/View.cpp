@@ -140,7 +140,7 @@ void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>
 	glViewport(0, 0, window_width, window_height);
 
     renderer = new GLScenegraphRenderer(modelview, objects, shaderLocations);
-    
+
     frames = 0;
     time = glfwGetTime();
 }
@@ -263,7 +263,8 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
             spdlog::debug("direction: " + glm::to_string(direction));
             scenegraph->getRoot()->accept(raytracerRenderer); 
 
-            HitRecord& hitRecord = raytracerRenderer->getHitRecord();
+
+            HitRecord& hitRecord = dynamic_cast<RaytracerRenderer *>(raytracerRenderer)->getHitRecord();
 
             std::cout << "(" << hh << "," << ww << "): time: " << hitRecord.t << std::endl;
 

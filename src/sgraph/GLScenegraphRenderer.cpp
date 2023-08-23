@@ -31,5 +31,3 @@ void GLScenegraphRenderer::visitLeafNode(LeafNode *leafNode) {
 
     objects[leafNode->getInstanceOf()]->draw();
 }
-
-HitRecord& GLScenegraphRenderer::getHitRecord() {}

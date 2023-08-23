@@ -26,7 +26,6 @@ class GLScenegraphRenderer: public AbstractRenderer {
     GLScenegraphRenderer (GLScenegraphRenderer &t);
 
     void visitLeafNode(LeafNode *leafNode);
-    HitRecord& getHitRecord();
 
     private: 
     util::ShaderLocationsVault shaderLocations;
