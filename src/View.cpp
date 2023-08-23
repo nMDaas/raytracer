@@ -257,14 +257,14 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
             spdlog::debug("modelview top: " + glm::to_string(raytracer_modelview.top()));
             spdlog::debug("lookat: " + glm::to_string(glm::lookAt(glm::vec3(0.0f,0.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f))));
             raytracer_modelview.top() = raytracer_modelview.top() * glm::lookAt(glm::vec3(0.0f,0.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
-            //raytracerRenderer = new RaytracerRenderer(raytracer_modelview,origin,direction);
-            testRenderer = new TestRenderer(raytracer_modelview, origin, direction);
+            raytracerRenderer = new RaytracerRenderer(raytracer_modelview,origin,direction);
+            //testRenderer = new TestRenderer(raytracer_modelview, origin, direction);
             spdlog::debug( "modelview top * lookat: " + glm::to_string(raytracer_modelview.top()));
             spdlog::debug("origin: " + glm::to_string(origin));
             spdlog::debug("direction: " + glm::to_string(direction));
-            scenegraph->getRoot()->accept(testRenderer); 
+            scenegraph->getRoot()->accept(raytracerRenderer); 
 
-            HitRecord& hitRecord = testRenderer->getHitRecord();
+            HitRecord& hitRecord = raytracerRenderer->getHitRecord();
 
             std::cout << "(" << hh << "," << ww << "): time: " << hitRecord.t << std::endl;
 
@@ -273,9 +273,9 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
             }
             else {
                 util::Material* mat = hitRecord.object_mat;
-                vector<util::Light> sceneLights = testRenderer->getLights();
+                vector<util::Light> sceneLights = raytracerRenderer->getLights();
                 glm::vec3 color = getColor(hitRecord,sceneLights);
-                testRenderer->clearLights();
+                raytracerRenderer->clearLights();
                 spdlog::debug("color in raytracer(): " + glm::to_string(color));
                 out << color.x << " " << color.y << " " << color.z << endl;
             }

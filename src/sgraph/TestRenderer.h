@@ -16,11 +16,7 @@
 #include "../objects/Sphere.h"
 
 class TestRenderer : public AbstractRenderer {
-
-    private: 
-        glm::vec4 s;
-        glm::vec4 v;
-
+    
     public:
         TestRenderer(stack<glm::mat4>& mv, glm::vec4& in_s, glm::vec4& in_v);
 
@@ -33,6 +29,8 @@ class TestRenderer : public AbstractRenderer {
         HitRecord& getHitRecord();
 
     private: 
+        glm::vec4 s;
+        glm::vec4 v;
         Box box;
         Sphere sphere;
         float minTime = INFINITY;
