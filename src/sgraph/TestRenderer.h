@@ -13,7 +13,7 @@
 class TestRenderer : public AbstractRenderer {
 
     public:
-        TestRenderer();
+        TestRenderer(stack<glm::mat4>& mv, glm::vec4& in_s, glm::vec4& in_v);
 
         ~TestRenderer();
 
