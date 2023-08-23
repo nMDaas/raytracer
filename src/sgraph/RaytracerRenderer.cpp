@@ -115,6 +115,11 @@ glm::vec4 RaytracerRenderer::getIntersection(float time, glm::vec4 _s, glm::vec4
     return _s + (_v * time);
 }
 
-glm::vec4 RaytracerRenderer::getNormal(glm::vec4 intersectionPoint) {
-    return sphere.getNormal(intersectionPoint);
+glm::vec4 RaytracerRenderer::getNormal(glm::vec4 intersectionPoint,string instanceOf) {
+    if (instanceOf == "box") {
+        return box.getNormal(intersectionPoint);
+    }
+    else if (instanceOf == "sphere") {
+        return sphere.getNormal(intersectionPoint);
+    }
 }
