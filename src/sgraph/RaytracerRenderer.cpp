@@ -62,15 +62,36 @@ void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
     spdlog::debug("inverseS: " + glm::to_string(_s));
     spdlog::debug("inverseV: " + glm::to_string(_v));
 
-    if (sphere.calcTimes(_s,_v)) {
-        float newTime = sphere.getTime();
+    bool hit; // did the ray hit the leaf
+    float newTime;
+    if (leafNode->getInstanceOf() == "box") {
+        hit = box.calcTimes(_s,_v);
+        if (hit) {
+            newTime = box.getTime();
+        }
+    }
+    else if (leafNode->getInstanceOf() == "sphere") {
+        hit = sphere.calcTimes(_s,_v);
+        if (hit) {
+            newTime = sphere.getTime();
+        }
+    }
+
+    if (hit) {
         if (newTime < hitRecordWithMinTime.t) {
             glm::vec4 intersectionPoint = getIntersection(newTime,_s,_v);
-            glm::vec4 normal = getNormal(intersectionPoint);
+            glm::vec4 normal;
+            if (leafNode->getInstanceOf() == "box") {
+                normal = getNormal(intersectionPoint,"box");
+            }
+            else if (leafNode->getInstanceOf() == "sphere") {
+                normal = getNormal(intersectionPoint,"sphere");
+            }
+            
             spdlog::debug("in RaytracerRenderer - visitLeafNode() - intersectionPoint: " + glm::to_string(intersectionPoint));
             spdlog::debug("in RaytracerRenderer - visitLeafNode() - normal: " + glm::to_string(normal));
 
-            normal = glm::normalize(getNormal(intersectionPoint));
+            normal = glm::normalize(normal);
             spdlog::debug("in RaytracerRenderer - visitLeafNode() - normal after normalizing: " + glm::to_string(normal));
         
             // points transformed to convert from object coordinate system to view coordinate system
