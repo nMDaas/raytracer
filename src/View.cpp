@@ -140,6 +140,7 @@ void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>
 	glViewport(0, 0, window_width, window_height);
 
     renderer = new GLScenegraphRenderer(modelview, objects, shaderLocations);
+    abstractRenderer = new AbstractRenderer(modelview);
 
     frames = 0;
     time = glfwGetTime();
@@ -180,6 +181,8 @@ void View::display(IScenegraph *scenegraph) {
       
     //draw scene graph here
     scenegraph->getRoot()->accept(renderer);
+
+    scenegraph->getRoot()->accept(abstractRenderer);
     
     vector<util::Light> sceneLights = renderer->getLights();
 
