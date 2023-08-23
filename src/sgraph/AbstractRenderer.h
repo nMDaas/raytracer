@@ -19,6 +19,10 @@
 
 class AbstractRenderer : public SGNodeVisitor {
 
+    protected: 
+        stack<glm::mat4>& modelview;
+        vector<util::Light> lights;
+
     public:
         AbstractRenderer(stack<glm::mat4>& mv);
 
@@ -32,16 +36,10 @@ class AbstractRenderer : public SGNodeVisitor {
         void visitRotateTransform(RotateTransform *rotateNode);
         void visitTranslateTransform(TranslateTransform *translateNode);
         void visitTransformNode(TransformNode *transformNode);
-        void visitLeafNode(LeafNode *leafNode);
         void visitLightNode(LightNode *lightNode);
         vector<util::Light> getLights();
         void clearLights();
         HitRecord& getHitRecord();
-
-        vector<util::Light> lights;
-
-    private: 
-        stack<glm::mat4>& modelview;
 
 };
 

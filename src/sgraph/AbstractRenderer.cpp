@@ -46,10 +46,6 @@ void AbstractRenderer::visitTransformNode(TransformNode *transformNode) {
     modelview.pop();
 }
 
-void AbstractRenderer::visitLeafNode(LeafNode *leafNode) {
-    spdlog::info("Leaf Node to draw: " +leafNode->getName());
-}
-
 void AbstractRenderer::visitLightNode(LightNode *lightNode) {
     spdlog::info("Light Node to draw: " +lightNode->getName());
     util::Light nodeLight = *lightNode->getLight();
