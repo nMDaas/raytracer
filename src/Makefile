@@ -1,4 +1,4 @@
-OBJS = Raytracer.o VertexAttrib.o ScenegraphImporter.o Controller.o Model.o View.o AbstractSGNode.o GroupNode.o ChildSGNode.o LeafNode.o LightNode.o ParentSGNode.o RotateTransform.o ScaleTransform.o TransformNode.o TranslateTransform.o AbstractRenderer.o GLScenegraphRenderer.o RaytracerRenderer.o Scenegraph.o Box.o Sphere.o
+OBJS = Raytracer.o VertexAttrib.o ScenegraphImporter.o Controller.o Model.o View.o AbstractSGNode.o GroupNode.o ChildSGNode.o LeafNode.o LightNode.o ParentSGNode.o RotateTransform.o ScaleTransform.o TransformNode.o TranslateTransform.o AbstractRenderer.o GLScenegraphRenderer.o RaytracerRenderer.o TestRenderer.o Scenegraph.o Box.o Sphere.o
 INCLUDES = -I../include
 LIBS = -L../lib
 LDFLAGS = -lglad -lglfw3
@@ -72,6 +72,9 @@ GLScenegraphRenderer.o: sgraph/GLScenegraphRenderer.cpp
 
 RaytracerRenderer.o: sgraph/RaytracerRenderer.cpp 
 	$(COMPILER) $(INCLUDES) $(CFLAGS) -c sgraph/RaytracerRenderer.cpp
+
+TestRenderer.o: sgraph/TestRenderer.cpp 
+	$(COMPILER) $(INCLUDES) $(CFLAGS) -c sgraph/TestRenderer.cpp
 
 Scenegraph.o: sgraph/Scenegraph.cpp 
 	$(COMPILER) $(INCLUDES) $(CFLAGS) -c sgraph/Scenegraph.cpp
