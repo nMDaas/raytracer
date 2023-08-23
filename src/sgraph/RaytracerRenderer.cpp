@@ -62,8 +62,8 @@ void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
     spdlog::debug("inverseS: " + glm::to_string(_s));
     spdlog::debug("inverseV: " + glm::to_string(_v));
 
-    if (box.calcTimes(_s,_v)) {
-        float newTime = box.getTime();
+    if (sphere.calcTimes(_s,_v)) {
+        float newTime = sphere.getTime();
         if (newTime < hitRecordWithMinTime.t) {
             glm::vec4 intersectionPoint = getIntersection(newTime,_s,_v);
             glm::vec4 normal = getNormal(intersectionPoint);
@@ -116,5 +116,5 @@ glm::vec4 RaytracerRenderer::getIntersection(float time, glm::vec4 _s, glm::vec4
 }
 
 glm::vec4 RaytracerRenderer::getNormal(glm::vec4 intersectionPoint) {
-    return box.getNormal(intersectionPoint);
+    return sphere.getNormal(intersectionPoint);
 }
