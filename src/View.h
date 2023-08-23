@@ -25,7 +25,6 @@ using namespace std;
 #include "sgraph/GLScenegraphRenderer.h"
 #include "sgraph/RaytracerRenderer.h"
 #include "sgraph/AbstractRenderer.h"
-#include "sgraph/TestRenderer.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -65,7 +64,6 @@ private:
     map<string,util::ObjectInstance *> objects;
     SGNodeVisitor *renderer;
     SGNodeVisitor *raytracerRenderer;
-    SGNodeVisitor *testRenderer;
     vector<LightLocation> lightLocations; // shader locations for lights
     int WIDTH = 300; // width of ppm file, in pixels
     int HEIGHT = 300; // height of ppm file, in pixels

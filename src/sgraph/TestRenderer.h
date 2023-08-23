@@ -1,6 +1,5 @@
 #ifndef _TESTRENDERER_H_
 #define _TESTRENDERER_H_
-
 #include <stack>
 #include <map>
 

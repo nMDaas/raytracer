@@ -5,23 +5,17 @@
 
 #include <glm/gtx/string_cast.hpp>
 
-#include "SGNodeVisitor.h"
-#include "nodes/GroupNode.h"
-#include "nodes/RotateTransform.h"
-#include "nodes/ScaleTransform.h"
-#include "nodes/TranslateTransform.h"
-#include "nodes/TransformNode.h"
-#include "nodes/LeafNode.h"
-#include "nodes/LightNode.h"
+#include "AbstractRenderer.h"
 
 #include "ShaderProgram.h"
 #include "ShaderLocationsVault.h"
 #include "ObjectInstance.h"
+#include "nodes/LeafNode.h"
 
 /*
     GLScenegraphRenderer is a visitor that implements SGNodeVisitor and will be
     used to traverse the scenegraph and render it */
-class GLScenegraphRenderer: public SGNodeVisitor {
+class GLScenegraphRenderer: public AbstractRenderer {
     public:
 
     GLScenegraphRenderer(stack<glm::mat4>& mv, map<string,util::ObjectInstance *>& os, util::ShaderLocationsVault& shaderLocs);
@@ -31,23 +25,10 @@ class GLScenegraphRenderer: public SGNodeVisitor {
     // to check for copy constructors
     GLScenegraphRenderer (GLScenegraphRenderer &t);
 
-    void visitGroupNode(GroupNode *groupNode);
-    void visitScaleTransform(ScaleTransform *scaleNode);
-    void visitRotateTransform(RotateTransform *rotateNode);
-    void visitTranslateTransform(TranslateTransform *translateNode);
-    void visitTransformNode(TransformNode *transformNode);
     void visitLeafNode(LeafNode *leafNode);
-    void visitLightNode(LightNode *lightNode);
-    vector<util::Light> getLights();
-    void clearLights();
     HitRecord& getHitRecord();
 
-    vector<util::Light> lights;
-
- 
-
     private: 
-    stack<glm::mat4>& modelview;
     util::ShaderLocationsVault shaderLocations;
     map<string,util::ObjectInstance *> objects;
 

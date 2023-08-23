@@ -140,8 +140,7 @@ void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>
 	glViewport(0, 0, window_width, window_height);
 
     renderer = new GLScenegraphRenderer(modelview, objects, shaderLocations);
-    testRenderer = new TestRenderer(modelview, objects, shaderLocations);
-
+    
     frames = 0;
     time = glfwGetTime();
 }
@@ -180,9 +179,9 @@ void View::display(IScenegraph *scenegraph) {
     modelview.top() = modelview.top() * glm::lookAt(glm::vec3(0.0f,0.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
       
     //draw scene graph here
-    scenegraph->getRoot()->accept(testRenderer);
+    scenegraph->getRoot()->accept(renderer);
     
-    vector<util::Light> sceneLights = testRenderer->getLights();
+    vector<util::Light> sceneLights = renderer->getLights();
 
     initShaderVariables(sceneLights);
 
@@ -205,7 +204,7 @@ void View::display(IScenegraph *scenegraph) {
         glUniform3fv(lightLocations[i].specular, 1,glm::value_ptr(sceneLights[i].getSpecular()));
     }
 
-    testRenderer->clearLights();
+    renderer->clearLights();
 
     modelview.pop();
     glFlush();
