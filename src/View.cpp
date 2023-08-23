@@ -322,9 +322,9 @@ glm::vec3 View::getColor(HitRecord hitRecord, vector<util::Light> sceneLights) {
         glm::vec3 reflectVec = glm::reflect(-lightVec,normalView);
         reflectVec = glm::normalize(reflectVec);
 
-        std::cout << "fPosition: " << glm::to_string(fPosition) << std::endl;
-        std::cout << "viewVec: " << glm::to_string(viewVec) << std::endl;
-        std::cout << "reflectVec: " << glm::to_string(reflectVec) << std::endl;
+        spdlog::debug("fPosition: " + glm::to_string(fPosition)); 
+        spdlog::debug("viewVec: " + glm::to_string(viewVec));
+        spdlog::debug("reflectVec: " + glm::to_string(reflectVec));
 
         /* A 1x3 * 1x3 matrix can give a 1x3 matrix or a single value. We avoid the single value  
         by multiplying the vectors together to give a 1x3 vector. If we wanted the single value, 
