@@ -10,7 +10,7 @@
 
 #include "nodes/LeafNode.h"
 
-class TestRenderer {
+class TestRenderer : public AbstractRenderer {
 
     public:
         TestRenderer();
@@ -19,6 +19,12 @@ class TestRenderer {
 
         // to check for copy constructors
         TestRenderer (TestRenderer &t);
+
+        void visitLeafNode(LeafNode *leafNode);
+
+    private: 
+        glm::vec4 s;
+        glm::vec4 v;
 };
 
 #endif
