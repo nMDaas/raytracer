@@ -39,7 +39,6 @@ class AbstractRenderer : public SGNodeVisitor {
         void visitLightNode(LightNode *lightNode);
         vector<util::Light> getLights();
         void clearLights();
-        HitRecord& getHitRecord();
 
 };
 

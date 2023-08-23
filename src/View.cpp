@@ -140,9 +140,6 @@ void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>
 	glViewport(0, 0, window_width, window_height);
 
     renderer = new GLScenegraphRenderer(modelview, objects, shaderLocations);
-    glm::vec4 sTest = glm::vec4(0,0,0,0);
-    glm::vec4 vTest = glm::vec4(0,0,0,0);
-    testRenderer = new TestRenderer(modelview, sTest, vTest);
 
     frames = 0;
     time = glfwGetTime();
@@ -183,8 +180,6 @@ void View::display(IScenegraph *scenegraph) {
       
     //draw scene graph here
     scenegraph->getRoot()->accept(renderer);
-
-    scenegraph->getRoot()->accept(testRenderer);
     
     vector<util::Light> sceneLights = renderer->getLights();
 
@@ -262,13 +257,14 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
             spdlog::debug("modelview top: " + glm::to_string(raytracer_modelview.top()));
             spdlog::debug("lookat: " + glm::to_string(glm::lookAt(glm::vec3(0.0f,0.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f))));
             raytracer_modelview.top() = raytracer_modelview.top() * glm::lookAt(glm::vec3(0.0f,0.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
-            raytracerRenderer = new RaytracerRenderer(raytracer_modelview,origin,direction);
+            //raytracerRenderer = new RaytracerRenderer(raytracer_modelview,origin,direction);
+            testRenderer = new TestRenderer(raytracer_modelview, origin, direction);
             spdlog::debug( "modelview top * lookat: " + glm::to_string(raytracer_modelview.top()));
             spdlog::debug("origin: " + glm::to_string(origin));
             spdlog::debug("direction: " + glm::to_string(direction));
-            scenegraph->getRoot()->accept(raytracerRenderer); 
+            scenegraph->getRoot()->accept(testRenderer); 
 
-            HitRecord& hitRecord = raytracerRenderer->getHitRecord();
+            HitRecord& hitRecord = testRenderer->getHitRecord();
 
             std::cout << "(" << hh << "," << ww << "): time: " << hitRecord.t << std::endl;
 
@@ -277,9 +273,9 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
             }
             else {
                 util::Material* mat = hitRecord.object_mat;
-                vector<util::Light> sceneLights = raytracerRenderer->getLights();
+                vector<util::Light> sceneLights = testRenderer->getLights();
                 glm::vec3 color = getColor(hitRecord,sceneLights);
-                raytracerRenderer->clearLights();
+                testRenderer->clearLights();
                 spdlog::debug("color in raytracer(): " + glm::to_string(color));
                 out << color.x << " " << color.y << " " << color.z << endl;
             }
