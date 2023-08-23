@@ -12,9 +12,8 @@
 #include "ObjectInstance.h"
 #include "nodes/LeafNode.h"
 
-/*
-    GLScenegraphRenderer is a visitor that implements SGNodeVisitor and will be
-    used to traverse the scenegraph and render it */
+/* GLScenegraphRenderer is a visitor that extends AbstractRenderer 
+and will be used to traverse the scenegraph and render it */
 class GLScenegraphRenderer: public AbstractRenderer {
     public:
 

@@ -17,6 +17,7 @@
 #include "nodes/LeafNode.h"
 #include "nodes/LightNode.h"
 
+/* RaytraceRenderer is an abstract class that implements SGNodeVisitor */
 class AbstractRenderer : public SGNodeVisitor {
 
     protected: 

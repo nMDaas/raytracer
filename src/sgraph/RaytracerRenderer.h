@@ -14,9 +14,8 @@
 #include "../objects/Box.h"
 #include "../objects/Sphere.h"
 
-/*
-    RaytraceRenderer is a visitor that implements SGNodeVisitor and will be
-    used to traverse the scenegraph and return a HitRecord */
+/* RaytraceRenderer is a visitor that extends AbstractRenderer and 
+will be used to traverse the scenegraph and return a HitRecord */
 class RaytracerRenderer: public AbstractRenderer {
     public:
 
