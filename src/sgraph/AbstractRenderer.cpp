@@ -15,24 +15,24 @@ AbstractRenderer::AbstractRenderer (AbstractRenderer &t) : modelview(t.modelview
 }
 
 void AbstractRenderer::visitGroupNode(GroupNode *groupNode) {
-    spdlog::info("Group Node: " +groupNode->getName());
+    spdlog::debug("Group Node: " +groupNode->getName());
     for (int i=0;i<groupNode->getChildren().size();i=i+1) {
         groupNode->getChildren()[i]->accept(this);
     }
 }
 
 void AbstractRenderer::visitScaleTransform(ScaleTransform *scaleNode) {
-    spdlog::info("ScaleTransform Node: " +scaleNode->getName());
+    spdlog::debug("ScaleTransform Node: " +scaleNode->getName());
     visitTransformNode(scaleNode);
 }
 
 void AbstractRenderer::visitRotateTransform(RotateTransform *rotateNode) {
-    spdlog::info("RotateTransform Node: " +rotateNode->getName());
+    spdlog::debug("RotateTransform Node: " +rotateNode->getName());
     visitTransformNode(rotateNode);
 }
 
 void AbstractRenderer::visitTranslateTransform(TranslateTransform *translateNode) {
-    spdlog::info("TranslateTransform Node: " +translateNode->getName());
+    spdlog::debug("TranslateTransform Node: " +translateNode->getName());
     visitTransformNode(translateNode);
 }
 
@@ -51,7 +51,7 @@ void AbstractRenderer::visitTransformNode(TransformNode *transformNode) {
 }
 
 void AbstractRenderer::visitLightNode(LightNode *lightNode) {
-    spdlog::info("Light Node: " +lightNode->getName());
+    spdlog::debug("Light Node: " +lightNode->getName());
     util::Light nodeLight = *lightNode->getLight();
     glm::vec4 pos = nodeLight.getPosition();
     nodeLight.setPosition(modelview.top() * pos);
@@ -59,11 +59,11 @@ void AbstractRenderer::visitLightNode(LightNode *lightNode) {
 }
 
 vector<util::Light> AbstractRenderer::getLights() {
-    spdlog::info("getLights() called");
+    spdlog::debug("getLights() called");
     return lights;
 }
 
 void AbstractRenderer::clearLights() {
-    spdlog::info("clearLights() called");
+    spdlog::debug("clearLights() called");
     lights.clear();
 }
