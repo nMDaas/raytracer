@@ -195,11 +195,7 @@ void View::display(IScenegraph *scenegraph) {
 
     //pass light colors to the shader
     for (int i = 0; i < sceneLights.size(); i++) {
-        //std::cout << "light ambient: " << glm::to_string(sceneLights[i].getAmbient()) << std::endl;
         glUniform3fv(lightLocations[i].ambient, 1, glm::value_ptr(sceneLights[i].getAmbient()));
-        //glm::vec4 pos = sceneLights[i].getPosition();
-        //glUniform4fv(lightLocations[i].position, 1, glm::value_ptr(pos));
-        //std::cout << "light diffuse: " << glm::to_string(sceneLights[i].getDiffuse()) << std::endl;
         glUniform3fv(lightLocations[i].diffuse, 1, glm::value_ptr(sceneLights[i].getDiffuse()));
         glUniform3fv(lightLocations[i].specular, 1,glm::value_ptr(sceneLights[i].getSpecular()));
     }
