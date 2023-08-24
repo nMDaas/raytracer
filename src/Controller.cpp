@@ -38,6 +38,7 @@ void Controller::meshMaterialSetup(char* filePath, bool debugger) {
     if (debugger) {
         importer.addInstance("sphere","models/sphere.obj");
         importer.addInstance("box","models/box.obj");
+        importer.addInstance("cylinder","models/cylinder.obj");
         debugging = true;
     }
     else {
