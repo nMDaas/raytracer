@@ -90,22 +90,20 @@ glm::vec4 Cylinder::getNormal(glm::vec4 intersectionPoint) {
     bool onCylinderEdge;
 
     if ((intersectionPoint.y > 0.999f) && (intersectionPoint.y < 1.001f)) {
-        std::cout << "at ymax" << std::endl;
+        spdlog::debug("at ymax");
         normal.y = 1;
         onCylinderEdge = true;
     }
     else if ((intersectionPoint.y > -0.001f) && (intersectionPoint.y < 0.001)) {
-        std::cout << "at ymin" << std::endl;
+        spdlog::debug("at ymin");
         normal.y = -1;
         onCylinderEdge = true;
     }
     else {
-        std::cout << "between ymin and ymax" << std::endl;
+        spdlog::debug("between ymin and ymax");
         normal.y = 0.0f;
         onCylinderEdge = false;
     }
-
-    std::cout << "onCylinderEdge: " << onCylinderEdge << std::endl;
 
     if (onCylinderEdge) {
         if ((intersectionPoint.x < 1.001f ) && (intersectionPoint.x > 0.999f)) {
@@ -133,8 +131,8 @@ glm::vec4 Cylinder::getNormal(glm::vec4 intersectionPoint) {
         normal.z = intersectionPoint.z;
     }
 
-    std::cout << "interesectionPoint: " << glm::to_string(intersectionPoint) << std::endl;
-    std::cout << "normal: " << glm::to_string(normal) << std::endl;
+    spdlog::debug("interesectionPoint: " + glm::to_string(intersectionPoint));
+    spdlog::debug("normal: " + glm::to_string(normal));
 
     return normal;
 }
