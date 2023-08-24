@@ -1,3 +1,4 @@
 *.o
 src/Raytracer
 src/images/out.ppm
+output.txt
