@@ -59,7 +59,28 @@ bool Cylinder::calcTimes(glm::vec4 s, glm::vec4 v) {
     tmax = (tMaxY < tmax) ? tMaxY : tmax;
     return true;
 }
+
+// returns the time of first intersection of the ray with the unit cylinder
 float Cylinder::getTime() {
+    spdlog::debug("In Cylinder::getTime()");
+
+    // if tmin and tmax are both positive, tmin and tmax both are in front of camera 
+    // return smaller value
+    if (tmin > 0 && tmax > 0 && tmin <= tmax) {
+        return tmin;
+    }
+
+    // if tmin is -ve and tmax is +ve, tmin is behind the camera
+    // return tmax
+    else if (tmin < 0 && tmax > 0) {
+        return tmax;
+    }
+
+    // no hits - check if you ever reach here
+    else {
+        return INFINITY; 
+    }
+    
 }
 
 glm::vec4 Cylinder::getNormal(glm::vec4 intersectionPoint) {
