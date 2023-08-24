@@ -40,6 +40,12 @@ void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
             newTime = sphere.getTime();
         }
     }
+    else if (leafNode->getInstanceOf() == "cylinder") {
+        hit = cylinder.calcTimes(_s,_v);
+        if (hit) {
+            newTime = cylinder.getTime();
+        }
+    }
 
     if (hit) {
         if (newTime < hitRecordWithMinTime.t) {
@@ -50,6 +56,9 @@ void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
             }
             else if (leafNode->getInstanceOf() == "sphere") {
                 normal = getNormal(intersectionPoint,"sphere");
+            }
+            else if (leafNode->getInstanceOf() == "cylinder") {
+                normal = getNormal(intersectionPoint,"cylinder");
             }
             
             spdlog::debug("in RaytracerRenderer - visitLeafNode() - intersectionPoint: " + glm::to_string(intersectionPoint));
@@ -90,5 +99,8 @@ glm::vec4 RaytracerRenderer::getNormal(glm::vec4 intersectionPoint,string instan
     }
     else if (instanceOf == "sphere") {
         return sphere.getNormal(intersectionPoint);
+    }
+    else if (instanceOf == "cylinder") {
+        return cylinder.getNormal(intersectionPoint);
     }
 }
