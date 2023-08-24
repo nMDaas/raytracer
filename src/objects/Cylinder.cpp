@@ -101,7 +101,7 @@ glm::vec4 Cylinder::getNormal(glm::vec4 intersectionPoint) {
     }
     else {
         std::cout << "between ymin and ymax" << std::endl;
-        normal.y = intersectionPoint.y;
+        normal.y = 0.0f;
         onCylinderEdge = false;
     }
 
