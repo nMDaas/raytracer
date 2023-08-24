@@ -1,4 +1,4 @@
-OBJS = Raytracer.o VertexAttrib.o ScenegraphImporter.o Controller.o Model.o View.o AbstractSGNode.o GroupNode.o ChildSGNode.o LeafNode.o LightNode.o ParentSGNode.o RotateTransform.o ScaleTransform.o TransformNode.o TranslateTransform.o AbstractRenderer.o GLScenegraphRenderer.o RaytracerRenderer.o Scenegraph.o Box.o Sphere.o
+OBJS = Raytracer.o VertexAttrib.o ScenegraphImporter.o Controller.o Model.o View.o AbstractSGNode.o GroupNode.o ChildSGNode.o LeafNode.o LightNode.o ParentSGNode.o RotateTransform.o ScaleTransform.o TransformNode.o TranslateTransform.o AbstractRenderer.o GLScenegraphRenderer.o RaytracerRenderer.o Scenegraph.o Box.o Sphere.o Cylinder.o
 INCLUDES = -I../include
 LIBS = -L../lib
 LDFLAGS = -lglad -lglfw3
@@ -81,7 +81,10 @@ Box.o: objects/Box.cpp
 
 Sphere.o: objects/Sphere.cpp 
 	$(COMPILER) $(INCLUDES) $(CFLAGS) -c objects/Sphere.cpp
-	
+
+Cylinder.o: objects/Cylinder.cpp 
+	$(COMPILER) $(INCLUDES) $(CFLAGS) -c objects/Cylinder.cpp
+
 RM = rm	-f
 ifeq ($(OS),Windows_NT)     # is Windows_NT on XP, 2000, 7, Vista, 10...
     RM := del
