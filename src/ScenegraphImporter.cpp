@@ -47,6 +47,12 @@ IScenegraph* ScenegraphImporter::parse(std::istream& input) {
         else if (command == "material") {
             parseMaterial(inputWithOutComments);
         }
+        else if (command == "texture") {
+            parseTexture(inputWithOutComments);
+        }
+        else if (command == "assign-texture") {
+            parseAssignTexture(inputWithOutComments);
+        }
         else if (command == "scale") {
             parseScale(inputWithOutComments);
         }
@@ -303,6 +309,18 @@ void ScenegraphImporter::parseSetRoot(istream& input) {
         throw runtime_error("Root node with name \""+rootname+"\" not found");
     }
     
+}
+
+void ScenegraphImporter::parseTexture(istream& input) {
+    string name,filename;
+    input >> name >> filename;
+    std::cout << "parseTexture(): " << name << ", " << filename << std::endl;
+}
+
+void ScenegraphImporter::parseAssignTexture(istream& input) {
+    string nodename,texturename;
+    input >> nodename >> texturename;
+    std::cout << "parseAssignTexture(): " << nodename << ", " << texturename << std::endl;
 }
 
 // parseAddChild() and parseAssignMaterial() is implicitly tested

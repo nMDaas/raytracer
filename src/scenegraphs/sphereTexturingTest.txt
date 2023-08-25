@@ -1,6 +1,9 @@
 # these instances will be ignored if debugger is being used
 instance sphere src/models/sphere.obj
 
+#textures
+texture earthTexture textures/earthmap.ppm
+
 #material
 material mat
 emission 0 0 0
@@ -16,6 +19,7 @@ scale s1 25 25 25
 rotate r1 30 0 1 0
 translate t1 0 0 0
 leaf l1 instanceof sphere 
+assign-texture l1 earthTexture
 
 translate tlight 50 30 70
 light li1 1 1 1 1 1 1 1 1 1
