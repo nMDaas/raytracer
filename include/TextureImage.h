@@ -1,8 +1,8 @@
 #ifndef _TEXTUREIMAGE_H_
 #define _TEXTUREIMAGE_H_
 
-#include <glad/glad.h>
-
+#include <QtGui/QImage>
+#include <QOpenGLTexture>
 
 namespace util
 {	
@@ -12,89 +12,85 @@ namespace util
   class TextureImage
   {
   protected:
-    GLubyte *image;
-    int width,height;
+    QImage *image;
+    QOpenGLTexture *texture;
     string name;
   protected:
   void deleteImage()
   {
 
     if (image)
-      delete []image;
+      delete image;
   }
 
   public:
-	  TextureImage() {
-      image = NULL;
-      width = 0;
-      height = 0;
+	  TextureImage()
+	  {
+
 	  }
 
-    TextureImage(GLubyte* image,int width,int height,string name) {
-      this->image = image;
-      this->width = width;
-      this->height = height;
+    TextureImage(string filepath,string name) throw(runtime_error)
+    {
+      image = new QImage(QString(filepath.c_str()));
+
+      if (image->isNull())
+        throw runtime_error("Image cannot be loaded!");
+
+      texture = new QOpenGLTexture(image->mirrored());
 
     }
 
-
-    ~TextureImage() {
-      deleteImage();
+    QOpenGLTexture *getTexture()
+    {
+      return texture;
     }
 
-    GLubyte *getImage() {
-      return image;
-    }
-
-    int getWidth() {
-      return width;
-    }
-
-    int getHeight() {
-      return height;
-    }
-
-    string getName() {
+    string getName()
+    {
       return name;
     }
 
-    glm::vec4 getColor(float x,float y) {
+    glm::vec4 getColor(float x,float y)
+    {
+      cout << "In textureImage getColor()" , endl;
       int x1,y1,x2,y2;
 
       x = x - (int)x; //GL_REPEAT
       y = y - (int)y; //GL_REPEAT
 
-      x1 = (int)(x*width);
-      y1 = (int)(y*height);
+      x1 = (int)(x*image->width());
+      y1 = (int)(y*image->height());
 
-      x1 = (x1 + width)%width;
-      y1 = (y1 + height)%height;
+      x1 = (x1 + image->width())%image->width();
+      y1 = (y1 + image->height())%image->height();
 
       x2 = x1+1;
       y2 = y1+1;
 
-      if (x2>=width)
-        x2 = width-1;
+      if (x2>=image->width())
+        x2 = image->width()-1;
 
-      if (y2>=height)
-        y2 = height-1;
+      if (y2>=image->height())
+        y2 = image->height()-1;
 
-      glm::vec3 one = getColor(x1,y1);
-      glm::vec3 two =getColor(x2,y1);
-      glm::vec3 three = getColor(x1,y2);
-      glm::vec3 four = getColor(x2,y2);
+      glm::vec4 one = ColorToVector4f(image->pixel(x1,y1));
+      glm::vec4 two = ColorToVector4f(image->pixel(x2,y1));
+      glm::vec4 three = ColorToVector4f(image->pixel(x1,y2));
+      glm::vec4 four = ColorToVector4f(image->pixel(x2,y2));
 
-      glm::vec3 inter1 = glm::mix(one,three,y-(int)y);
-      glm::vec3 inter2 = glm::mix(two,four,y-(int)y);
-      glm::vec3 inter3 = glm::mix(inter1,inter2,x-(int)x);
+      glm::vec4 inter1 = glm::mix(one,three,y-(int)y);
+      glm::vec4 inter2 = glm::mix(two,four,y-(int)y);
+      glm::vec4 inter3 = glm::mix(inter1,inter2,x-(int)x);
 
-      return glm::vec4(inter3,1);
+      return inter3;
+      cout << "exiting textureImage getColor()" , endl;
     }
 
   private:
-    glm::vec3 getColor(int x,int y) {
-      return glm::vec3((float)image[3*(y*width+x)],(float)image[3*(y*width+x)+1],(float)image[3*(y*width+x)+2]);
-    }
+    glm::vec4 ColorToVector4f(QRgb c)
+    {
+    return glm::vec4((float)qRed(c)/255,(float)qGreen(c)/255,(float)qBlue(c)/255,(float)qAlpha(c)/255);
+  }
 
 
 
