@@ -62,6 +62,8 @@ class ScenegraphImporter {
         void parseAssignMaterial(istream& input);
         void parseAddChild(istream& input);
         void parseSetRoot(istream& input);
+        void parseTexture(istream& input);
+        void parseAssignTexture(istream& input);
 
 };
 
