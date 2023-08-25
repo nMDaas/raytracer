@@ -2,7 +2,7 @@
 instance sphere src/models/sphere.obj
 
 #textures
-texture earthTexture textures/earthmap.ppm
+texture earthTexture src/textures/earthmap.ppm
 
 #material
 material mat

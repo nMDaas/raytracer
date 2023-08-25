@@ -1,5 +1,8 @@
 #include "ScenegraphImporter.h"
 
+#include <ImageLoader.h>
+#include <PPMImageLoader.h>
+
 ScenegraphImporter::ScenegraphImporter() {
     root = NULL;
 }
@@ -314,7 +317,18 @@ void ScenegraphImporter::parseSetRoot(istream& input) {
 void ScenegraphImporter::parseTexture(istream& input) {
     string name,filename;
     input >> name >> filename;
-    std::cout << "parseTexture(): " << name << ", " << filename << std::endl;
+
+    std::ifstream test(filename); 
+    if (!test)
+    {
+        throw runtime_error("Texture file " + filename + " does not exist.");
+    }
+
+    ImageLoader *loader = new PPMImageLoader();
+    loader->load(filename);
+    util::TextureImage *texture = new util::TextureImage(loader->getPixels(), loader->getWidth(), loader->getHeight(), name);
+
+    textureObjects[name] = texture;
 }
 
 void ScenegraphImporter::parseAssignTexture(istream& input) {

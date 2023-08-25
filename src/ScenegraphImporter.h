@@ -14,6 +14,7 @@ using namespace std;
 #include <ObjImporter.h>
 #include "sgraph/IScenegraph.h"
 #include <glm/gtx/string_cast.hpp>
+#include "TextureImage.h"
 
 #include "sgraph/IScenegraph.h"
 #include "sgraph/Scenegraph.h"
@@ -48,6 +49,7 @@ class ScenegraphImporter {
         map<string,SGNode *> nodes;
         map<string,util::Material> materials;
         SGNode *root;
+        map<string,util::TextureImage *> textureObjects;
 
         void parseInstance(istream& input);
         void parseGroup(istream& input);
