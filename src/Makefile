@@ -1,4 +1,4 @@
-OBJS = Raytracer.o VertexAttrib.o ScenegraphImporter.o Controller.o Model.o View.o AbstractSGNode.o GroupNode.o ChildSGNode.o LeafNode.o LightNode.o ParentSGNode.o RotateTransform.o ScaleTransform.o TransformNode.o TranslateTransform.o AbstractRenderer.o GLScenegraphRenderer.o RaytracerRenderer.o Scenegraph.o Box.o Sphere.o Cylinder.o
+OBJS = Raytracer.o VertexAttrib.o TextureImage.o ScenegraphImporter.o Controller.o Model.o View.o AbstractSGNode.o GroupNode.o ChildSGNode.o LeafNode.o LightNode.o ParentSGNode.o RotateTransform.o ScaleTransform.o TransformNode.o TranslateTransform.o AbstractRenderer.o GLScenegraphRenderer.o RaytracerRenderer.o Scenegraph.o Box.o Sphere.o Cylinder.o
 INCLUDES = -I../include
 LIBS = -L../lib
 LDFLAGS = -lglad -lglfw3
@@ -21,6 +21,9 @@ Raytracer.o: Raytracer.cpp
 
 VertexAttrib.o: VertexAttrib.cpp
 	$(COMPILER) $(INCLUDES) $(CFLAGS) -c VertexAttrib.cpp
+
+TextureImage.o: ../include/TextureImage.cpp
+	$(COMPILER) $(INCLUDES) $(CFLAGS) -c ../include/TextureImage.cpp
 
 ScenegraphImporter.o: ScenegraphImporter.cpp ScenegraphImporter.h
 	$(COMPILER) $(INCLUDES) $(CFLAGS) -c ScenegraphImporter.cpp
