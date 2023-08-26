@@ -326,15 +326,19 @@ void ScenegraphImporter::parseTexture(istream& input) {
 
     ImageLoader *loader = new PPMImageLoader();
     loader->load(filename);
-    util::TextureImage *texture = new util::TextureImage(loader->getPixels(), loader->getWidth(), loader->getHeight(), name);
-
+    TextureImage* texture = new TextureImage(loader->getPixels(), loader->getWidth(), loader->getHeight(), name);
     textureObjects[name] = texture;
 }
 
 void ScenegraphImporter::parseAssignTexture(istream& input) {
     string nodename,texturename;
     input >> nodename >> texturename;
-    std::cout << "parseAssignTexture(): " << nodename << ", " << texturename << std::endl;
+    LeafNode *leafNode = dynamic_cast<LeafNode *>(nodes[nodename]);
+    if ((leafNode!=NULL) && (textureObjects.find(texturename)!=textureObjects.end())) {
+        auto search = textureObjects.find(texturename);
+        TextureImage* textureImage = search->second;
+        leafNode->setTexture(textureImage);
+    }
 }
 
 // parseAddChild() and parseAssignMaterial() is implicitly tested
@@ -380,6 +384,9 @@ void ScenegraphImporter::testParse(IScenegraph* scenegraph) {
             std::cout << "      leaf node: " << leafNode->getName() << std::endl;
             std::cout << "      instance of: " << leafNode->getInstanceOf() << std::endl;
             std::cout << "      material ambient: " << glm::to_string(leafNode->getMaterial()->getAmbient()) << std::endl;
+            std::cout << "      material diffuse: " << glm::to_string(leafNode->getMaterial()->getDiffuse()) << std::endl;
+            std::cout << "      material specular: " << glm::to_string(leafNode->getMaterial()->getSpecular()) << std::endl;
+            std::cout << "      texture: " << leafNode->getTexture()->getName() << std::endl;
             std::cout << std::endl;
             }
     }

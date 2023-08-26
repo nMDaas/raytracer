@@ -49,7 +49,7 @@ class ScenegraphImporter {
         map<string,SGNode *> nodes;
         map<string,util::Material> materials;
         SGNode *root;
-        map<string,util::TextureImage *> textureObjects;
+        map<string,TextureImage*> textureObjects;
 
         void parseInstance(istream& input);
         void parseGroup(istream& input);
