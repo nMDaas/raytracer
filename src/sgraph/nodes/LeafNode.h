@@ -2,6 +2,7 @@
 #define _LEAFNODE_H_
 
 #include "Material.h"
+#include "TextureImage.h"
 
 #include "ChildSGNode.h"
 #include "../IScenegraph.h"
@@ -27,6 +28,13 @@ class LeafNode: public ChildSGNode {
     util::Material* getMaterial();
 
     void accept(SGNodeVisitor* visitor);
+
+    void setTexture(TextureImage* textImage);
+    
+    TextureImage* getTexture();
+
+    private : 
+    TextureImage* textureImage;
 };
 
 #endif

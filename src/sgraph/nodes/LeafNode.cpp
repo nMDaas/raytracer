@@ -33,3 +33,10 @@ util::Material* LeafNode::getMaterial()
 void LeafNode::accept(SGNodeVisitor* visitor) {
     visitor->visitLeafNode(this);
 }
+
+void LeafNode::setTexture(TextureImage* textImage) {    textureImage = textImage;
+}
+
+TextureImage* LeafNode::getTexture() {
+    return textureImage;
+}
