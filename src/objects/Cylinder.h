@@ -14,6 +14,9 @@ class Cylinder {
         glm::vec4 getNormal(glm::vec4 intersectionPoint);
 
     private:
+        glm::vec3 vmin = glm::vec3(-1.0f,0.0f,-1.0f); // minimum bounds of cylinder in Object Coordinate System
+        glm::vec3 vmax = glm::vec3(1.0f,1.0f,1.0f); // maximum bounds of cylinder in Object Coordinate System
+        float radius = 1.0f;
         float tmin;
         float tmax;
 };

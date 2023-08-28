@@ -24,7 +24,7 @@ bool Cylinder::calcTimes(glm::vec4 s, glm::vec4 v) {
 
     float a = pow(v.z,2) + pow(v.x,2);
     float b = (2 * v.z * s.z) + (2 * v.x * s.x);
-    float c = pow(s.z,2) + pow(s.x,2) - 1;
+    float c = pow(s.z,2) + pow(s.x,2) - radius;
 
     spdlog::debug("a: " + (int) a); 
     spdlog::debug("b: " + (int) b); 
@@ -43,8 +43,8 @@ bool Cylinder::calcTimes(glm::vec4 s, glm::vec4 v) {
         std::swap(tmin,tmax);
     }
 
-    float tMinY = (0.0f - s.y)/v.y; 
-    float tMaxY = (1.0f - s.y)/v.y; 
+    float tMinY = (vmin.y - s.y)/v.y; 
+    float tMaxY = (vmax.y - s.y)/v.y; 
 
     if (tMinY > tMaxY) {
         std::swap(tMinY, tMaxY); 
@@ -89,12 +89,12 @@ glm::vec4 Cylinder::getNormal(glm::vec4 intersectionPoint) {
 
     bool onCylinderEdge;
 
-    if ((intersectionPoint.y > 0.999f) && (intersectionPoint.y < 1.001f)) {
+    if ((intersectionPoint.y > (vmax.y - 0.001f)) && (intersectionPoint.y < (vmax.y + 0.001f))) {
         spdlog::debug("at ymax");
         normal.y = 1;
         onCylinderEdge = true;
     }
-    else if ((intersectionPoint.y > -0.001f) && (intersectionPoint.y < 0.001)) {
+    else if ((intersectionPoint.y > (vmin.y - 0.001f)) && (intersectionPoint.y < (vmin.y + 0.001f))) {
         spdlog::debug("at ymin");
         normal.y = -1;
         onCylinderEdge = true;
@@ -106,20 +106,20 @@ glm::vec4 Cylinder::getNormal(glm::vec4 intersectionPoint) {
     }
 
     if (onCylinderEdge) {
-        if ((intersectionPoint.x < 1.001f ) && (intersectionPoint.x > 0.999f)) {
+        if ((intersectionPoint.x < (vmax.x + 0.001f)) && (intersectionPoint.x > (vmax.x - 0.001f))) {
             normal.x = 1;
         }
-        else if ((intersectionPoint.x > -1.001f) && (intersectionPoint.x < -0.999f)) {
+        else if ((intersectionPoint.x > (vmin.x - 0.001f)) && (intersectionPoint.x < (vmin.x + 0.001f))) {
             normal.x = -1;
         }
         else {
             normal.x = 0;
         }
 
-        if ((intersectionPoint.z < 1.001f ) && (intersectionPoint.z > 0.999f)) {
+        if ((intersectionPoint.z < (vmax.z + 0.001f) ) && (intersectionPoint.z > (vmax.z - 0.001f))) {
             normal.z = 1;
         }
-        else if ((intersectionPoint.z > -1.001f) && (intersectionPoint.z < -0.999f)) {
+        else if ((intersectionPoint.z > (vmin.z - 0.001f)) && (intersectionPoint.z < (vmin.z + 0.001f))) {
             normal.z = -1;
         }
         else {
