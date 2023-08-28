@@ -37,7 +37,8 @@ class RaytracerRenderer: public AbstractRenderer {
     Cylinder cylinder;
     float minTime = INFINITY;
     util::Material* dummyMaterial;
-    HitRecord hitRecordWithMinTime = {minTime,glm::vec4(0,0,0,0),glm::vec4(0,0,0,0),dummyMaterial};
+    TextureImage* dummyTextureImage;
+    HitRecord hitRecordWithMinTime = {minTime,glm::vec4(0,0,0,0),glm::vec4(0,0,0,0),dummyMaterial,dummyTextureImage,glm::vec2(0,0)};
 
     glm::vec4 getIntersection(float time, glm::vec4 _s, glm::vec4 _v);
     glm::vec4 getNormal(glm::vec4 intersectionPoint, string instanceOf);
