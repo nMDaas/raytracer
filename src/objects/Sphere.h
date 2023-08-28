@@ -18,6 +18,7 @@ class Sphere {
     private:
         float tmin;
         float tmax;
+        float radius = 1.0f;
 };
 
 #endif

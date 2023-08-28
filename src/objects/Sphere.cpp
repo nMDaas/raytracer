@@ -19,12 +19,11 @@ Sphere::Sphere (Sphere &t){
 bool Sphere::calcTimes(glm::vec4 s, glm::vec4 v) {
     spdlog::debug("s: " + glm::to_string(s));
     spdlog::debug("v: " + glm::to_string(v));
-    float r = 1.0f;
     float a = pow(v.x,2) + pow(v.y,2) + pow(v.z,2);
     spdlog::debug("a: " + (int) a); 
     float b = 2 * ((s.x * v.x) + (s.y * v.y) + (s.z * v.z));
     spdlog::debug("b: " + (int) b); 
-    float c = pow(s.x,2) + pow(s.y,2) + pow(s.z,2) - pow(r,2);
+    float c = pow(s.x,2) + pow(s.y,2) + pow(s.z,2) - pow(radius,2);
     spdlog::debug("c: " + (int) c); 
 
     float discriminant = pow(b,2) - (4 * a * c);
