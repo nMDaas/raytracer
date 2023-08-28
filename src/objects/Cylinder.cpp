@@ -28,7 +28,7 @@ bool Cylinder::calcTimes(glm::vec4 s, glm::vec4 v) {
 
     spdlog::debug("a: " + (int) a); 
     spdlog::debug("b: " + (int) b); 
-    spdlog::debug("b: " + (int) c); 
+    spdlog::debug("c: " + (int) c); 
 
     float discriminant = pow(b,2) - (4 * a * c);
     spdlog::debug("discriminant: " + (int) discriminant);
@@ -45,6 +45,8 @@ bool Cylinder::calcTimes(glm::vec4 s, glm::vec4 v) {
 
     float tMinY = (vmin.y - s.y)/v.y; 
     float tMaxY = (vmax.y - s.y)/v.y; 
+    std::cout << "tMinY: " << tMinY << std::endl;
+    std::cout << "tMaxY: " << tMaxY << std::endl;
 
     if (tMinY > tMaxY) {
         std::swap(tMinY, tMaxY); 
