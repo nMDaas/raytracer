@@ -14,6 +14,8 @@ class Cone {
         glm::vec4 getNormal(glm::vec4 intersectionPoint);
 
     private:
+        glm::vec3 vmin = glm::vec3(-1.0f,0.0f,-1.0f); // minimum bounds of cone in Object Coordinate System
+        glm::vec3 vmax = glm::vec3(1.0f,1.0f,1.0f); // maximum bounds of cone in Object Coordinate System
         float tmin;
         float tmax;
 };
