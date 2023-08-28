@@ -7,9 +7,9 @@ texture earthTexture src/textures/earthmap.ppm
 #material
 material mat
 emission 0 0 0
-ambient 1 0 0
-diffuse 0 1 0
-specular 0 0 1
+ambient 0.5 0.7 0.7
+diffuse 0 0 1
+specular 0 0 0
 shininess 5
 end-material
 
@@ -17,7 +17,7 @@ end-material
 group root
 scale s1 25 25 25
 rotate r1 30 0 1 0
-translate t1 0 0 0
+translate t1 0 0 30
 leaf l1 instanceof sphere 
 assign-texture l1 earthTexture
 

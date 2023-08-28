@@ -270,10 +270,13 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
             else {
                 util::Material* mat = hitRecord.object_mat;
                 vector<util::Light> sceneLights = raytracerRenderer->getLights();
-                glm::vec3 color = getColor(hitRecord,sceneLights);
+                glm::vec4 color = getColor(hitRecord,sceneLights);
+                glm::vec4 textureColor = hitRecord.textureImage->getColor(hitRecord.textureCoordinates.x, hitRecord.textureCoordinates.y);
+                glm::vec4 colorWithTexture = color * glm::vec4(textureColor.x/255, textureColor.y/255, textureColor.z/255, textureColor.w/255) * 255.0f;
+
                 raytracerRenderer->clearLights();
                 spdlog::debug("color in raytracer(): " + glm::to_string(color));
-                out << color.x << " " << color.y << " " << color.z << endl;
+                out << clipValue(colorWithTexture.x) << " " <<  clipValue(colorWithTexture.y) << " " <<  clipValue(colorWithTexture.z) << endl;
             }
 
             spdlog::debug("----");
