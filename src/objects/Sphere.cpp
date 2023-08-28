@@ -73,3 +73,23 @@ glm::vec4 Sphere::getNormal(glm::vec4 intersectionPoint) {
     spdlog::debug("normal: " + glm::to_string(normal));
     return normal;
 }
+
+glm::vec2 Sphere::getTextureCoordinates(glm::vec4 intersectionPoint) {
+    spdlog::debug("i_point: " + glm::to_string(intersectionPoint));
+
+    // phi covers longitude and so is between -π/2 and π/2
+    float phi = asin(intersectionPoint.y);
+
+    // theta covers latitude and so is between 0 and 2π
+    // using atan2 to returns a value in the range -π to π radians - covers same range
+    float theta = atan2(-intersectionPoint.z, intersectionPoint.x); 
+
+    // s and t are values between 0 and 1
+    float s = theta / (2 * M_PI);
+    float t = (phi + (0.5 * M_PI)) / M_PI;
+
+    std::cout << "s: " << s << std::endl;
+    std::cout << "t: " << t << std::endl;
+
+    return glm::vec4(s,t,0,0);
+}
