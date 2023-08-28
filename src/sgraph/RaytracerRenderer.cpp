@@ -46,10 +46,17 @@ void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
             newTime = cylinder.getTime();
         }
     }
+    else if (leafNode->getInstanceOf() == "cone") {
+        hit = cone.calcTimes(_s,_v);
+        if (hit) {
+            newTime = cone.getTime();
+        }
+    }
 
     if (hit) {
         if (newTime < hitRecordWithMinTime.t) {
             glm::vec4 intersectionPoint = getIntersection(newTime,_s,_v);
+            std::cout << "Intersection Y: " << intersectionPoint.y << std::endl;
             glm::vec4 normal;
             normal = getNormal(intersectionPoint,leafNode->getInstanceOf());
             
@@ -95,6 +102,9 @@ glm::vec4 RaytracerRenderer::getNormal(glm::vec4 intersectionPoint,string instan
         return sphere.getNormal(intersectionPoint);
     }
     else if (instanceOf == "cylinder") {
+        return cylinder.getNormal(intersectionPoint);
+    }
+    else if (instanceOf == "cone") {
         return cylinder.getNormal(intersectionPoint);
     }
 }
