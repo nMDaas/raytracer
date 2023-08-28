@@ -265,18 +265,20 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
             std::cout << "(" << hh << "," << ww << "): time: " << hitRecord.t << std::endl;
 
             if (isinf(hitRecord.t)) {
-                out << 0 << " " << 0 << " " << 0 << endl;
+                out << "0 0 0" << endl;
             }
             else {
                 util::Material* mat = hitRecord.object_mat;
                 vector<util::Light> sceneLights = raytracerRenderer->getLights();
+                /*
                 glm::vec4 color = getColor(hitRecord,sceneLights);
                 glm::vec4 textureColor = hitRecord.textureImage->getColor(hitRecord.textureCoordinates.x, hitRecord.textureCoordinates.y);
                 glm::vec4 colorWithTexture = color * glm::vec4(textureColor.x/255, textureColor.y/255, textureColor.z/255, textureColor.w/255) * 255.0f;
 
                 raytracerRenderer->clearLights();
                 spdlog::debug("color in raytracer(): " + glm::to_string(color));
-                out << clipValue(colorWithTexture.x) << " " <<  clipValue(colorWithTexture.y) << " " <<  clipValue(colorWithTexture.z) << endl;
+                out << clipValue(colorWithTexture.x) << " " <<  clipValue(colorWithTexture.y) << " " <<  clipValue(colorWithTexture.z) << endl; */
+                out << "255 255 255" << endl;
             }
 
             spdlog::debug("----");
