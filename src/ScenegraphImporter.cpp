@@ -5,6 +5,11 @@
 
 ScenegraphImporter::ScenegraphImporter() {
     root = NULL;
+    ImageLoader *loader = new PPMImageLoader();
+    loader->load("src/textures/white.ppm");
+    string name = "default";
+    TextureImage* texture = new TextureImage(loader->getPixels(), loader->getWidth(), loader->getHeight(), name);
+    textureObjects[name] = texture;
 }
 
 ScenegraphImporter::~ScenegraphImporter()
@@ -141,6 +146,9 @@ void ScenegraphImporter::parseLeaf(istream& input) {
     }
     //std::cout << "command: leaf " << varname << " " << name << " " << command << " " << instanceof << std::endl;
     SGNode *leaf = new LeafNode(instanceof,name,NULL);
+    auto search = textureObjects.find("default");
+    TextureImage* textureImage = search->second;
+    dynamic_cast<LeafNode *>(leaf)->setTexture(textureImage);
     nodes[name] = leaf;
 }
 
