@@ -283,7 +283,8 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
     std::cout << "Completed raytracing!" << std::endl;
 }
 
-glm::vec3 View::getColor(HitRecord hitRecord, vector<util::Light> sceneLights) {
+// RGB values are between 0 and 1
+glm::vec4 View::getColor(HitRecord hitRecord, vector<util::Light> sceneLights) {
     glm::vec3 outColor(0,0,0);
     glm::vec3 lightVec;
     glm::vec4 fPosition = hitRecord.intersection_position;
@@ -361,14 +362,9 @@ glm::vec3 View::getColor(HitRecord hitRecord, vector<util::Light> sceneLights) {
         spdlog::debug("light outColor: " + glm::to_string(outColor));
     }
 
-    outColor = outColor * 255.0f;
-    
-    spdlog::debug("outColor before clipping(): " + glm::to_string(outColor));
-    outColor.x = clipValue(outColor.x);
-    outColor.y = clipValue(outColor.y);
-    outColor.z = clipValue(outColor.z);
+    outColor = outColor;
 
-    return outColor;
+    return glm::vec4(outColor.x, outColor.y, outColor.z, 0);
 }
 
 int View::clipValue(int val) {
