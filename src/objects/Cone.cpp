@@ -22,13 +22,13 @@ bool Cone::calcTimes(glm::vec4 s, glm::vec4 v) {
     spdlog::debug("s: " + glm::to_string(s));
     spdlog::debug("v: " + glm::to_string(v));
 
-    float a = pow(v.z,2) + pow(v.x,2);
-    float b = (2 * v.z * s.z) + (2 * v.x * s.x);
-    float c = pow(s.z,2) + pow(s.x,2) - 1;
+    float a = pow(v.z,2) + pow(v.x,2) - pow(-v.y,2);
+    float b = (2 * v.z * s.z) + (2 * v.x * s.x) - (2 * v.y * -s.y) - (2 * -v.y);
+    float c = pow(s.z,2) + pow(s.x,2) - pow(-s.y,2) - (2 * -s.y) - 1.0f;
 
     spdlog::debug("a: " + (int) a); 
     spdlog::debug("b: " + (int) b); 
-    spdlog::debug("b: " + (int) c); 
+    spdlog::debug("c: " + (int) c); 
 
     float discriminant = pow(b,2) - (4 * a * c);
     spdlog::debug("discriminant: " + (int) discriminant);
@@ -43,20 +43,6 @@ bool Cone::calcTimes(glm::vec4 s, glm::vec4 v) {
         std::swap(tmin,tmax);
     }
 
-    float tMinY = (0.0f - s.y)/v.y; 
-    float tMaxY = (1.0f - s.y)/v.y; 
-
-    if (tMinY > tMaxY) {
-        std::swap(tMinY, tMaxY); 
-    }
-
-    // ray missed box
-    if ((tmin > tMaxY) || (tMinY > tmax)) {
-        return false;
-    }
-
-    tmin = (tMinY > tmin) ? tMinY : tmin;
-    tmax = (tMaxY < tmax) ? tMaxY : tmax;
     return true;
 }
 

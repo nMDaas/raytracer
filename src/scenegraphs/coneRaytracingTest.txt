@@ -1,0 +1,28 @@
+# these instances will be ignored if debugger is being used
+instance cone src/models/cone.obj
+
+#material
+material mat
+emission 0 0 0
+ambient 1 0 0
+diffuse 0 1 0
+specular 0 0 1
+shininess 5
+end-material
+
+#the root
+group root
+rotate r1 30 0 0 1
+scale s1 25 50 25
+leaf l1 instanceof cone 
+
+translate tlight 50 30 70
+light li1 1 1 1 1 1 1 1 1 1
+add-child li1 tlight
+add-child tlight root
+
+assign-material l1 mat
+add-child l1 s1
+add-child s1 r1
+add-child r1 root
+assign-root root
