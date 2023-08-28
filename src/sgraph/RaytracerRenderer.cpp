@@ -51,15 +51,7 @@ void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
         if (newTime < hitRecordWithMinTime.t) {
             glm::vec4 intersectionPoint = getIntersection(newTime,_s,_v);
             glm::vec4 normal;
-            if (leafNode->getInstanceOf() == "box") {
-                normal = getNormal(intersectionPoint,"box");
-            }
-            else if (leafNode->getInstanceOf() == "sphere") {
-                normal = getNormal(intersectionPoint,"sphere");
-            }
-            else if (leafNode->getInstanceOf() == "cylinder") {
-                normal = getNormal(intersectionPoint,"cylinder");
-            }
+            normal = getNormal(intersectionPoint,leafNode->getInstanceOf());
             
             spdlog::debug("in RaytracerRenderer - visitLeafNode() - intersectionPoint: " + glm::to_string(intersectionPoint));
             spdlog::debug("in RaytracerRenderer - visitLeafNode() - normal: " + glm::to_string(normal));
