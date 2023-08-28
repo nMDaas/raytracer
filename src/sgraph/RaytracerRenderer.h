@@ -41,6 +41,7 @@ class RaytracerRenderer: public AbstractRenderer {
 
     glm::vec4 getIntersection(float time, glm::vec4 _s, glm::vec4 _v);
     glm::vec4 getNormal(glm::vec4 intersectionPoint, string instanceOf);
+    glm::vec2 getTextureCoordinates(glm::vec4 intersectionPoint, string instanceOf);
 
 };
 

@@ -66,6 +66,8 @@ void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
 
             normal = glm::normalize(normal);
             spdlog::debug("in RaytracerRenderer - visitLeafNode() - normal after normalizing: " + glm::to_string(normal));
+
+            glm::vec2 textureCoordinates = getTextureCoordinates(intersectionPoint,leafNode->getInstanceOf());
         
             // points transformed to convert from object coordinate system to view coordinate system
             intersectionPoint = modelview.top() * intersectionPoint; 
@@ -102,5 +104,11 @@ glm::vec4 RaytracerRenderer::getNormal(glm::vec4 intersectionPoint,string instan
     }
     else if (instanceOf == "cylinder") {
         return cylinder.getNormal(intersectionPoint);
+    }
+}
+
+glm::vec2 RaytracerRenderer::getTextureCoordinates(glm::vec4 intersectionPoint, string instanceOf) {
+    if (instanceOf == "sphere") {
+        return sphere.getTextureCoordinates(intersectionPoint);
     }
 }
