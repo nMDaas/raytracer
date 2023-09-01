@@ -265,11 +265,13 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
             std::cout << "(" << hh << "," << ww << "): time: " << hitRecord.t << std::endl;
 
             if (isinf(hitRecord.t)) {
+                std::cout << "printing 0 0 0: " << hitRecord.t << std::endl;
                 out << "0 0 0" << endl;
             }
             else {
                 util::Material* mat = hitRecord.object_mat;
                 vector<util::Light> sceneLights = raytracerRenderer->getLights();
+                std::cout << "printing 255 255 255: " <<  hitRecord.t << std::endl;
                 /*
                 glm::vec4 color = getColor(hitRecord,sceneLights);
                 glm::vec4 textureColor = hitRecord.textureImage->getColor(hitRecord.textureCoordinates.x, hitRecord.textureCoordinates.y);

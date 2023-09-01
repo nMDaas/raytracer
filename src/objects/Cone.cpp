@@ -22,9 +22,9 @@ bool Cone::calcTimes(glm::vec4 s, glm::vec4 v) {
     spdlog::debug("s: " + glm::to_string(s));
     spdlog::debug("v: " + glm::to_string(v));
 
-    float a = pow(v.z,2) + pow(v.x,2) - pow(-v.y,2);
-    float b = (2 * v.z * s.z) + (2 * v.x * s.x) - (2 * v.y * -s.y) - (2 * -v.y);
-    float c = pow(s.z,2) + pow(s.x,2) - pow(-s.y,2) - (2 * -s.y) - 1.0f;
+    float a = pow(v.z,2) + pow(v.x,2) - pow(v.y,2);
+    float b = (2 * v.z * s.z) + (2 * v.x * s.x) + (-2 * v.y * s.y) + (2 * v.y);
+    float c = pow(s.z,2) + pow(s.x,2) - pow(s.y,2) + (2 * s.y) - 1.0f;
 
     spdlog::debug("a: " + (int) a); 
     spdlog::debug("b: " + (int) b); 
@@ -38,6 +38,22 @@ bool Cone::calcTimes(glm::vec4 s, glm::vec4 v) {
 
     tmin = (-b + sqrt(discriminant)) / (2 * a);
     tmax = (-b - sqrt(discriminant)) / (2 * a);
+
+    spdlog::debug("tmin: " + (int) tmin);
+    spdlog::debug("tmax: " + (int) tmax);
+
+    float tMinY = s.y + (tmin * v.y);
+    float tMaxY = s.y + (tmax * v.y);
+    spdlog::debug("tMinY: " + (int) tMinY);
+    spdlog::debug("tMaxY: " + (int) tMaxY);
+
+    if (tMinY < 0 || tMinY > 1) { 
+        tmin = INFINITY;
+    }
+
+    if (tMaxY < 0 || tMaxY > 1) { 
+        tmax = INFINITY;
+    }
 
     if (tmin > tmax) {
         std::swap(tmin,tmax);
