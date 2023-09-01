@@ -56,7 +56,6 @@ void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
     if (hit) {
         if (newTime < hitRecordWithMinTime.t) {
             glm::vec4 intersectionPoint = getIntersection(newTime,_s,_v);
-            std::cout << "Intersection Y: " << intersectionPoint.y << std::endl;
             glm::vec4 normal;
             normal = getNormal(intersectionPoint,leafNode->getInstanceOf());
             
