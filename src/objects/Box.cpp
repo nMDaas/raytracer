@@ -117,8 +117,14 @@ glm::vec2 Box::getTextureCoordinates(glm::vec4 intersectionPoint) {
     float absY = abs(intersectionPoint.y);
     float absZ = abs(intersectionPoint.z);
 
+    std::cout << "intersectionPoint: " << glm::to_string(intersectionPoint) << std::endl;
+    std::cout << "absX: " << absX << std::endl;
+    std::cout << "absY: " << absY << std::endl;
+    std::cout << "absZ: " << absZ << std::endl;
+
+
     // intersectionPoint is on front face
-    if (absZ >= absY && absZ >= absX) {
+    if (absZ >= absY && absZ >= absX && intersectionPoint.z >= 0) {
         std::cout << "intersectionPoint " << glm::to_string(intersectionPoint) << " is on the front face" << std::endl;
         float s = ((intersectionPoint.x - (-0.5)) * 0.25) + 0.25;
         float t = ((intersectionPoint.y - (-0.5)) * 0.25) + 0.25;
@@ -128,4 +134,65 @@ glm::vec2 Box::getTextureCoordinates(glm::vec4 intersectionPoint) {
         std::cout << "t: " << t << std::endl;
         return glm::vec2(s,t);
     }
+
+    // intersectionPoint is on back face
+    if (absZ >= absY && absZ >= absX && intersectionPoint.z < 0) {
+        std::cout << "intersectionPoint " << glm::to_string(intersectionPoint) << " is on the back face" << std::endl;
+        float s = ((intersectionPoint.x - (-0.5)) * 0.25) + 0.75;
+        float t = ((intersectionPoint.y - (-0.5)) * 0.25) + 0.25;
+        std::cout << "intersectionPoint.x: " << intersectionPoint.x << std::endl;
+        std::cout << "s: " << s << std::endl;
+        std::cout << "intersectionPoint.y: " << intersectionPoint.y << std::endl;
+        std::cout << "t: " << t << std::endl;
+        return glm::vec2(s,t);
+    }
+
+    // intersectionPoint is on left face
+    if (absX >= absY && absX >= absZ && intersectionPoint.x < 0) {
+        std::cout << "intersectionPoint " << glm::to_string(intersectionPoint) << " is on the left face" << std::endl;
+        float s = ((intersectionPoint.z - (-0.5)) * 0.25) + 0;
+        float t = ((intersectionPoint.y - (-0.5)) * 0.25) + 0.25;
+        std::cout << "intersectionPoint.x: " << intersectionPoint.x << std::endl;
+        std::cout << "s: " << s << std::endl;
+        std::cout << "intersectionPoint.y: " << intersectionPoint.y << std::endl;
+        std::cout << "t: " << t << std::endl;
+        return glm::vec2(s,t);
+    }
+
+    // intersectionPoint is on right face
+    if (absX >= absY && absX >= absZ && intersectionPoint.x >= 0) {
+        std::cout << "intersectionPoint " << glm::to_string(intersectionPoint) << " is on the right face" << std::endl;
+        float s = ((intersectionPoint.z - (-0.5)) * 0.25) + 0.5;
+        float t = ((intersectionPoint.y - (-0.5)) * 0.25) + 0.25;
+        std::cout << "intersectionPoint.x: " << intersectionPoint.x << std::endl;
+        std::cout << "s: " << s << std::endl;
+        std::cout << "intersectionPoint.y: " << intersectionPoint.y << std::endl;
+        std::cout << "t: " << t << std::endl;
+        return glm::vec2(s,t);
+    }
+
+    // intersectionPoint is on top face
+    if (absY >= absX && absY >= absZ && intersectionPoint.y >= 0) {
+        std::cout << "intersectionPoint " << glm::to_string(intersectionPoint) << " is on the top face" << std::endl;
+        float s = ((intersectionPoint.x - (-0.5)) * 0.25) + 0.25;
+        float t = ((intersectionPoint.z - (-0.5)) * 0.25) + 0.50;
+        std::cout << "intersectionPoint.x: " << intersectionPoint.x << std::endl;
+        std::cout << "s: " << s << std::endl;
+        std::cout << "intersectionPoint.y: " << intersectionPoint.y << std::endl;
+        std::cout << "t: " << t << std::endl;
+        return glm::vec2(s,t);
+    }
+
+    // intersectionPoint is on bottom face
+    if (absY >= absX && absY >= absZ && intersectionPoint.y < 0) {
+        std::cout << "intersectionPoint " << glm::to_string(intersectionPoint) << " is on the bottom face" << std::endl;
+        float s = ((intersectionPoint.x - (-0.5)) * 0.25) + 0.25;
+        float t = ((intersectionPoint.z - (-0.5)) * 0.25) + 0;
+        std::cout << "intersectionPoint.x: " << intersectionPoint.x << std::endl;
+        std::cout << "s: " << s << std::endl;
+        std::cout << "intersectionPoint.y: " << intersectionPoint.y << std::endl;
+        std::cout << "t: " << t << std::endl;
+        return glm::vec2(s,t);
+    }
+    
 }
