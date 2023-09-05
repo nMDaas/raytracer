@@ -62,7 +62,7 @@ bool Cone::calcTimes(glm::vec4 s, glm::vec4 v) {
     return true;
 }
 
-// returns the time of first intersection of the ray with the unit cylinder
+// returns the time of first intersection of the ray with the unit cone
 float Cone::getTime() {
     spdlog::debug("In Cone::getTime()");
 
