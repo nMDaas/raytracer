@@ -112,4 +112,7 @@ glm::vec2 RaytracerRenderer::getTextureCoordinates(glm::vec4 intersectionPoint, 
     if (instanceOf == "sphere") {
         return sphere.getTextureCoordinates(intersectionPoint);
     }
+    else if (instanceOf == "box") {
+        return box.getTextureCoordinates(intersectionPoint);
+    }
 }

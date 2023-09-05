@@ -1,6 +1,8 @@
 #include "Box.h"
 #include <iostream>
 
+#include <glm/gtx/string_cast.hpp>
+
 Box::Box(){}
 
 Box::~Box(){}
@@ -108,4 +110,22 @@ glm::vec4 Box::getNormal(glm::vec4 intersectionPoint) {
     }
 
     return normal;
+}
+
+glm::vec2 Box::getTextureCoordinates(glm::vec4 intersectionPoint) {
+    float absX = abs(intersectionPoint.x);
+    float absY = abs(intersectionPoint.y);
+    float absZ = abs(intersectionPoint.z);
+
+    // intersectionPoint is on front face
+    if (absZ >= absY && absZ >= absX) {
+        std::cout << "intersectionPoint " << glm::to_string(intersectionPoint) << " is on the front face" << std::endl;
+        float s = ((intersectionPoint.x - (-0.5)) * 0.25) + 0.25;
+        float t = ((intersectionPoint.y - (-0.5)) * 0.25) + 0.25;
+        std::cout << "intersectionPoint.x: " << intersectionPoint.x << std::endl;
+        std::cout << "s: " << s << std::endl;
+        std::cout << "intersectionPoint.y: " << intersectionPoint.y << std::endl;
+        std::cout << "t: " << t << std::endl;
+        return glm::vec2(s,t);
+    }
 }
