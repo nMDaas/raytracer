@@ -104,7 +104,7 @@ glm::vec4 RaytracerRenderer::getNormal(glm::vec4 intersectionPoint,string instan
         return cylinder.getNormal(intersectionPoint);
     }
     else if (instanceOf == "cone") {
-        return cylinder.getNormal(intersectionPoint);
+        return cone.getNormal(intersectionPoint);
     }
 }
 

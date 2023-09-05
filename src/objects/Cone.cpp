@@ -1,6 +1,7 @@
 #include "Cone.h"
 
 #include <iostream>
+#include <math.h>
 
 #include <glm/gtx/string_cast.hpp>
 
@@ -87,54 +88,65 @@ float Cone::getTime() {
 
 glm::vec4 Cone::getNormal(glm::vec4 intersectionPoint) {
     spdlog::debug("In Cone::getNormal()");
+
+    std::cout << "intersectionPoint.y: " << intersectionPoint.y << std::endl;
+
     glm::vec4 normal(0,0,0,0);
 
-    bool onCylinderEdge;
+    bool onBase = false;
+    bool onCurve = false;
 
-    if ((intersectionPoint.y > 0.999f) && (intersectionPoint.y < 1.001f)) {
+    if ((intersectionPoint.y > (0.999f)) && (intersectionPoint.y < (1.001f))) {
         spdlog::debug("at ymax");
+        std::cout << "at ymax" << std::endl;
         normal.y = 1;
-        onCylinderEdge = true;
     }
-    else if ((intersectionPoint.y > -0.001f) && (intersectionPoint.y < 0.001)) {
+    else if ((intersectionPoint.y > (-0.001f)) && (intersectionPoint.y < (0.001f))) {
         spdlog::debug("at ymin");
+        std::cout << "at ymin" << std::endl;
         normal.y = -1;
-        onCylinderEdge = true;
+        onBase = true;
     }
     else {
-        spdlog::debug("between ymin and ymax");
-        normal.y = 0.0f;
-        onCylinderEdge = false;
+        onCurve = true;
     }
 
-    if (onCylinderEdge) {
-        if ((intersectionPoint.x < 1.001f ) && (intersectionPoint.x > 0.999f)) {
+    if (onBase) {
+        if ((intersectionPoint.x < (vmax.x + 0.001f)) && (intersectionPoint.x > (vmax.x - 0.001f))) {
             normal.x = 1;
         }
-        else if ((intersectionPoint.x > -1.001f) && (intersectionPoint.x < -0.999f)) {
+        else if ((intersectionPoint.x > (vmin.x - 0.001f)) && (intersectionPoint.x < (vmin.x + 0.001f))) {
             normal.x = -1;
         }
         else {
             normal.x = 0;
         }
 
-        if ((intersectionPoint.z < 1.001f ) && (intersectionPoint.z > 0.999f)) {
+        if ((intersectionPoint.z < (vmax.z + 0.001f) ) && (intersectionPoint.z > (vmax.z - 0.001f))) {
             normal.z = 1;
         }
-        else if ((intersectionPoint.z > -1.001f) && (intersectionPoint.z < -0.999f)) {
+        else if ((intersectionPoint.z > (vmin.z - 0.001f)) && (intersectionPoint.z < (vmin.z + 0.001f))) {
             normal.z = -1;
         }
         else {
             normal.z = 0;
         }
     }
-    else {
-        normal.x = intersectionPoint.x;
-        normal.z = intersectionPoint.z;
+
+    if (onCurve) {
+        float Fx = 2 * intersectionPoint.x;
+        float Fy = 2 - (2 * intersectionPoint.y);
+        float Fz = 2 * intersectionPoint.z;
+        float magnitude = sqrt(pow(Fx,2) + pow(Fy,2) + pow(Fz,2));
+        glm::vec3 normalVec3 = glm::vec3(Fx,Fy,Fz) * (1.0f/magnitude);
+        normal = glm::vec4(normalVec3.x, normalVec3.y, normalVec3.z, 0);
     }
 
     spdlog::debug("interesectionPoint: " + glm::to_string(intersectionPoint));
     spdlog::debug("normal: " + glm::to_string(normal));
+
+    std::cout << "intersectionPoint: " << glm::to_string(intersectionPoint) << std::endl;
+    std::cout << "normal: " << glm::to_string(normal) << std::endl;
 
     return normal;
 }
