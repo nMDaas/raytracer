@@ -125,74 +125,36 @@ glm::vec2 Box::getTextureCoordinates(glm::vec4 intersectionPoint) {
 
     // intersectionPoint is on front face
     if (absZ >= absY && absZ >= absX && intersectionPoint.z >= 0) {
-        std::cout << "intersectionPoint " << glm::to_string(intersectionPoint) << " is on the front face" << std::endl;
-        float s = ((intersectionPoint.x - (-0.5)) * 0.25) + 0.25;
-        float t = ((intersectionPoint.y - (-0.5)) * 0.25) + 0.25;
-        std::cout << "intersectionPoint.x: " << intersectionPoint.x << std::endl;
-        std::cout << "s: " << s << std::endl;
-        std::cout << "intersectionPoint.y: " << intersectionPoint.y << std::endl;
-        std::cout << "t: " << t << std::endl;
-        return glm::vec2(s,t);
+        return calcTextureCoordinates(intersectionPoint.x,intersectionPoint.y,glm::vec2(0.25f,0.25f));
     }
-
     // intersectionPoint is on back face
-    if (absZ >= absY && absZ >= absX && intersectionPoint.z < 0) {
-        std::cout << "intersectionPoint " << glm::to_string(intersectionPoint) << " is on the back face" << std::endl;
-        float s = ((intersectionPoint.x - (-0.5)) * 0.25) + 0.75;
-        float t = ((intersectionPoint.y - (-0.5)) * 0.25) + 0.25;
-        std::cout << "intersectionPoint.x: " << intersectionPoint.x << std::endl;
-        std::cout << "s: " << s << std::endl;
-        std::cout << "intersectionPoint.y: " << intersectionPoint.y << std::endl;
-        std::cout << "t: " << t << std::endl;
-        return glm::vec2(s,t);
+    else if (absZ >= absY && absZ >= absX && intersectionPoint.z < 0) {
+        return calcTextureCoordinates(intersectionPoint.x,intersectionPoint.y,glm::vec2(0.75f,0.25f));
     }
-
     // intersectionPoint is on left face
-    if (absX >= absY && absX >= absZ && intersectionPoint.x < 0) {
-        std::cout << "intersectionPoint " << glm::to_string(intersectionPoint) << " is on the left face" << std::endl;
-        float s = ((intersectionPoint.z - (-0.5)) * 0.25) + 0;
-        float t = ((intersectionPoint.y - (-0.5)) * 0.25) + 0.25;
-        std::cout << "intersectionPoint.x: " << intersectionPoint.x << std::endl;
-        std::cout << "s: " << s << std::endl;
-        std::cout << "intersectionPoint.y: " << intersectionPoint.y << std::endl;
-        std::cout << "t: " << t << std::endl;
-        return glm::vec2(s,t);
+    else if (absX >= absY && absX >= absZ && intersectionPoint.x < 0) {
+        return calcTextureCoordinates(intersectionPoint.z,intersectionPoint.y,glm::vec2(0.0f,0.25f));
     }
-
     // intersectionPoint is on right face
-    if (absX >= absY && absX >= absZ && intersectionPoint.x >= 0) {
-        std::cout << "intersectionPoint " << glm::to_string(intersectionPoint) << " is on the right face" << std::endl;
-        float s = ((intersectionPoint.z - (-0.5)) * 0.25) + 0.5;
-        float t = ((intersectionPoint.y - (-0.5)) * 0.25) + 0.25;
-        std::cout << "intersectionPoint.x: " << intersectionPoint.x << std::endl;
-        std::cout << "s: " << s << std::endl;
-        std::cout << "intersectionPoint.y: " << intersectionPoint.y << std::endl;
-        std::cout << "t: " << t << std::endl;
-        return glm::vec2(s,t);
+    else if (absX >= absY && absX >= absZ && intersectionPoint.x >= 0) {
+        return calcTextureCoordinates(intersectionPoint.z,intersectionPoint.y,glm::vec2(0.5f,0.25f));
     }
-
     // intersectionPoint is on top face
-    if (absY >= absX && absY >= absZ && intersectionPoint.y >= 0) {
-        std::cout << "intersectionPoint " << glm::to_string(intersectionPoint) << " is on the top face" << std::endl;
-        float s = ((intersectionPoint.x - (-0.5)) * 0.25) + 0.25;
-        float t = ((intersectionPoint.z - (-0.5)) * 0.25) + 0.50;
-        std::cout << "intersectionPoint.x: " << intersectionPoint.x << std::endl;
-        std::cout << "s: " << s << std::endl;
-        std::cout << "intersectionPoint.y: " << intersectionPoint.y << std::endl;
-        std::cout << "t: " << t << std::endl;
-        return glm::vec2(s,t);
+    else if (absY >= absX && absY >= absZ && intersectionPoint.y >= 0) {
+        return calcTextureCoordinates(intersectionPoint.x,intersectionPoint.z,glm::vec2(0.25f,0.5f));
     }
-
     // intersectionPoint is on bottom face
-    if (absY >= absX && absY >= absZ && intersectionPoint.y < 0) {
-        std::cout << "intersectionPoint " << glm::to_string(intersectionPoint) << " is on the bottom face" << std::endl;
-        float s = ((intersectionPoint.x - (-0.5)) * 0.25) + 0.25;
-        float t = ((intersectionPoint.z - (-0.5)) * 0.25) + 0;
-        std::cout << "intersectionPoint.x: " << intersectionPoint.x << std::endl;
-        std::cout << "s: " << s << std::endl;
-        std::cout << "intersectionPoint.y: " << intersectionPoint.y << std::endl;
-        std::cout << "t: " << t << std::endl;
-        return glm::vec2(s,t);
+    else if (absY >= absX && absY >= absZ && intersectionPoint.y < 0) {
+        return calcTextureCoordinates(intersectionPoint.x,intersectionPoint.z,glm::vec2(0.25f,0.0f));
     }
     
+}
+
+// sCoord is the intersection point coordinate (can be x,y or z) that the value of s will map to
+// tCoord is the intersection point coordinate (can be x,y or z) that the value of t will map to
+// bottomLeftCoords is the bottom left coordinate of the box on the ppm image that the box face maps to
+glm::vec2 Box::calcTextureCoordinates(float sCoord, float tCoord, glm::vec2 bottomLeftCoords) {
+    float s = ((sCoord - (-0.5)) * 0.25) + bottomLeftCoords.x;
+    float t = ((tCoord - (-0.5)) * 0.25) + bottomLeftCoords.y;
+    return glm::vec2(s,t);
 }

@@ -17,6 +17,7 @@ class Box {
     private:
         glm::vec3 vmin = glm::vec3(-0.5f,-0.5f,-0.5f); // minimum bounds of box in Object Coordinate System
         glm::vec3 vmax = glm::vec3(0.5f,0.5f,0.5f); // maximum bounds of box in Object Coordinate System
+        glm::vec2 calcTextureCoordinates(float sCoord, float tCoord, glm::vec2 bottomLeftCoords);
         float tmin;
         float tmax;
 };
