@@ -65,8 +65,8 @@ private:
     SGNodeVisitor *renderer;
     SGNodeVisitor *raytracerRenderer;
     vector<LightLocation> lightLocations; // shader locations for lights
-    int WIDTH = 500; // width of ppm file, in pixels
-    int HEIGHT = 500; // height of ppm file, in pixels
+    int WIDTH = 200; // width of ppm file, in pixels
+    int HEIGHT = 200; // height of ppm file, in pixels
     float cameraFOV = (float) glm::radians(60.0f);
 
     void reshape(GLFWwindow* window, int width, int height);
