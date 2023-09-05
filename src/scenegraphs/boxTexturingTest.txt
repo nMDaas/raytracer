@@ -1,0 +1,35 @@
+# these instances will be ignored if debugger is being used
+instance box src/models/box.obj
+
+#textures
+texture dieTexture src/textures/die.ppm
+
+#material
+material mat
+emission 0 0 0
+ambient 0.7 0.7 0.7
+diffuse 0.1 0.1 0.3
+specular 0 0 0
+shininess 5
+end-material
+
+#the root
+group root
+scale s1 25 25 25
+rotate r1 30 1 1 0
+translate t1 0 0 0
+leaf l1 instanceof box 
+assign-texture l1 dieTexture
+
+translate tlight 80 30 70
+light li1 1 1 1 1 1 1 1 1 1
+add-child li1 tlight
+add-child tlight root
+
+assign-material l1 mat
+add-child l1 s1
+add-child s1 r1
+add-child r1 t1
+add-child t1 root
+
+assign-root root
