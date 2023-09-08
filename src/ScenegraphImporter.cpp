@@ -3,10 +3,16 @@
 #include <ImageLoader.h>
 #include <PPMImageLoader.h>
 
-ScenegraphImporter::ScenegraphImporter() {
+ScenegraphImporter::ScenegraphImporter(bool debugger) {
     root = NULL;
     ImageLoader *loader = new PPMImageLoader();
-    loader->load("src/textures/white.ppm");
+    if (debugger) {
+        loader->load("textures/white.ppm");
+    }
+    else {
+        loader->load("src/textures/white.ppm");
+    }
+
     string name = "default";
     TextureImage* texture = new TextureImage(loader->getPixels(), loader->getWidth(), loader->getHeight(), name);
     textureObjects[name] = texture;

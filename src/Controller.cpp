@@ -34,17 +34,21 @@ void Controller::meshMaterialSetup(char* filePath, bool debugger) {
     }
 
     ifstream inFile(filePath);
-    ScenegraphImporter importer;
+    IScenegraph *scenegraph;
+
     if (debugger) {
+        ScenegraphImporter importer(true);
         importer.addInstance("sphere","models/sphere.obj");
         importer.addInstance("box","models/box.obj");
         importer.addInstance("cylinder","models/cylinder.obj");
         debugging = true;
+        scenegraph = importer.parse(inFile);
     }
     else {
+        ScenegraphImporter importer(false);
         debugging = false;
+        scenegraph = importer.parse(inFile);
     }
-    IScenegraph *scenegraph = importer.parse(inFile);
     spdlog::debug("Scenegraph made.");
     //importer.testParse(scenegraph);
 

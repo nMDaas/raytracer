@@ -32,7 +32,7 @@ using namespace std;
 
 class ScenegraphImporter {
     public:
-        ScenegraphImporter();
+        ScenegraphImporter(bool debugger);
         ~ScenegraphImporter();
 
         // to check for copy constructors
