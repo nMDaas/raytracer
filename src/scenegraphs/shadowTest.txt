@@ -1,0 +1,50 @@
+#all the instances
+instance box src/models/box.obj
+instance sphere src/models/sphere.obj
+
+#material
+material mat
+emission 0 0 0
+ambient 1 0 0
+diffuse 0 1 0
+specular 0 0 1
+shininess 5
+end-material
+
+material mat-box 
+emission 0 0 0
+ambient 0 0 0.5
+diffuse 0.3 0.3 0.3
+specular 0 0 0
+shininess 0.1
+end-material
+
+group root 
+
+translate t1 0 0 30  
+rotate r1 0 0 0 1  
+rotate r2 0 0 1 0  
+scale s1 20 20 20  
+leaf l1 instanceof sphere  
+add-child t1 root
+add-child s1 t1
+add-child l1 s1
+assign-material l1 mat
+
+translate t2 0 0 0  
+rotate r3 0 1 0 0  
+scale s2 180 70 2  
+leaf l2 instanceof box  
+add-child l2 s2
+add-child s2 r3
+add-child r3 t2
+add-child t2 root
+assign-material l2 mat-box
+
+translate tlight 40 -30 70
+light li1 1 1 1 1 1 1 1 1 1
+add-child li1 tlight
+add-child tlight root
+
+# Assign Root
+assign-root root

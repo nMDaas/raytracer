@@ -259,12 +259,6 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
             spdlog::debug("direction: " + glm::to_string(direction));
             scenegraph->getRoot()->accept(raytracerRenderer); 
 
-            if (dynamic_cast<RaytracerRenderer *>(raytracerRenderer)->hitHappened()) {
-                std::cout << "there was a hit" << std::endl;
-            }
-            else {
-                std::cout << "no hit" << std::endl;
-            }
             HitRecord& hitRecord = dynamic_cast<RaytracerRenderer *>(raytracerRenderer)->getHitRecord();
 
             std::cout << "(" << hh << "," << ww << "): time: " << hitRecord.t << std::endl;
@@ -290,6 +284,39 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
         }
     }
     std::cout << "Completed raytracing!" << std::endl;
+}
+
+bool View::inShadow(HitRecord hitRecord, util::Light light,IScenegraph* scenegraph) {
+    // ray origin and direction (s,v) from intersectionPoint to light
+    glm::vec4 origin(hitRecord.intersection_position.x, hitRecord.intersection_position.y, hitRecord.intersection_position.z, 1.0f);
+    glm::vec4 direction = (light.getPosition() - origin);
+    origin = origin + (direction * 0.001f);
+
+    std::cout << "intersectionPosition: " << glm::to_string(hitRecord.intersection_position);
+    std::cout << "light position: " << glm::to_string(light.getPosition());
+    std::cout << "direction: " << glm::to_string(direction);
+
+    stack<glm::mat4> inShadow_modelview;
+    inShadow_modelview.push(glm::mat4(1.0));
+    std::cout << "modelview.top(): " << glm::to_string(inShadow_modelview.top()) << std::endl;
+    inShadow_modelview.top() = inShadow_modelview.top() * glm::lookAt(glm::vec3(0.0f,0.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
+    std::cout << "modelview.top(): " << glm::to_string(inShadow_modelview.top()) << std::endl;
+    SGNodeVisitor *inShadowVisitor = new RaytracerRenderer(inShadow_modelview,origin,direction);
+    scenegraph->getRoot()->accept(inShadowVisitor); 
+
+    HitRecord& otherHitRecord = dynamic_cast<RaytracerRenderer *>(inShadowVisitor)->getHitRecord();
+
+    std::cout << "hitRecord time: " << hitRecord.t << std::endl;
+    std::cout << "otherHitRecord time: " << otherHitRecord.t << std::endl;
+
+    if (otherHitRecord.t < hitRecord.t) {
+        std::cout << "in shadow" << std::endl;
+        return true;
+    }
+    else {
+        std::cout << "not in shadow" << std::endl;
+        return false;
+    }
 }
 
 // RGB values are between 0 and 1
@@ -337,32 +364,40 @@ glm::vec4 View::getColor(HitRecord hitRecord, vector<util::Light> sceneLights, I
         we could take glm::dot of the two vectors */
         ambient = glm::vec3(mat->getAmbient()) * sceneLights[i].getAmbient();
 
-        /* nDotL is greater > 0 only if angle between normal and light vector is between 
-        0° and 90° and between 270° and 360°. This ensures that the light direction is coming in 
-        front of point of intersection and not behind point of intersection. If behind, diffuse becomes 0
-        (multiplied by 0). Otherwise, diffuse is calculated to it's full amount (multiplied by 1). It also 
-        does not matter if lightVec is lightPosition - fPosition or fPosition - lightPosition because the dot 
-        product of either is the same because the cos of the angle between both vectors is the same. */
-        diffuse = glm::vec3(mat->getDiffuse()) * sceneLights[i].getDiffuse() * std::max(nDotL,0.0f);
+        if (!inShadow(hitRecord, sceneLights[i],scenegraph)) {
 
-        // fPosition vector = 0 - pointOfIntersection 
-        // viewVec is the vector = pointOfIntersection - 0 in direction of the camera (from viewer's location)
-        /* the logic behind calculating rDotV is that when the reflected vector and viewVec are pointing 
-        in the same direction and angle between them = 0°, the light should be brightest. When the vectors are pointed
-        opposite to each other and angle between them is closer to 180°, light should be reflected the least. 
-        This is best represented by the cos graph. If the angle is between 180° and 270°, there should be no 
-        lighting (specular) */
-        float rDotV = std::max(dot(reflectVec,viewVec),0.0f);
+            /* nDotL is greater > 0 only if angle between normal and light vector is between 
+            0° and 90° and between 270° and 360°. This ensures that the light direction is coming in 
+            front of point of intersection and not behind point of intersection. If behind, diffuse becomes 0
+            (multiplied by 0). Otherwise, diffuse is calculated to it's full amount (multiplied by 1). It also 
+            does not matter if lightVec is lightPosition - fPosition or fPosition - lightPosition because the dot 
+            product of either is the same because the cos of the angle between both vectors is the same. */
+            diffuse = glm::vec3(mat->getDiffuse()) * sceneLights[i].getDiffuse() * std::max(nDotL,0.0f);
 
-        /* check to make sure that light is coming in front of object and not behind (rDotV > 0 includes light 
-        coming from behind the object */
-        if (nDotL > 0) {
-            // The closer the viewVec and reflectVec, the higher the value of rDotV, the higher the specular value
-            specular = glm::vec3(mat->getSpecular()) * sceneLights[i].getSpecular() * pow(rDotV,mat->getShininess());
+            // fPosition vector = 0 - pointOfIntersection 
+            // viewVec is the vector = pointOfIntersection - 0 in direction of the camera (from viewer's location)
+            /* the logic behind calculating rDotV is that when the reflected vector and viewVec are pointing 
+            in the same direction and angle between them = 0°, the light should be brightest. When the vectors are pointed
+            opposite to each other and angle between them is closer to 180°, light should be reflected the least. 
+            This is best represented by the cos graph. If the angle is between 180° and 270°, there should be no 
+            lighting (specular) */
+            float rDotV = std::max(dot(reflectVec,viewVec),0.0f);
+
+            /* check to make sure that light is coming in front of object and not behind (rDotV > 0 includes light 
+            coming from behind the object */
+            if (nDotL > 0) {
+                // The closer the viewVec and reflectVec, the higher the value of rDotV, the higher the specular value
+                specular = glm::vec3(mat->getSpecular()) * sceneLights[i].getSpecular() * pow(rDotV,mat->getShininess());
+            }
+            else {
+                specular = glm::vec3(0,0,0);
+            }
         }
         else {
+            diffuse = glm::vec3(0,0,0);
             specular = glm::vec3(0,0,0);
         }
+
         outColor = outColor + ambient + diffuse + specular;
         spdlog::debug("light #" + i);
         spdlog::debug("light ambient: " + glm::to_string(ambient));
