@@ -276,7 +276,7 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
             else {
                 util::Material* mat = hitRecord.object_mat;
                 vector<util::Light> sceneLights = raytracerRenderer->getLights();
-                glm::vec4 color = getColor(hitRecord,sceneLights);
+                glm::vec4 color = getColor(hitRecord,sceneLights,scenegraph);
                 glm::vec4 textureColor = hitRecord.textureImage->getColor(hitRecord.textureCoordinates.x, hitRecord.textureCoordinates.y);
                 glm::vec4 colorWithTexture = color * glm::vec4(textureColor.x/255, textureColor.y/255, textureColor.z/255, textureColor.w/255) * 255.0f;
 
@@ -293,7 +293,7 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
 }
 
 // RGB values are between 0 and 1
-glm::vec4 View::getColor(HitRecord hitRecord, vector<util::Light> sceneLights) {
+glm::vec4 View::getColor(HitRecord hitRecord, vector<util::Light> sceneLights, IScenegraph* scenegraph) {
     glm::vec3 outColor(0,0,0);
     glm::vec3 lightVec;
     glm::vec4 fPosition = hitRecord.intersection_position;
