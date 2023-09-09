@@ -29,7 +29,7 @@ class RaytracerRenderer: public AbstractRenderer {
 
         void visitLeafNode(LeafNode *leafNode);
         HitRecord& getHitRecord();
-        bool hitHappened();
+
 
     private: 
     glm::vec4 s;
