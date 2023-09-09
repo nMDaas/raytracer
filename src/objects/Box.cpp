@@ -117,11 +117,12 @@ glm::vec2 Box::getTextureCoordinates(glm::vec4 intersectionPoint) {
     float absY = abs(intersectionPoint.y);
     float absZ = abs(intersectionPoint.z);
 
+    /*
     std::cout << "intersectionPoint: " << glm::to_string(intersectionPoint) << std::endl;
     std::cout << "absX: " << absX << std::endl;
     std::cout << "absY: " << absY << std::endl;
     std::cout << "absZ: " << absZ << std::endl;
-
+    */
 
     // intersectionPoint is on front face
     if (absZ >= absY && absZ >= absX && intersectionPoint.z >= 0) {
