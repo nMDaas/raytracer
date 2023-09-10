@@ -43,14 +43,15 @@ void Controller::meshMaterialSetup(char* filePath, bool debugger) {
         importer.addInstance("cylinder","models/cylinder.obj");
         debugging = true;
         scenegraph = importer.parse(inFile);
+        importer.testParse(scenegraph);
     }
     else {
         ScenegraphImporter importer(false);
         debugging = false;
         scenegraph = importer.parse(inFile);
+        importer.testParse(scenegraph);
     }
     spdlog::debug("Scenegraph made.");
-    //importer.testParse(scenegraph);
 
     model.setScenegraph(scenegraph);
 

@@ -456,8 +456,8 @@ void ScenegraphImporter::testParse(IScenegraph* scenegraph) {
             std::cout << "      spotlight ambient: " << glm::to_string(spotlightNode->getLight()->getAmbient()) << std::endl;
             std::cout << "      spotlight diffuse: " << glm::to_string(spotlightNode->getLight()->getDiffuse()) << std::endl;
             std::cout << "      spotlight specular: " << glm::to_string(spotlightNode->getLight()->getSpecular()) << std::endl;
-            std::cout << "      spotlight direction: " << glm::to_string(spotlightNode->getDirection()) << std::endl;
-            std::cout << "      spotlight spot angle: " << spotlightNode->getSpotAngle() << std::endl;
+            std::cout << "      spotlight direction: " << glm::to_string(spotlightNode->getLight()->getSpotDirection()) << std::endl;
+            std::cout << "      spotlight spot angle: " << spotlightNode->getLight()->getSpotCutoff() << std::endl;
             std::cout << std::endl;
             }
     }
