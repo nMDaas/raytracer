@@ -292,15 +292,9 @@ bool View::inShadow(HitRecord hitRecord, util::Light light,IScenegraph* scenegra
     glm::vec4 direction = (light.getPosition() - origin);
     origin = origin + (direction * 0.001f);
 
-    std::cout << "intersectionPosition: " << glm::to_string(hitRecord.intersection_position);
-    std::cout << "light position: " << glm::to_string(light.getPosition());
-    std::cout << "direction: " << glm::to_string(direction);
-
     stack<glm::mat4> inShadow_modelview;
     inShadow_modelview.push(glm::mat4(1.0));
-    std::cout << "modelview.top(): " << glm::to_string(inShadow_modelview.top()) << std::endl;
     inShadow_modelview.top() = inShadow_modelview.top() * glm::lookAt(glm::vec3(0.0f,0.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
-    std::cout << "modelview.top(): " << glm::to_string(inShadow_modelview.top()) << std::endl;
     SGNodeVisitor *inShadowVisitor = new RaytracerRenderer(inShadow_modelview,origin,direction);
     scenegraph->getRoot()->accept(inShadowVisitor); 
 
