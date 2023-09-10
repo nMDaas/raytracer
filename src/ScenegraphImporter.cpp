@@ -58,6 +58,9 @@ IScenegraph* ScenegraphImporter::parse(std::istream& input) {
         else if (command == "light") {
             parseLight(inputWithOutComments);
         }
+        else if (command == "spotlight") {
+            parseSpotlight(inputWithOutComments);
+        }
         else if (command == "material") {
             parseMaterial(inputWithOutComments);
         }
@@ -172,6 +175,26 @@ void ScenegraphImporter::parseLight(istream& input) {
     SGNode *light = new LightNode(name,NULL,glm::vec3(ambientR,ambientG,ambientB),
         glm::vec3(diffuseR,diffuseG,diffuseB),glm::vec3(specularR,specularG,specularB));
     nodes[name] = light;
+}
+
+void ScenegraphImporter::parseSpotlight(istream& input) {
+    string name;
+    input >> name;
+    //std::cout << "command: light " << varname << " " << name << " " << std::endl;
+    float ambientR,ambientG,ambientB;
+    input >> ambientR >> ambientG >> ambientB;
+    float diffuseR,diffuseG,diffuseB;
+    input >> diffuseR >> diffuseG >> diffuseB;
+    float specularR,specularG,specularB;
+    input >> specularR >> specularG >> specularB;
+    float dx,dy,dz;
+    input >> dx >> dy >> dz;
+    float spotAngle;
+    input >> spotAngle;
+
+    SGNode *spotlight = new SpotlightNode(name,NULL,glm::vec3(ambientR,ambientG,ambientB),
+        glm::vec3(diffuseR,diffuseG,diffuseB),glm::vec3(specularR,specularG,specularB),glm::vec4(dx,dy,dz,0),spotAngle);
+    nodes[name] = spotlight;
 }
 
 void ScenegraphImporter::parseMaterial(istream& input) {
@@ -417,6 +440,24 @@ void ScenegraphImporter::testParse(IScenegraph* scenegraph) {
             std::cout << "      light ambient: " << glm::to_string(lightNode->getLight()->getAmbient()) << std::endl;
             std::cout << "      light diffuse: " << glm::to_string(lightNode->getLight()->getDiffuse()) << std::endl;
             std::cout << "      light specular: " << glm::to_string(lightNode->getLight()->getSpecular()) << std::endl;
+            std::cout << std::endl;
+            }
+    }
+
+    std::cout << std::endl;
+
+    // test for parseSpotlight
+    std::cout << "   SPOTLIGHT NODES:"<< std::endl;
+     for (auto i : nodes) {
+        string nodeName = typeid(*i.second).name();
+        if (nodeName.find("SpotlightNode") != std::string::npos) {
+            SpotlightNode* spotlightNode = dynamic_cast<SpotlightNode *> (i.second);
+            std::cout << "      spotlight node: " << spotlightNode->getName() << std::endl;
+            std::cout << "      spotlight ambient: " << glm::to_string(spotlightNode->getLight()->getAmbient()) << std::endl;
+            std::cout << "      spotlight diffuse: " << glm::to_string(spotlightNode->getLight()->getDiffuse()) << std::endl;
+            std::cout << "      spotlight specular: " << glm::to_string(spotlightNode->getLight()->getSpecular()) << std::endl;
+            std::cout << "      spotlight direction: " << glm::to_string(spotlightNode->getDirection()) << std::endl;
+            std::cout << "      spotlight spot angle: " << spotlightNode->getSpotAngle() << std::endl;
             std::cout << std::endl;
             }
     }
