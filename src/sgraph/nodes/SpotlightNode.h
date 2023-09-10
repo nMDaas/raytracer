@@ -6,6 +6,9 @@
 class SpotlightNode: public LightNode {
     public: 
     SpotlightNode(const std::string& name,IScenegraph *graph,glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular,glm::vec4 dir,float angle);
+    glm::vec4 getDirection();
+    float getSpotAngle();
+
     private: 
     glm::vec4 direction;
     float spotAngle;
