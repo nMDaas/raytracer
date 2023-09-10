@@ -87,8 +87,8 @@ glm::vec2 Sphere::getTextureCoordinates(glm::vec4 intersectionPoint) {
     float s = theta / (2 * M_PI);
     float t = (phi + (0.5 * M_PI)) / M_PI;
 
-    std::cout << "s: " << s << std::endl;
-    std::cout << "t: " << t << std::endl;
+    //std::cout << "s: " << s << std::endl;
+    //std::cout << "t: " << t << std::endl;
 
     return glm::vec4(s,t,0,0);
 }

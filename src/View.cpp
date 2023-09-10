@@ -306,15 +306,15 @@ bool View::inShadow(HitRecord hitRecord, util::Light light,IScenegraph* scenegra
 
     HitRecord& otherHitRecord = dynamic_cast<RaytracerRenderer *>(inShadowVisitor)->getHitRecord();
 
-    std::cout << "hitRecord time: " << hitRecord.t << std::endl;
-    std::cout << "otherHitRecord time: " << otherHitRecord.t << std::endl;
+    //std::cout << "hitRecord time: " << hitRecord.t << std::endl;
+    //std::cout << "otherHitRecord time: " << otherHitRecord.t << std::endl;
 
     if (otherHitRecord.t < hitRecord.t) {
-        std::cout << "in shadow" << std::endl;
+        spdlog::debug("in shadow");
         return true;
     }
     else {
-        std::cout << "not in shadow" << std::endl;
+        spdlog::debug("not in shadow");
         return false;
     }
 }
