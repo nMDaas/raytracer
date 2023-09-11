@@ -1,0 +1,38 @@
+#test with a spotlight and a light
+
+# these instances will be ignored if debugger is being used
+instance sphere src/models/sphere.obj
+
+#material
+material mat
+emission 0 0 0
+ambient 0.5 0.5 0.5
+diffuse 0.5 1 0
+specular 0 0 0
+shininess 0.1
+end-material
+
+#the root
+group root
+scale s1 35 35 35
+rotate r1 0 0 1 0
+translate t1 0 0 0
+leaf l1 instanceof sphere 
+
+translate tlight2 0 0 50
+spotlight li2 0.7 0 0 0.7 0 0 0 0 0 -200 0 -1000 20
+add-child li2 tlight2
+add-child tlight2 root
+
+translate tlight 50 30 70
+light li1 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2
+add-child li1 tlight
+add-child tlight root
+
+assign-material l1 mat
+add-child l1 s1
+add-child s1 r1
+add-child r1 t1
+add-child t1 root
+
+assign-root root
