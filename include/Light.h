@@ -67,7 +67,7 @@ namespace util
   private:
     glm::vec3 ambient, diffuse, specular;
     glm::vec4 position, spotDirection;
-    float spotCutoff;
+    float spotCutoff; // this angle is in radians
   };
 
 
