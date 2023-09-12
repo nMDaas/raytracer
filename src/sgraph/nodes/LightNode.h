@@ -18,6 +18,8 @@ class LightNode: public ChildSGNode {
     SGNode *clone();
     void accept(SGNodeVisitor* visitor);
     util::Light* getLight();
+    std::vector<util::Light>* getLightCells();
+
     private:
     void generateLightCells(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular); // currently generating 2x2 cells
 };

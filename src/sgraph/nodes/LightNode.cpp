@@ -45,4 +45,7 @@ void LightNode::generateLightCells(glm::vec3 ambient, glm::vec3 diffuse, glm::ve
     lightCells.push_back(light3);
     lightCells.push_back(light4);
 }
+
+std::vector<util::Light>* LightNode::getLightCells() {
+    return &lightCells;
 }
