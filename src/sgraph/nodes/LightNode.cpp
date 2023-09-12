@@ -7,7 +7,6 @@ LightNode::LightNode(const std::string& name,IScenegraph *graph,glm::vec3 ambien
     light->setAmbient(ambient.x,ambient.y,ambient.z);
     light->setDiffuse(diffuse.x,diffuse.y,diffuse.z);
     light->setSpecular(specular.x,specular.y,specular.z);
-    
     generateLightCells(ambient,diffuse,specular);
 }
 
