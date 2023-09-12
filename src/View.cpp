@@ -344,19 +344,19 @@ glm::vec4 View::getColor(HitRecord hitRecord, vector<util::Light> sceneLights, I
         glm::vec3 spotDir = glm::normalize(-sceneLights[i].getSpotDirection());
         float lDotSpotDir = glm::dot(direction,spotDir);
         float spotCutOff = sceneLights[i].getSpotCutoff();
-        std::cout << "direction" << glm::to_string(direction) << std::endl;
-        std::cout << "spotDir" << glm::to_string(spotDir) << std::endl;
-        std::cout << "lDotSpotDir: " << acos(lDotSpotDir) << std::endl;
-        std::cout << "spotCutOff: " << spotCutOff << std::endl;
+        spdlog::debug("direction" + glm::to_string(direction));
+        spdlog::debug("spotDir" + glm::to_string(spotDir));
+        spdlog::debug("lDotSpotDir: (int) " + (int) acos(lDotSpotDir));
+        spdlog::debug("spotCutOff: (int)" + (int) spotCutOff);
 
         float keepLighting = true;
 
         if (spotCutOff != 0.0f) {
             if (acos(lDotSpotDir) <= spotCutOff) {
-                std::cout << "In spotlight" << std::endl;
+                spdlog::debug("In spotlight");
             }
             else {
-                std::cout << "out of spotlight, in darkness" << std::endl;
+                spdlog::debug("out of spotlight, in darkness");
                 keepLighting = false;
             }
         }
