@@ -371,44 +371,45 @@ glm::vec4 View::getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneL
             we could take glm::dot of the two vectors */
             ambient = glm::vec3(mat->getAmbient()) * mainLight.getAmbient();
 
-            float shadowIntensity = getShadowIntensity(hitRecord,sceneLightCollections[i],scenegraph);
-            float lightIntensity = 1.0f - shadowIntensity;
+            float shadowIntensity;
+            float lightIntensity;
 
             std::cout << "shadow Intensity = " << shadowIntensity << std::endl;
 
-            //if (!inShadow(hitRecord, mainLight,scenegraph)) {
+            if (!inShadow(hitRecord, mainLight,scenegraph)) {
+                lightIntensity = 1.0f;
+            }
+            else {
+                shadowIntensity = getShadowIntensity(hitRecord,sceneLightCollections[i],scenegraph);
+                lightIntensity = 1.0f - shadowIntensity;
+            }
 
-                /* nDotL is greater > 0 only if angle between normal and light vector is between 
-                0° and 90° and between 270° and 360°. This ensures that the light direction is coming in 
-                front of point of intersection and not behind point of intersection. If behind, diffuse becomes 0
-                (multiplied by 0). Otherwise, diffuse is calculated to it's full amount (multiplied by 1). It also 
-                does not matter if lightVec is lightPosition - fPosition or fPosition - lightPosition because the dot 
-                product of either is the same because the cos of the angle between both vectors is the same. */
-                diffuse = lightIntensity * glm::vec3(mat->getDiffuse()) * mainLight.getDiffuse() * std::max(nDotL,0.0f);
+            /* nDotL is greater > 0 only if angle between normal and light vector is between 
+            0° and 90° and between 270° and 360°. This ensures that the light direction is coming in 
+            front of point of intersection and not behind point of intersection. If behind, diffuse becomes 0
+            (multiplied by 0). Otherwise, diffuse is calculated to it's full amount (multiplied by 1). It also 
+            does not matter if lightVec is lightPosition - fPosition or fPosition - lightPosition because the dot 
+            product of either is the same because the cos of the angle between both vectors is the same. */
+            diffuse = lightIntensity * glm::vec3(mat->getDiffuse()) * mainLight.getDiffuse() * std::max(nDotL,0.0f);
 
-                // fPosition vector = 0 - pointOfIntersection 
-                // viewVec is the vector = pointOfIntersection - 0 in direction of the camera (from viewer's location)
-                /* the logic behind calculating rDotV is that when the reflected vector and viewVec are pointing 
-                in the same direction and angle between them = 0°, the light should be brightest. When the vectors are pointed
-                opposite to each other and angle between them is closer to 180°, light should be reflected the least. 
-                This is best represented by the cos graph. If the angle is between 180° and 270°, there should be no 
-                lighting (specular) */
-                float rDotV = std::max(dot(reflectVec,viewVec),0.0f);
+            // fPosition vector = 0 - pointOfIntersection 
+            // viewVec is the vector = pointOfIntersection - 0 in direction of the camera (from viewer's location)
+            /* the logic behind calculating rDotV is that when the reflected vector and viewVec are pointing 
+            in the same direction and angle between them = 0°, the light should be brightest. When the vectors are pointed
+            opposite to each other and angle between them is closer to 180°, light should be reflected the least. 
+            This is best represented by the cos graph. If the angle is between 180° and 270°, there should be no 
+            lighting (specular) */
+            float rDotV = std::max(dot(reflectVec,viewVec),0.0f);
 
-                /* check to make sure that light is coming in front of object and not behind (rDotV > 0 includes light 
-                coming from behind the object */
-                if (nDotL > 0) {
-                    // The closer the viewVec and reflectVec, the higher the value of rDotV, the higher the specular value
-                    specular = lightIntensity * glm::vec3(mat->getSpecular()) * mainLight.getSpecular() * pow(rDotV,mat->getShininess());
-                }
-                else {
-                    specular = glm::vec3(0,0,0);
-                }
-            //}
-            //else {
-            //    diffuse = glm::vec3(0,0,0);
-            //    specular = glm::vec3(0,0,0);
-            //}
+            /* check to make sure that light is coming in front of object and not behind (rDotV > 0 includes light 
+            coming from behind the object */
+            if (nDotL > 0) {
+                // The closer the viewVec and reflectVec, the higher the value of rDotV, the higher the specular value
+                specular = lightIntensity * glm::vec3(mat->getSpecular()) * mainLight.getSpecular() * pow(rDotV,mat->getShininess());
+            }
+            else {
+                specular = glm::vec3(0,0,0);
+            }
 
             outColor = outColor + ambient + diffuse + specular;
             spdlog::debug("light #" + i);
@@ -453,11 +454,11 @@ bool View::inShadow(HitRecord hitRecord, util::Light light,IScenegraph* scenegra
 }
 
 float View::getShadowIntensity(HitRecord hitRecord, vector<util::Light> lightCollection, IScenegraph* scenegraph) {
-    float total = 0.0f;
+    float total = 1.0f; // accounts for main light so that is not processed again
 
     std::cout << "lightCollection size: " << lightCollection.size() << std::endl;
 
-    for (int i = 0; i < lightCollection.size(); i++) {
+    for (int i = 1; i < lightCollection.size(); i++) {
         std::cout << "light " << i << std::endl;
         // ray origin and direction (s,v) from intersectionPoint to light
         glm::vec4 origin(hitRecord.intersection_position.x, hitRecord.intersection_position.y, hitRecord.intersection_position.z, 1.0f);
