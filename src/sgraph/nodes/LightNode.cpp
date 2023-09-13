@@ -45,9 +45,9 @@ void LightNode::generateLightCells(glm::vec3 ambient, glm::vec3 diffuse, glm::ve
     light4->setDiffuse(diffuse.x,diffuse.y,diffuse.z);
     light4->setSpecular(specular.x,specular.y,specular.z);
     lightCells.push_back(light1);
-    lightCells.push_back(light2);
-    lightCells.push_back(light3);
-    lightCells.push_back(light4);
+    //lightCells.push_back(light2);
+    //lightCells.push_back(light3);
+    //lightCells.push_back(light4);
 }
 
 std::vector<util::Light*>* LightNode::getLightCells() {
