@@ -289,33 +289,6 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
     std::cout << "Completed raytracing!" << std::endl;
 }
 
-bool View::inShadow(HitRecord hitRecord, util::Light light,IScenegraph* scenegraph) {
-    // ray origin and direction (s,v) from intersectionPoint to light
-    glm::vec4 origin(hitRecord.intersection_position.x, hitRecord.intersection_position.y, hitRecord.intersection_position.z, 1.0f);
-    glm::vec4 direction = (light.getPosition() - origin);
-    origin = origin + (direction * 0.001f);
-
-    stack<glm::mat4> inShadow_modelview;
-    inShadow_modelview.push(glm::mat4(1.0));
-    inShadow_modelview.top() = inShadow_modelview.top() * glm::lookAt(glm::vec3(0.0f,0.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
-    SGNodeVisitor *inShadowVisitor = new RaytracerRenderer(inShadow_modelview,origin,direction);
-    scenegraph->getRoot()->accept(inShadowVisitor); 
-
-    HitRecord& otherHitRecord = dynamic_cast<RaytracerRenderer *>(inShadowVisitor)->getHitRecord();
-
-    //std::cout << "hitRecord time: " << hitRecord.t << std::endl;
-    //std::cout << "otherHitRecord time: " << otherHitRecord.t << std::endl;
-
-    if (otherHitRecord.t < hitRecord.t) {
-        spdlog::debug("in shadow");
-        return true;
-    }
-    else {
-        spdlog::debug("not in shadow");
-        return false;
-    }
-}
-
 // RGB values are between 0 and 1
 glm::vec4 View::getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph) {
     glm::vec3 outColor(0,0,0);
@@ -445,6 +418,33 @@ glm::vec4 View::getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneL
     outColor = outColor;
 
     return glm::vec4(outColor.x, outColor.y, outColor.z, 0);
+}
+
+bool View::inShadow(HitRecord hitRecord, util::Light light,IScenegraph* scenegraph) {
+    // ray origin and direction (s,v) from intersectionPoint to light
+    glm::vec4 origin(hitRecord.intersection_position.x, hitRecord.intersection_position.y, hitRecord.intersection_position.z, 1.0f);
+    glm::vec4 direction = (light.getPosition() - origin);
+    origin = origin + (direction * 0.001f);
+
+    stack<glm::mat4> inShadow_modelview;
+    inShadow_modelview.push(glm::mat4(1.0));
+    inShadow_modelview.top() = inShadow_modelview.top() * glm::lookAt(glm::vec3(0.0f,0.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
+    SGNodeVisitor *inShadowVisitor = new RaytracerRenderer(inShadow_modelview,origin,direction);
+    scenegraph->getRoot()->accept(inShadowVisitor); 
+
+    HitRecord& otherHitRecord = dynamic_cast<RaytracerRenderer *>(inShadowVisitor)->getHitRecord();
+
+    //std::cout << "hitRecord time: " << hitRecord.t << std::endl;
+    //std::cout << "otherHitRecord time: " << otherHitRecord.t << std::endl;
+
+    if (otherHitRecord.t < hitRecord.t) {
+        spdlog::debug("in shadow");
+        return true;
+    }
+    else {
+        spdlog::debug("not in shadow");
+        return false;
+    }
 }
 
 int View::clipValue(int val) {
