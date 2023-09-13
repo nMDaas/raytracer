@@ -77,6 +77,7 @@ private:
     glm::vec4 getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph); // RGB values are between 0 and 1
     int clipValue(int val);
     bool inShadow(HitRecord hitRecord, util::Light light, IScenegraph* scenegraph);
+    float getShadowIntensity(HitRecord hitRecord, vector<util::Light> lightCollection, IScenegraph* scenegraph);
 };
 
 #endif
