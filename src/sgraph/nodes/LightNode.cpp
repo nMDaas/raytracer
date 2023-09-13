@@ -24,7 +24,11 @@ util::Light* LightNode::getLight() {
 }
 
 void LightNode::generateLightCells(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular) {
-    lightCells.push_back(light); //main light at bottom left corner (x,y,z)
+    util::Light* light1 = new util::Light(); //main light at bottom left corner (x,y,z)
+    light1->setPosition(0.0f,0.0f,0.0f);
+    light1->setAmbient(ambient.x,ambient.y,ambient.z);
+    light1->setDiffuse(diffuse.x,diffuse.y,diffuse.z);
+    light1->setSpecular(specular.x,specular.y,specular.z);
     util::Light* light2 = new util::Light(); //light above (x,y+1,z)
     light2->setPosition(0.0f,1.0f,0.0f);
     light2->setAmbient(ambient.x,ambient.y,ambient.z);
@@ -35,11 +39,12 @@ void LightNode::generateLightCells(glm::vec3 ambient, glm::vec3 diffuse, glm::ve
     light3->setAmbient(ambient.x,ambient.y,ambient.z);
     light3->setDiffuse(diffuse.x,diffuse.y,diffuse.z);
     light3->setSpecular(specular.x,specular.y,specular.z);
-    util::Light* light4; //light on right (x+1,y,z)
+    util::Light* light4 = new util::Light(); //light on right (x+1,y,z)
     light4->setPosition(1.0f,0.0f,0.0f);
     light4->setAmbient(ambient.x,ambient.y,ambient.z);
     light4->setDiffuse(diffuse.x,diffuse.y,diffuse.z);
     light4->setSpecular(specular.x,specular.y,specular.z);
+    lightCells.push_back(light1);
     lightCells.push_back(light2);
     lightCells.push_back(light3);
     lightCells.push_back(light4);
