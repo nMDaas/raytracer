@@ -453,10 +453,15 @@ bool View::inShadow(HitRecord hitRecord, util::Light light,IScenegraph* scenegra
 }
 
 float View::getShadowIntensity(HitRecord hitRecord, vector<util::Light> lightCollection, IScenegraph* scenegraph) {
-    int total = 0;
+    float total = 0.0f;
+
+    std::cout << "lightCollection size: " << lightCollection.size() << std::endl;
+
     for (int i = 0; i < lightCollection.size(); i++) {
+        std::cout << "light " << i << std::endl;
         // ray origin and direction (s,v) from intersectionPoint to light
         glm::vec4 origin(hitRecord.intersection_position.x, hitRecord.intersection_position.y, hitRecord.intersection_position.z, 1.0f);
+        std::cout << "light position: " << glm::to_string(lightCollection[i].getPosition()) << std::endl;
         glm::vec4 direction = (lightCollection[i].getPosition() - origin);
         origin = origin + (direction * 0.001f);
 
@@ -473,12 +478,15 @@ float View::getShadowIntensity(HitRecord hitRecord, vector<util::Light> lightCol
 
         if (otherHitRecord.t < hitRecord.t) {
             spdlog::debug("in shadow");
-            total = total + 1;
+            std::cout << "adding 1" << std::endl;
+            total = total + 1.0f;
         }
         else {
             spdlog::debug("not in shadow");
         }
     }
+
+    std::cout << "total: " << total << std::endl;
 
     float avg = total / lightCollection.size();
     return avg;

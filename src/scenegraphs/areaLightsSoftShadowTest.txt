@@ -31,8 +31,8 @@ add-child s1 t1
 add-child l1 s1
 assign-material l1 mat
 
-translate t2 0 0 0  
-rotate r3 0 1 0 0  
+translate t2 0 -35 0  
+rotate r3 90 1 0 0  
 scale s2 180 180 2  
 leaf l2 instanceof box  
 add-child l2 s2
@@ -41,7 +41,7 @@ add-child r3 t2
 add-child t2 root
 assign-material l2 mat-box
 
-translate tlight 40 -30 70
+translate tlight -40 30 70
 light li1 1 1 1 1 1 1 1 1 1
 add-child li1 tlight
 add-child tlight root
