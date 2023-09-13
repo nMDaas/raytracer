@@ -201,6 +201,7 @@ void View::display(IScenegraph *scenegraph) {
     }
 
     renderer->clearLights();
+    renderer->clearLightCellCollections();
 
     modelview.pop();
     glFlush();
@@ -271,7 +272,7 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
                 util::Material* mat = hitRecord.object_mat;
                 vector<util::Light> sceneLights = raytracerRenderer->getLights();
                 vector<vector<util::Light>> lightCellCollections = raytracerRenderer->getLightCellCollections();
-                glm::vec4 color = getColor(hitRecord,sceneLights,lightCellCollections, scenegraph);
+                glm::vec4 color = getColor(hitRecord, lightCellCollections, scenegraph);
                 glm::vec4 textureColor = hitRecord.textureImage->getColor(hitRecord.textureCoordinates.x, hitRecord.textureCoordinates.y);
                 glm::vec4 colorWithTexture = color * glm::vec4(textureColor.x/255, textureColor.y/255, textureColor.z/255, textureColor.w/255) * 255.0f;
 
@@ -315,7 +316,7 @@ bool View::inShadow(HitRecord hitRecord, util::Light light,IScenegraph* scenegra
 }
 
 // RGB values are between 0 and 1
-glm::vec4 View::getColor(HitRecord hitRecord, vector<util::Light> sceneLights, vector<vector<util::Light>> sceneLightCellCollections, IScenegraph* scenegraph) {
+glm::vec4 View::getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph) {
     glm::vec3 outColor(0,0,0);
     glm::vec3 lightVec;
     glm::vec4 fPosition = hitRecord.intersection_position;
@@ -327,31 +328,37 @@ glm::vec4 View::getColor(HitRecord hitRecord, vector<util::Light> sceneLights, v
     glm::vec3 viewVec = - fPosition;
     viewVec = glm::normalize(viewVec);
 
-    spdlog::debug("sceneLights size: " + sceneLights.size());
+    spdlog::debug("sceneLightCollections size: " + sceneLightCollections.size());
 
+    /*
     std::cout << "TESTING IN GETCOLOR()" << std::endl;
-    for (int i = 0; i < sceneLightCellCollections.size(); i++) {
-        for (int j = 0; j < sceneLightCellCollections[i].size(); j++) {
-            std::cout << "light " << i << "," << j << ": " << glm::to_string(sceneLightCellCollections[i][j].getPosition()) << std::endl;
+    for (int i = 0; i < sceneLightCollections.size(); i++) {
+        for (int j = 0; j < sceneLightCollections[i].size(); j++) {
+            std::cout << "light " << i << "," << j << ": " << glm::to_string(sceneLightCollections[i][j].getPosition()) << std::endl;
         }
     }
+    */
 
-    for (int i = 0; i < sceneLights.size(); i++) {
+    for (int i = 0; i < sceneLightCollections.size(); i++) {
 
-        if (sceneLights[i].getPosition().w != 0) {
+        // this is the light in the bottom left corner that other cells in the light are generated from
+        util::Light mainLight = sceneLightCollections[i][0]; 
+        std::cout << "mainLight: " << glm::to_string(mainLight.getPosition()) << std::endl; 
+
+        if (mainLight.getPosition().w != 0) {
             std::cout << "W IS 1" << std::endl;
             // this is the vector from the light position to the point of intersection
-            lightVec = glm::normalize(sceneLights[i].getPosition() - fPosition);
+            lightVec = glm::normalize(mainLight.getPosition() - fPosition);
         }
         else {
             std::cout << "W IS 0" << std::endl;
-            lightVec = glm::normalize(- sceneLights[i].getPosition());
+            lightVec = glm::normalize(- mainLight.getPosition());
         }
 
-        glm::vec3 direction = glm::normalize(sceneLights[i].getPosition() - fPosition);
-        glm::vec3 spotDir = glm::normalize(-sceneLights[i].getSpotDirection());
+        glm::vec3 direction = glm::normalize(mainLight.getPosition() - fPosition);
+        glm::vec3 spotDir = glm::normalize(-mainLight.getSpotDirection());
         float lDotSpotDir = glm::dot(direction,spotDir);
-        float spotCutOff = sceneLights[i].getSpotCutoff();
+        float spotCutOff = mainLight.getSpotCutoff();
         spdlog::debug("direction" + glm::to_string(direction));
         spdlog::debug("spotDir" + glm::to_string(spotDir));
         spdlog::debug("lDotSpotDir: (int) " + (int) acos(lDotSpotDir));
@@ -388,9 +395,9 @@ glm::vec4 View::getColor(HitRecord hitRecord, vector<util::Light> sceneLights, v
             /* A 1x3 * 1x3 matrix can give a 1x3 matrix or a single value. We avoid the single value  
             by multiplying the vectors together to give a 1x3 vector. If we wanted the single value, 
             we could take glm::dot of the two vectors */
-            ambient = glm::vec3(mat->getAmbient()) * sceneLights[i].getAmbient();
+            ambient = glm::vec3(mat->getAmbient()) * mainLight.getAmbient();
 
-            if (!inShadow(hitRecord, sceneLights[i],scenegraph)) {
+            if (!inShadow(hitRecord, mainLight,scenegraph)) {
 
                 /* nDotL is greater > 0 only if angle between normal and light vector is between 
                 0° and 90° and between 270° and 360°. This ensures that the light direction is coming in 
@@ -398,7 +405,7 @@ glm::vec4 View::getColor(HitRecord hitRecord, vector<util::Light> sceneLights, v
                 (multiplied by 0). Otherwise, diffuse is calculated to it's full amount (multiplied by 1). It also 
                 does not matter if lightVec is lightPosition - fPosition or fPosition - lightPosition because the dot 
                 product of either is the same because the cos of the angle between both vectors is the same. */
-                diffuse = glm::vec3(mat->getDiffuse()) * sceneLights[i].getDiffuse() * std::max(nDotL,0.0f);
+                diffuse = glm::vec3(mat->getDiffuse()) * mainLight.getDiffuse() * std::max(nDotL,0.0f);
 
                 // fPosition vector = 0 - pointOfIntersection 
                 // viewVec is the vector = pointOfIntersection - 0 in direction of the camera (from viewer's location)
@@ -413,7 +420,7 @@ glm::vec4 View::getColor(HitRecord hitRecord, vector<util::Light> sceneLights, v
                 coming from behind the object */
                 if (nDotL > 0) {
                     // The closer the viewVec and reflectVec, the higher the value of rDotV, the higher the specular value
-                    specular = glm::vec3(mat->getSpecular()) * sceneLights[i].getSpecular() * pow(rDotV,mat->getShininess());
+                    specular = glm::vec3(mat->getSpecular()) * mainLight.getSpecular() * pow(rDotV,mat->getShininess());
                 }
                 else {
                     specular = glm::vec3(0,0,0);
