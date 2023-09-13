@@ -25,6 +25,8 @@ class SGNodeVisitor {
         virtual void visitLightNode(LightNode *node)=0;
         virtual std::vector<util::Light> getLights()=0;
         virtual void clearLights()=0;
+        virtual std::vector<std::vector<util::Light>> getLightCellCollections()=0;
+        virtual void clearLightCellCollections()=0;
 };
 
 #endif

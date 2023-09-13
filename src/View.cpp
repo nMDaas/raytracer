@@ -328,6 +328,14 @@ glm::vec4 View::getColor(HitRecord hitRecord, vector<util::Light> sceneLights, I
 
     spdlog::debug("sceneLights size: " + sceneLights.size());
 
+    std::cout << "TESTING IN GETCOLOR()" << std::endl;
+    vector<vector<util::Light>> lightCellCollections = raytracerRenderer->getLightCellCollections();
+    for (int i = 0; i < lightCellCollections.size(); i++) {
+        for (int j = 0; j < lightCellCollections[i].size(); j++) {
+            std::cout << "light " << i << "," << j << ": " << glm::to_string(lightCellCollections[i][j].getPosition()) << std::endl;
+        }
+    }
+
     for (int i = 0; i < sceneLights.size(); i++) {
 
         if (sceneLights[i].getPosition().w != 0) {

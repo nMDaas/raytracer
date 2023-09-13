@@ -23,6 +23,7 @@ class AbstractRenderer : public SGNodeVisitor {
     protected: 
         stack<glm::mat4>& modelview;
         vector<util::Light> lights;
+        vector<vector<util::Light>> lightCellCollections;
 
     public:
         AbstractRenderer(stack<glm::mat4>& mv);
@@ -40,7 +41,8 @@ class AbstractRenderer : public SGNodeVisitor {
         void visitLightNode(LightNode *lightNode);
         vector<util::Light> getLights();
         void clearLights();
-
+        vector<vector<util::Light>> getLightCellCollections();
+        void clearLightCellCollections();
 };
 
 #endif

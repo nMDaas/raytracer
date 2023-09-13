@@ -52,7 +52,7 @@ void AbstractRenderer::visitTransformNode(TransformNode *transformNode) {
 
 void AbstractRenderer::visitLightNode(LightNode *lightNode) {
     spdlog::debug("Light Node: " +lightNode->getName());
-    std::vector<util::Light>* nodeLightCellsP = lightNode->getLightCells();
+    std::vector<util::Light*>* nodeLightCellsP = lightNode->getLightCells();
     // this will currently never be 0 because generateLightCells() in LightNode.cpp is called in its constructor
     if (nodeLightCellsP->size() == 0) {
         // point light
@@ -64,16 +64,19 @@ void AbstractRenderer::visitLightNode(LightNode *lightNode) {
     }
     else {
         // area light
-        std::vector<util::Light> nodeLightCells = *nodeLightCellsP;
+        std::vector<util::Light*> nodeLightCells = *nodeLightCellsP;
+        std::vector<util::Light> newLightCellCollection;
         for (int i=0; i < nodeLightCellsP->size(); i++) {
-            util::Light nodeLight = nodeLightCells[i];
+            util::Light nodeLight = *nodeLightCells[i];
             glm::vec4 pos = nodeLight.getPosition();
-            nodeLight.setPosition(modelview.top() * pos); // it may not actually set position because nodeLight is not a pointer??? no that shouldn't happen
+            nodeLight.setPosition(modelview.top() * pos);
             std::cout << "light " << i << ": " << glm::to_string(modelview.top() * pos) << std::endl;
             if (i == 0) {
                 lights.push_back(nodeLight);
             }
+            newLightCellCollection.push_back(nodeLight);
         }
+        lightCellCollections.push_back(newLightCellCollection);
     }
 }
 
@@ -85,4 +88,12 @@ vector<util::Light> AbstractRenderer::getLights() {
 void AbstractRenderer::clearLights() {
     spdlog::debug("clearLights() called");
     lights.clear();
+}
+
+vector<vector<util::Light>> AbstractRenderer::getLightCellCollections() {
+    return lightCellCollections;
+}
+
+void AbstractRenderer::clearLightCellCollections() {
+    lightCellCollections.clear();
 }

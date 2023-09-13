@@ -436,7 +436,7 @@ void ScenegraphImporter::testParse(IScenegraph* scenegraph) {
         string nodeName = typeid(*i.second).name();
         if (nodeName.find("LightNode") != std::string::npos) {
             LightNode* lightNode = dynamic_cast<LightNode *> (i.second);
-            std::vector<util::Light>* nodeLightCellsP = lightNode->getLightCells();
+            std::vector<util::Light*>* nodeLightCellsP = lightNode->getLightCells();
             // this will currently never be 0 because generateLightCells() in LightNode.cpp is called in its constructor
             if (nodeLightCellsP->size() == 0) {
                 // point light
@@ -447,9 +447,9 @@ void ScenegraphImporter::testParse(IScenegraph* scenegraph) {
             }
             else {
                 // area light
-                std::vector<util::Light> nodeLightCells = *nodeLightCellsP;
+                std::vector<util::Light*> nodeLightCells = *nodeLightCellsP;
                 for (int i=0; i < nodeLightCellsP->size(); i++) {
-                    std::cout << "      light position " << i << ": " << glm::to_string(nodeLightCells[i].getPosition()) << std::endl;
+                    std::cout << "      light position " << i << ": " << glm::to_string(nodeLightCells[i]->getPosition()) << std::endl;
                 }
                 std::cout << "      light ambient: " << glm::to_string(lightNode->getLight()->getAmbient()) << std::endl;
                 std::cout << "      light diffuse: " << glm::to_string(lightNode->getLight()->getDiffuse()) << std::endl;
