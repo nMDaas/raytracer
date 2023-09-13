@@ -277,6 +277,7 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
                 glm::vec4 colorWithTexture = color * glm::vec4(textureColor.x/255, textureColor.y/255, textureColor.z/255, textureColor.w/255) * 255.0f;
 
                 raytracerRenderer->clearLights();
+                raytracerRenderer->clearLightCellCollections();
                 spdlog::debug("color in raytracer(): " + glm::to_string(color));
                 out << clipValue(colorWithTexture.x) << " " <<  clipValue(colorWithTexture.y) << " " <<  clipValue(colorWithTexture.z) << endl; 
             }
