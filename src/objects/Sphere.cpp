@@ -27,7 +27,7 @@ bool Sphere::calcTimes(glm::vec4 s, glm::vec4 v) {
     spdlog::debug("c: " + (int) c); 
 
     float discriminant = pow(b,2) - (4 * a * c);
-    spdlog::debug("discriminant: " + (int) discriminant);
+    //spdlog::debug("discriminant: " + (int) discriminant);
     if (discriminant < 0) {
         return false;
     }
