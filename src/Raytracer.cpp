@@ -20,7 +20,7 @@ int main(int argc,char *argv[])
     }
     else {
         // run via debugger
-        controller.meshMaterialSetup("scenegraphs/boxSphereRaytracingTest.txt", true);
+        controller.meshMaterialSetup("scenegraphs/areaLightsSoftShadowTest.txt", true);
     }
     controller.run();
 }
