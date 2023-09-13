@@ -371,7 +371,12 @@ glm::vec4 View::getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneL
             we could take glm::dot of the two vectors */
             ambient = glm::vec3(mat->getAmbient()) * mainLight.getAmbient();
 
-            if (!inShadow(hitRecord, mainLight,scenegraph)) {
+            float shadowIntensity = getShadowIntensity(hitRecord,sceneLightCollections[i],scenegraph);
+            float lightIntensity = 1.0f - shadowIntensity;
+
+            std::cout << "shadow Intensity = " << shadowIntensity << std::endl;
+
+            //if (!inShadow(hitRecord, mainLight,scenegraph)) {
 
                 /* nDotL is greater > 0 only if angle between normal and light vector is between 
                 0° and 90° and between 270° and 360°. This ensures that the light direction is coming in 
@@ -379,7 +384,7 @@ glm::vec4 View::getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneL
                 (multiplied by 0). Otherwise, diffuse is calculated to it's full amount (multiplied by 1). It also 
                 does not matter if lightVec is lightPosition - fPosition or fPosition - lightPosition because the dot 
                 product of either is the same because the cos of the angle between both vectors is the same. */
-                diffuse = glm::vec3(mat->getDiffuse()) * mainLight.getDiffuse() * std::max(nDotL,0.0f);
+                diffuse = lightIntensity * glm::vec3(mat->getDiffuse()) * mainLight.getDiffuse() * std::max(nDotL,0.0f);
 
                 // fPosition vector = 0 - pointOfIntersection 
                 // viewVec is the vector = pointOfIntersection - 0 in direction of the camera (from viewer's location)
@@ -394,16 +399,16 @@ glm::vec4 View::getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneL
                 coming from behind the object */
                 if (nDotL > 0) {
                     // The closer the viewVec and reflectVec, the higher the value of rDotV, the higher the specular value
-                    specular = glm::vec3(mat->getSpecular()) * mainLight.getSpecular() * pow(rDotV,mat->getShininess());
+                    specular = lightIntensity * glm::vec3(mat->getSpecular()) * mainLight.getSpecular() * pow(rDotV,mat->getShininess());
                 }
                 else {
                     specular = glm::vec3(0,0,0);
                 }
-            }
-            else {
-                diffuse = glm::vec3(0,0,0);
-                specular = glm::vec3(0,0,0);
-            }
+            //}
+            //else {
+            //    diffuse = glm::vec3(0,0,0);
+            //    specular = glm::vec3(0,0,0);
+            //}
 
             outColor = outColor + ambient + diffuse + specular;
             spdlog::debug("light #" + i);
