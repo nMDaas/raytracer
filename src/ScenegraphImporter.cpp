@@ -449,24 +449,13 @@ void ScenegraphImporter::testParse(IScenegraph* scenegraph) {
         if (nodeName.find("LightNode") != std::string::npos) {
             LightNode* lightNode = dynamic_cast<LightNode *> (i.second);
             std::vector<util::Light*>* nodeLightCellsP = lightNode->getLightCells();
-            // this will currently never be 0 because generateLightCells() in LightNode.cpp is called in its constructor
-            if (nodeLightCellsP->size() == 0) {
-                // point light
-                std::cout << "      light node: " << lightNode->getName() << std::endl;
-                std::cout << "      light ambient: " << glm::to_string(lightNode->getLight()->getAmbient()) << std::endl;
-                std::cout << "      light diffuse: " << glm::to_string(lightNode->getLight()->getDiffuse()) << std::endl;
-                std::cout << "      light specular: " << glm::to_string(lightNode->getLight()->getSpecular()) << std::endl;
+            std::vector<util::Light*> nodeLightCells = *nodeLightCellsP;
+            for (int i=0; i < nodeLightCellsP->size(); i++) {
+                std::cout << "      light position " << i << ": " << glm::to_string(nodeLightCells[i]->getPosition()) << std::endl;
             }
-            else {
-                // area light
-                std::vector<util::Light*> nodeLightCells = *nodeLightCellsP;
-                for (int i=0; i < nodeLightCellsP->size(); i++) {
-                    std::cout << "      light position " << i << ": " << glm::to_string(nodeLightCells[i]->getPosition()) << std::endl;
-                }
-                std::cout << "      light ambient: " << glm::to_string(lightNode->getLight()->getAmbient()) << std::endl;
-                std::cout << "      light diffuse: " << glm::to_string(lightNode->getLight()->getDiffuse()) << std::endl;
-                std::cout << "      light specular: " << glm::to_string(lightNode->getLight()->getSpecular()) << std::endl;
-            }
+            std::cout << "      light ambient: " << glm::to_string(lightNode->getLight()->getAmbient()) << std::endl;
+            std::cout << "      light diffuse: " << glm::to_string(lightNode->getLight()->getDiffuse()) << std::endl;
+            std::cout << "      light specular: " << glm::to_string(lightNode->getLight()->getSpecular()) << std::endl;
             std::cout << std::endl;
             }
     }
