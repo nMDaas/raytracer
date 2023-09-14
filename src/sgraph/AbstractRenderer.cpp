@@ -57,7 +57,7 @@ void AbstractRenderer::visitLightNode(LightNode *lightNode) {
     spdlog::debug("Light Node: " +lightNode->getName());
     std::vector<util::Light*>* nodeLightCellsP = lightNode->getLightCells();
     std::vector<util::Light*> nodeLightCells = *nodeLightCellsP;
-    std::vector<util::Light> newLightCellCollection;
+    std::vector<util::Light> newLightCollection;
     for (int i=0; i < nodeLightCellsP->size(); i++) {
         util::Light nodeLight = *nodeLightCells[i];
         glm::vec4 pos = nodeLight.getPosition();
@@ -67,9 +67,9 @@ void AbstractRenderer::visitLightNode(LightNode *lightNode) {
         if (i == 0) {
             lights.push_back(nodeLight);
         }
-        newLightCellCollection.push_back(nodeLight);
+        newLightCollection.push_back(nodeLight);
     }
-    lightCellCollections.push_back(newLightCellCollection);
+    lightCollections.push_back(newLightCollection);
 }
 
 vector<util::Light> AbstractRenderer::getLights() {
@@ -82,10 +82,10 @@ void AbstractRenderer::clearLights() {
     lights.clear();
 }
 
-vector<vector<util::Light>> AbstractRenderer::getLightCellCollections() {
-    return lightCellCollections;
+vector<vector<util::Light>> AbstractRenderer::getLightCollections() {
+    return lightCollections;
 }
 
-void AbstractRenderer::clearLightCellCollections() {
-    lightCellCollections.clear();
+void AbstractRenderer::clearLightCollections() {
+    lightCollections.clear();
 }

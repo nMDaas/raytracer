@@ -23,7 +23,9 @@ class AbstractRenderer : public SGNodeVisitor {
     protected: 
         stack<glm::mat4>& modelview;
         vector<util::Light> lights;
-        vector<vector<util::Light>> lightCellCollections;
+
+        // each light collection (vector<util::Light>) consists of many util::Light that represent the cells of an area light
+        vector<vector<util::Light>> lightCollections; 
 
     public:
         AbstractRenderer(stack<glm::mat4>& mv);
@@ -41,8 +43,8 @@ class AbstractRenderer : public SGNodeVisitor {
         void visitLightNode(LightNode *lightNode);
         vector<util::Light> getLights();
         void clearLights();
-        vector<vector<util::Light>> getLightCellCollections();
-        void clearLightCellCollections();
+        vector<vector<util::Light>> getLightCollections();
+        void clearLightCollections();
 };
 
 #endif
