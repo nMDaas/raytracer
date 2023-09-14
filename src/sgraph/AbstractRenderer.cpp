@@ -50,6 +50,9 @@ void AbstractRenderer::visitTransformNode(TransformNode *transformNode) {
     modelview.pop();
 }
 
+// for each light node, a vector<util::Light> is added to lightCellConnections
+// if the light is a point light, this vector only contains one light (size = 1)
+// if the light is an area light, this vector will have more lights (size > 1)
 void AbstractRenderer::visitLightNode(LightNode *lightNode) {
     spdlog::debug("Light Node: " +lightNode->getName());
     std::vector<util::Light*>* nodeLightCellsP = lightNode->getLightCells();
