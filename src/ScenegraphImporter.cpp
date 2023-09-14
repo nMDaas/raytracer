@@ -107,6 +107,8 @@ IScenegraph* ScenegraphImporter::parse(std::istream& input) {
         scenegraph->makeScenegraph(root);
         scenegraph->setMeshes(meshes);
         scenegraph->setMeshPaths(meshPaths);
+        scenegraph->setCameraPos(cameraPos);
+        scenegraph->setCameraTarget(cameraTarget);
         return scenegraph;
     }
     else {
