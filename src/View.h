@@ -45,7 +45,7 @@ public:
     // to check for copy constructors
     View (View &t);
 
-    void init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>& meshes, bool debugger);
+    void init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>& meshes, bool debugger, glm::vec3 camPos, glm::vec3 camTarget);
     void raytrace(bool debugging,IScenegraph *scenegraph);
     bool shouldWindowClose();
     void display(IScenegraph *scenegraph);
@@ -68,6 +68,10 @@ private:
     int WIDTH = 200; // width of ppm file, in pixels
     int HEIGHT = 200; // height of ppm file, in pixels
     float cameraFOV = (float) glm::radians(60.0f);
+
+    // camera details - assumes that we are looking down the z axis
+    glm::vec3 cameraPosition;
+    glm::vec3 cameraTarget;
 
     void reshape(GLFWwindow* window, int width, int height);
     void error_callback(int error, const char* description);

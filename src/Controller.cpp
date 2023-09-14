@@ -61,8 +61,10 @@ void Controller::run()
 {
     IScenegraph* scenegraph = model.getScenegraph();
     std::map<string,util::PolygonMesh<VertexAttrib>>& meshes = scenegraph->getMeshes();
+    glm::vec3 cameraPosition = scenegraph->getCameraPos();
+    glm::vec3 cameraTarget = scenegraph->getCameraTarget();
 
-    view.init(this, meshes, debugging);
+    view.init(this, meshes, debugging,cameraPosition,cameraTarget);
 
 
     while (!view.shouldWindowClose()) {

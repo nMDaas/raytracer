@@ -63,7 +63,7 @@ void View::initObjects(map<string,util::PolygonMesh<VertexAttrib>>& meshes) {
     }
 }
 
-void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>& meshes, bool debugger) {
+void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>& meshes, bool debugger, glm::vec3 camPos, glm::vec3 camTarget) {
 
     // This function initializes the GLFW library because before GLFW functions can be used, GLFW must be initialized
     if (!glfwInit())
@@ -140,6 +140,8 @@ void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>
 	glViewport(0, 0, window_width, window_height);
 
     renderer = new GLScenegraphRenderer(modelview, objects, shaderLocations);
+    cameraPosition = camPos;
+    cameraTarget = camTarget;
 
     frames = 0;
     time = glfwGetTime();
