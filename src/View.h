@@ -82,6 +82,7 @@ private:
     int clipValue(int val);
     bool inShadow(HitRecord hitRecord, util::Light light, IScenegraph* scenegraph);
     float getShadowIntensity(HitRecord hitRecord, vector<util::Light> lightCollection, IScenegraph* scenegraph);
+    glm::highp_mat4 getLookAtMatrix();
 };
 
 #endif

@@ -178,7 +178,7 @@ void View::display(IScenegraph *scenegraph) {
 
     modelview.push(glm::mat4(1.0));
 
-    modelview.top() = modelview.top() * glm::lookAt(glm::vec3(0.0f,0.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
+    modelview.top() = modelview.top() * getLookAtMatrix();
       
     //draw scene graph here
     scenegraph->getRoot()->accept(renderer);
@@ -254,8 +254,8 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
 
             raytracer_modelview.push(glm::mat4(1.0));
             spdlog::debug("modelview top: " + glm::to_string(raytracer_modelview.top()));
-            spdlog::debug("lookat: " + glm::to_string(glm::lookAt(glm::vec3(0.0f,0.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f))));
-            raytracer_modelview.top() = raytracer_modelview.top() * glm::lookAt(glm::vec3(0.0f,0.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
+            spdlog::debug("lookat: " + glm::to_string(getLookAtMatrix()));
+            raytracer_modelview.top() = raytracer_modelview.top() * getLookAtMatrix();
             raytracerRenderer = new RaytracerRenderer(raytracer_modelview,origin,direction);
             spdlog::debug( "modelview top * lookat: " + glm::to_string(raytracer_modelview.top()));
             spdlog::debug("origin: " + glm::to_string(origin));
@@ -436,7 +436,7 @@ bool View::inShadow(HitRecord hitRecord, util::Light light,IScenegraph* scenegra
 
     stack<glm::mat4> inShadow_modelview;
     inShadow_modelview.push(glm::mat4(1.0));
-    inShadow_modelview.top() = inShadow_modelview.top() * glm::lookAt(glm::vec3(0.0f,0.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
+    inShadow_modelview.top() = inShadow_modelview.top() * getLookAtMatrix();
     SGNodeVisitor *inShadowVisitor = new RaytracerRenderer(inShadow_modelview,origin,direction);
     scenegraph->getRoot()->accept(inShadowVisitor); 
 
@@ -470,7 +470,7 @@ float View::getShadowIntensity(HitRecord hitRecord, vector<util::Light> lightCol
 
         stack<glm::mat4> inShadow_modelview;
         inShadow_modelview.push(glm::mat4(1.0));
-        inShadow_modelview.top() = inShadow_modelview.top() * glm::lookAt(glm::vec3(0.0f,0.0f,150.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
+        inShadow_modelview.top() = inShadow_modelview.top() * getLookAtMatrix();
         SGNodeVisitor *inShadowVisitor = new RaytracerRenderer(inShadow_modelview,origin,direction);
         scenegraph->getRoot()->accept(inShadowVisitor); 
 
@@ -505,6 +505,10 @@ int View::clipValue(int val) {
     else {
         return val;
     }
+}
+
+glm::highp_mat4 View::getLookAtMatrix() {
+    return glm::lookAt(cameraPosition,cameraTarget,glm::vec3(0.0f,1.0f,0.0f));
 }
 
 void View::error_callback(int error, const char* description)
