@@ -51,6 +51,8 @@ class ScenegraphImporter {
         map<string,util::Material> materials;
         SGNode *root;
         map<string,TextureImage*> textureObjects;
+        glm::vec3 cameraPos;
+        glm::vec3 cameraTarget; // what camera is looking at
 
         void parseInstance(istream& input);
         void parseGroup(istream& input);
@@ -68,7 +70,7 @@ class ScenegraphImporter {
         void parseSetRoot(istream& input);
         void parseTexture(istream& input);
         void parseAssignTexture(istream& input);
-
+        void parseCamera(istream& input);
 };
 
 #endif

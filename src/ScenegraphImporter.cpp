@@ -94,6 +94,9 @@ IScenegraph* ScenegraphImporter::parse(std::istream& input) {
         else if (command == "assign-root") {
             parseSetRoot(inputWithOutComments);
         }
+        else if (command == "camera") {
+            parseCamera(inputWithOutComments);
+        }
         else {
             throw runtime_error("Unrecognized or out-of-place command: "+command);
         }
@@ -376,6 +379,13 @@ void ScenegraphImporter::parseAssignTexture(istream& input) {
         TextureImage* textureImage = search->second;
         leafNode->setTexture(textureImage);
     }
+}
+
+void ScenegraphImporter::parseCamera(istream& input) {
+    float px,py,pz,tx,ty,tz;
+    input >> px >> py >> pz >> tx >> ty >> tz;
+    cameraPos = glm::vec3(px,py,pz);
+    cameraTarget = glm::vec3(tx,ty,tz);
 }
 
 // parseAddChild() and parseAssignMaterial() is implicitly tested
