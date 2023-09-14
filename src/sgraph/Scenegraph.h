@@ -16,6 +16,8 @@ class Scenegraph: public IScenegraph {
       std::map<std::string,SGNode *> nodes; // to keep track of all nodes in this scenegraph
       std::map<std::string,util::PolygonMesh<VertexAttrib> > meshes;
       map<string,string> meshPaths;
+      glm::vec3 cameraPosition;
+      glm::vec3 cameraTarget;
 
     public:
     Scenegraph();
@@ -39,6 +41,11 @@ class Scenegraph: public IScenegraph {
     map<string,util::PolygonMesh<VertexAttrib>>& getMeshes();
 
     SGNode *getRoot();
+
+    void setCameraPos(glm::vec3 camPos);
+    void setCameraTarget(glm::vec3 camTarget);
+    glm::vec3 getCameraPos();
+    glm::vec3 getCameraTarget();
 };
 
 #endif

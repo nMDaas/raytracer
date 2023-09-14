@@ -46,6 +46,22 @@ map<string,util::PolygonMesh<VertexAttrib>>& Scenegraph::getMeshes() {
     return this->meshes;
 }
 
+void Scenegraph::setCameraPos(glm::vec3 camPos) {
+    cameraPosition = camPos;
+}
+
+void Scenegraph::setCameraTarget(glm::vec3 camTarget) {
+    cameraTarget = camTarget;
+}
+
+glm::vec3 Scenegraph::getCameraPos() {
+    return cameraPosition;
+}
+
+glm::vec3 Scenegraph::getCameraTarget() {
+    return cameraTarget;
+}
+
 SGNode* Scenegraph::getRoot() {
     return root;
 }
