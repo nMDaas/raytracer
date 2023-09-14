@@ -24,25 +24,22 @@ util::Light* LightNode::getLight() {
 }
 
 void LightNode::generateLightCells(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular) {
-    util::Light* light2 = new util::Light(); //light above (x,y+1,z)
-    light2->setPosition(0.0f,77.0f,0.0f);
-    light2->setAmbient(ambient.x,ambient.y,ambient.z);
-    light2->setDiffuse(diffuse.x,diffuse.y,diffuse.z);
-    light2->setSpecular(specular.x,specular.y,specular.z);
-    util::Light* light3 = new util::Light(); //light across (x+1,y+1,z)
-    light3->setPosition(77.0f,77.0f,0.0f);
-    light3->setAmbient(ambient.x,ambient.y,ambient.z);
-    light3->setDiffuse(diffuse.x,diffuse.y,diffuse.z);
-    light3->setSpecular(specular.x,specular.y,specular.z);
-    util::Light* light4 = new util::Light(); //light on right (x+1,y,z)
-    light4->setPosition(77.0f,0.0f,0.0f);
-    light4->setAmbient(ambient.x,ambient.y,ambient.z);
-    light4->setDiffuse(diffuse.x,diffuse.y,diffuse.z);
-    light4->setSpecular(specular.x,specular.y,specular.z);
+
     lightCells.push_back(light);
-    lightCells.push_back(light2);
-    lightCells.push_back(light3);
-    lightCells.push_back(light4);
+
+    for (int lw = 0; lw < lightWidth; lw ++) {
+        for (int lh = 0; lh < lightHeight; lh ++) {
+            if (!(lw == 0 && lh == 0)) {
+                glm::vec3 pos = glm::vec3(lw * cellSize, lh * cellSize, 0.0f);
+                util::Light* newLight = new util::Light(); //light above (x,y+1,z)
+                newLight->setPosition(lw * cellSize, lh * cellSize, 1.0f);
+                newLight->setAmbient(ambient.x,ambient.y,ambient.z);
+                newLight->setDiffuse(diffuse.x,diffuse.y,diffuse.z);
+                newLight->setSpecular(specular.x,specular.y,specular.z);
+                lightCells.push_back(newLight);
+            }
+        }
+    }
 }
 
 std::vector<util::Light*>* LightNode::getLightCells() {
