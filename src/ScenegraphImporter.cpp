@@ -205,6 +205,7 @@ void ScenegraphImporter::parseSpotlight(istream& input) {
 void ScenegraphImporter::parseMaterial(istream& input) {
     util::Material mat;
     float r,g,b;
+    float absorption,reflection,transparency;
     string name;
     input >> name;
     string command;
@@ -235,6 +236,18 @@ void ScenegraphImporter::parseMaterial(istream& input) {
             input >> r;
             //std::cout << "shininess: " << r  << std::endl;
             mat.setShininess(r);
+        }
+        else if (command == "absorption") {
+            input >> absorption;
+            mat.setAbsorption(absorption);
+        }
+        else if (command == "reflection") {
+            input >> reflection;
+            mat.setReflection(reflection);
+        }
+        else if (command == "transparency") {
+            input >> transparency;
+            mat.setTransparency(transparency);
         }
         input >> command;
     }
@@ -401,6 +414,9 @@ void ScenegraphImporter::testParse(IScenegraph* scenegraph) {
         std::cout << "   ambient: " << glm::to_string(i.second.getAmbient()) << std::endl;
         std::cout << "   diffuse: " << glm::to_string(i.second.getDiffuse()) << std::endl;
         std::cout << "   specular: " << glm::to_string(i.second.getSpecular()) << std::endl;
+        std::cout << "   absorption: " << i.second.getAbsorption() << std::endl;
+        std::cout << "   reflection: " << i.second.getReflection() << std::endl;
+        std::cout << "   transparency: " << i.second.getTransparency() << std::endl;
         std::cout << std::endl;
     }
 
