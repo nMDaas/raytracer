@@ -319,7 +319,7 @@ glm::vec4 View::getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneL
 
         // this is the light in the bottom left corner that other cells in the light are generated from
         util::Light mainLight = sceneLightCollections[i][0]; 
-        std::cout << "mainLight: " << glm::to_string(mainLight.getPosition()) << std::endl; 
+        spdlog::debug("mainLight: " + glm::to_string(mainLight.getPosition())); 
 
         if (mainLight.getPosition().w != 0) {
             std::cout << "W IS 1" << std::endl;
@@ -376,7 +376,7 @@ glm::vec4 View::getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneL
             float shadowIntensity;
             float lightIntensity;
 
-            std::cout << "shadow Intensity = " << shadowIntensity << std::endl;
+            spdlog::debug("shadow Intensity = (int)" + (int) shadowIntensity);
 
             if (!inShadow(hitRecord, mainLight,scenegraph)) {
                 lightIntensity = 1.0f;
@@ -458,13 +458,13 @@ bool View::inShadow(HitRecord hitRecord, util::Light light,IScenegraph* scenegra
 float View::getShadowIntensity(HitRecord hitRecord, vector<util::Light> lightCollection, IScenegraph* scenegraph) {
     float total = 1.0f; // accounts for main light so that is not processed again
 
-    std::cout << "lightCollection size: " << lightCollection.size() << std::endl;
+    spdlog::debug("lightCollection size: " + lightCollection.size());
 
     for (int i = 1; i < lightCollection.size(); i++) {
-        std::cout << "light " << i << std::endl;
+        spdlog::debug("light " + i);
         // ray origin and direction (s,v) from intersectionPoint to light
         glm::vec4 origin(hitRecord.intersection_position.x, hitRecord.intersection_position.y, hitRecord.intersection_position.z, 1.0f);
-        std::cout << "light position: " << glm::to_string(lightCollection[i].getPosition()) << std::endl;
+        spdlog::debug("light position: " + glm::to_string(lightCollection[i].getPosition()));
         glm::vec4 direction = (lightCollection[i].getPosition() - origin);
         origin = origin + (direction * 0.001f);
 
@@ -481,15 +481,12 @@ float View::getShadowIntensity(HitRecord hitRecord, vector<util::Light> lightCol
 
         if (otherHitRecord.t < hitRecord.t) {
             spdlog::debug("in shadow");
-            std::cout << "adding 1" << std::endl;
             total = total + 1.0f;
         }
         else {
             spdlog::debug("not in shadow");
         }
     }
-
-    std::cout << "total: " << total << std::endl;
 
     float avg = total / lightCollection.size();
     return avg;
