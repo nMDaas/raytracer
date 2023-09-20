@@ -293,6 +293,7 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
 
 // RGB values are between 0 and 1
 glm::vec4 View::getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph) {
+glm::vec4 View::getAbsorptionColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph) {
     glm::vec3 outColor(0,0,0);
     glm::vec3 lightVec;
     glm::vec4 fPosition = hitRecord.intersection_position;
