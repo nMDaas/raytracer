@@ -429,6 +429,14 @@ glm::vec4 View::getAbsorptionColor(HitRecord hitRecord, vector<vector<util::Ligh
     return glm::vec4(outColor.x, outColor.y, outColor.z, 0);
 }
 
+glm::vec4 View::getReflectionColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph, glm::vec4 rayDirection) {
+    return glm::vec4(0,0,0,0);
+}
+
+glm::vec4 View::getTransparencyColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph) {
+    return glm::vec4(0,0,0,0);
+}
+
 bool View::inShadow(HitRecord hitRecord, util::Light light,IScenegraph* scenegraph) {
     // ray origin and direction (s,v) from intersectionPoint to light
     glm::vec4 origin(hitRecord.intersection_position.x, hitRecord.intersection_position.y, hitRecord.intersection_position.z, 1.0f);
