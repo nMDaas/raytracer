@@ -78,7 +78,7 @@ private:
     void dispose(GLFWwindow* window);
     void initObjects(map<string,util::PolygonMesh<VertexAttrib>>& meshes);
     void initShaderVariables(vector<util::Light>& lights);
-    glm::vec4 getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph); // RGB values are between 0 and 1
+    glm::vec4 getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph, glm::vec4 rayDirection); // RGB values are between 0 and 1
     int clipValue(int val);
     bool inShadow(HitRecord hitRecord, util::Light light, IScenegraph* scenegraph);
     float getShadowIntensity(HitRecord hitRecord, vector<util::Light> lightCollection, IScenegraph* scenegraph);
