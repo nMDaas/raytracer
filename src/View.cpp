@@ -274,7 +274,7 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
                 util::Material* mat = hitRecord.object_mat;
                 vector<util::Light> sceneLights = raytracerRenderer->getLights();
                 vector<vector<util::Light>> lightCellCollections = raytracerRenderer->getLightCollections();
-                glm::vec4 color = getColor(hitRecord, lightCellCollections, scenegraph);
+                glm::vec4 color = getColor(hitRecord, lightCellCollections, scenegraph, direction);
                 glm::vec4 textureColor = hitRecord.textureImage->getColor(hitRecord.textureCoordinates.x, hitRecord.textureCoordinates.y);
                 glm::vec4 colorWithTexture = color * glm::vec4(textureColor.x/255, textureColor.y/255, textureColor.z/255, textureColor.w/255) * 255.0f;
 
