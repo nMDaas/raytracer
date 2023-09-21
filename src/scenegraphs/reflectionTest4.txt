@@ -1,0 +1,72 @@
+# these instances will be ignored if debugger is being used
+instance box src/models/box.obj
+instance sphere src/models/sphere.obj
+
+#textures
+texture dieTexture src/textures/die.ppm
+texture checkerboard src/textures/checkerboard.ppm
+texture earthmap src/textures/earthmap.ppm
+
+#material
+material mat
+emission 0 0 0
+ambient 0.7 0.7 0.7
+diffuse 0.1 0.1 0.3
+specular 0 0 1
+shininess 5
+absorption 1
+reflection 0
+end-material
+
+material mat-box-r
+emission 0 0 0
+ambient 1 1 1
+diffuse 1 1 1
+specular 1 1 1
+shininess 100
+absorption 0.1
+reflection 0.9
+end-material
+
+#the root
+group root
+scale s1 400 2 600
+rotate r1 0 0 1 0
+rotate r2 0 1 0 0
+translate t1 0 -30 0 
+leaf l1 instanceof box 
+assign-texture l1 checkerboard
+assign-material l1 mat
+add-child l1 s1
+add-child s1 r1
+add-child r1 r2
+add-child r2 t1
+add-child t1 root
+
+translate tlight 0 0 40 
+light li1 1 1 1 1 1 1 1 1 1
+add-child li1 tlight
+add-child tlight root
+
+scale s2 300 300 2
+rotate r2 0 0 1 0
+translate t2 0 40 -300
+leaf l2 instanceof box 
+assign-material l2 mat-box-r
+add-child l2 s2
+add-child s2 r2
+add-child r2 t2
+add-child t2 root
+
+scale s3 30 30 30
+translate t3 0 40 400
+leaf l3 instanceof sphere
+assign-texture l3 earthmap
+assign-material l3 mat
+add-child l3 s3
+add-child s3 t3
+add-child t3 root
+
+assign-root root
+
+camera 0 60 300 0 0 0
