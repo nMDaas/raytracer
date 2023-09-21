@@ -61,9 +61,11 @@ private:
     double time;
     stack<glm::mat4> modelview;
     stack<glm::mat4> raytracer_modelview;
+    stack<glm::mat4> reflection_modelview;
     map<string,util::ObjectInstance *> objects;
     SGNodeVisitor *renderer;
     SGNodeVisitor *raytracerRenderer;
+    SGNodeVisitor *reflectionVisitor;
     vector<LightLocation> lightLocations; // shader locations for lights
     int WIDTH = 200; // width of ppm file, in pixels
     int HEIGHT = 200; // height of ppm file, in pixels

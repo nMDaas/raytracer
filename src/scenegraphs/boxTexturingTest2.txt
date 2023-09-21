@@ -1,0 +1,62 @@
+# these instances will be ignored if debugger is being used
+instance box src/models/box.obj
+
+#textures
+texture dieTexture src/textures/die.ppm
+texture checkerboard src/textures/checkerboard.ppm
+
+
+#material
+material mat
+emission 0 0 0
+ambient 0.7 0.7 0.7
+diffuse 0.1 0.1 0.3
+specular 0 0 1
+shininess 5
+absorption 1
+reflection 0
+end-material
+
+material mat-box-r
+emission 0 0 0
+ambient 1 1 1
+diffuse 1 1 1
+specular 1 1 1
+shininess 100
+absorption 0.1
+reflection 0.9
+end-material
+
+#the root
+group root
+scale s1 400 2 600
+rotate r1 0 0 1 0
+rotate r2 0 1 0 0
+translate t1 0 -30 0 
+leaf l1 instanceof box 
+assign-texture l1 checkerboard
+assign-material l1 mat
+add-child l1 s1
+add-child s1 r1
+add-child r1 r2
+add-child r2 t1
+add-child t1 root
+
+translate tlight 0 0 40 
+light li1 1 1 1 1 1 1 1 1 1
+add-child li1 tlight
+add-child tlight root
+
+scale s2 200 300 2 
+rotate r2 0 0 1 0
+translate t2 0 30 -500
+leaf l2 instanceof box 
+assign-material l2 mat-box-r
+add-child l2 s2
+add-child s2 r2
+add-child r2 t2
+add-child t2 root
+
+assign-root root
+
+camera 0 0 300 0 0 0
