@@ -277,7 +277,7 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
                 glm::vec4 color = getColor(hitRecord, lightCellCollections, scenegraph, direction) * 255.0f;
                 //glm::vec4 textureColor = hitRecord.textureImage->getColor(hitRecord.textureCoordinates.x, hitRecord.textureCoordinates.y);
                 //glm::vec4 colorWithTexture = color * glm::vec4(textureColor.x/255, textureColor.y/255, textureColor.z/255, textureColor.w/255) * 255.0f;
-                std::cout << "color * 255: " << glm::to_string(color) << std::endl;
+                //std::cout << "color * 255: " << glm::to_string(color) << std::endl;
                 raytracerRenderer->clearLights();
                 raytracerRenderer->clearLightCollections();
                 //spdlog::debug("color in raytracer(): " + glm::to_string(color));
@@ -294,39 +294,39 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
 
 // RGB values are between 0 and 1
 glm::vec4 View::getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph, glm::vec4 rayDirection) {
-    std::cout << "in getColor()" << std::endl;
+    //std::cout << "in getColor()" << std::endl;
     float a = hitRecord.object_mat->getAbsorption();
     float r = hitRecord.object_mat->getReflection();
-    std::cout << "material absorption: " << a << std::endl;
-    std::cout << "material reflection: " << r << std::endl;
+    //std::cout << "material absorption: " << a << std::endl;
+    //std::cout << "material reflection: " << r << std::endl;
 
     glm::vec4 absorption = glm::vec4(0,0,0,0);
     if (a > 0) {
         absorption = hitRecord.object_mat->getAbsorption() * getAbsorptionColor(hitRecord,sceneLightCollections,scenegraph);
     }
 
-    std::cout << "absorption color: " << glm::to_string(absorption) << std::endl;
+    //std::cout << "absorption color: " << glm::to_string(absorption) << std::endl;
 
     glm::vec4 reflection = glm::vec4(0,0,0,0);
     if (r > 0) {
         reflection = r * getReflectionColor(hitRecord,sceneLightCollections,scenegraph,rayDirection);
     }
 
-    std::cout << "reflection color: " << glm::to_string(reflection) << std::endl;
+    //std::cout << "reflection color: " << glm::to_string(reflection) << std::endl;
 
     glm::vec4 color = absorption + reflection;
     glm::vec4 textureColor = hitRecord.textureImage->getColor(hitRecord.textureCoordinates.x, hitRecord.textureCoordinates.y);
     glm::vec4 colorWithTexture = color * glm::vec4(textureColor.x/255, textureColor.y/255, textureColor.z/255, textureColor.w/255);
 
-    std::cout << "color: " << glm::to_string(color) << std::endl;
-    std::cout << "textureColor: " << glm::to_string(textureColor) << std::endl;
-    std::cout << "colorWithTexture: " << glm::to_string(colorWithTexture) << std::endl;
+    //std::cout << "color: " << glm::to_string(color) << std::endl;
+    //std::cout << "textureColor: " << glm::to_string(textureColor) << std::endl;
+    //std::cout << "colorWithTexture: " << glm::to_string(colorWithTexture) << std::endl;
 
     return colorWithTexture;
 }
 
 glm::vec4 View::getAbsorptionColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph) {
-    std::cout << "in getAbsorptionColor()" << std::endl;
+    //std::cout << "in getAbsorptionColor()" << std::endl;
     glm::vec3 outColor(0,0,0);
     glm::vec3 lightVec;
     glm::vec4 fPosition = hitRecord.intersection_position;
@@ -459,13 +459,13 @@ glm::vec4 View::getAbsorptionColor(HitRecord hitRecord, vector<vector<util::Ligh
 
     outColor = outColor;
 
-    std::cout << "outColor: " << glm::to_string(outColor) << std::endl;
+    //std::cout << "outColor: " << glm::to_string(outColor) << std::endl;
 
     return glm::vec4(outColor.x, outColor.y, outColor.z, 0);
 }
 
 glm::vec4 View::getReflectionColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph, glm::vec4 rayDirection) {
-    std::cout << "in getReflectionColor()" << std::endl;
+    //std::cout << "in getReflectionColor()" << std::endl;
     
     glm::vec4 relectedRayOrigin = hitRecord.intersection_position;
     glm::vec4 incidentRay = normalize(rayDirection);
@@ -491,7 +491,7 @@ glm::vec4 View::getReflectionColor(HitRecord hitRecord, vector<vector<util::Ligh
     HitRecord& reflectedHitRecord = dynamic_cast<RaytracerRenderer *>(reflectionVisitor)->getHitRecord();
 
     if (isinf(reflectedHitRecord.t)) {
-        std::cout << "reflected ray hit background" << std::endl;
+        //std::cout << "reflected ray hit background" << std::endl;
         return glm::vec4(0,0,0,0);
     }
     else {
@@ -499,7 +499,7 @@ glm::vec4 View::getReflectionColor(HitRecord hitRecord, vector<vector<util::Ligh
         vector<util::Light> sceneLights = reflectionVisitor->getLights();
         vector<vector<util::Light>> lightCellCollections = reflectionVisitor->getLightCollections();
         glm::vec4 color = getColor(reflectedHitRecord, lightCellCollections, scenegraph, reflectedRay);
-        std::cout << "reflected ray color: " << glm::to_string(color) << std::endl;
+        //std::cout << "reflected ray color: " << glm::to_string(color) << std::endl;
         //glm::vec4 textureColor = reflectedHitRecord.textureImage->getColor(reflectedHitRecord.textureCoordinates.x, reflectedHitRecord.textureCoordinates.y);
         //std::cout << "reflected ray textureColor: " << glm::to_string(textureColor) << std::endl;
         //glm::vec4 colorWithTexture = color * glm::vec4(textureColor.x/255, textureColor.y/255, textureColor.z/255, textureColor.w/255) * 255.0f;
