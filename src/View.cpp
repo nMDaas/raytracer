@@ -163,7 +163,7 @@ void View::initShaderVariables(vector<util::Light>& lights) {
 
 void View::display(IScenegraph *scenegraph) {
     program.enable();
-    glClearColor(0, 0, 0, 1); // set background color to black
+    glClearColor(1, 1, 1, 1); // set background color to white
 
     //clear the background
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -268,7 +268,7 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
 
             if (isinf(hitRecord.t)) {
                 //std::cout << "printing 0 0 0: " << hitRecord.t << std::endl;
-                out << "0 0 0" << endl;
+                out << "255 255 255" << endl;
             }
             else {
                 util::Material* mat = hitRecord.object_mat;
