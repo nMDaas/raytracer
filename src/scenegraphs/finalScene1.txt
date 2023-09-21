@@ -1,0 +1,57 @@
+#all the instances
+instance box src/models/box.obj
+instance sphere src/models/sphere.obj
+
+#textures
+texture checkerboard src/textures/checkerboardBox.ppm
+
+#material
+material mat-base
+emission 0 0 0
+ambient 1 0.9 1
+diffuse 0.5 0 0
+specular 0 0 0
+shininess 5
+end-material
+
+#material
+material mat-sphere
+emission 0 0 0
+ambient 0.96 0.65 0.52
+diffuse 1 0 0
+specular 0 0.5 0.5
+shininess 50
+absorption 0.8
+reflection 0.2
+end-material
+
+group root 
+
+# base
+translate t1 0 0 0  
+scale s1 500 2 500
+leaf l1 instanceof box  
+add-child t1 root
+add-child s1 t1
+add-child l1 s1
+assign-material l1 mat-base
+assign-texture l1 checkerboard
+
+# orange sphere
+translate t2 0 50 70
+scale s2 50 50 50
+leaf l2 instanceof sphere
+assign-material l2 mat-sphere
+add-child l2 s2
+add-child s2 t2
+add-child t2 root
+
+translate tlight 100 0 200 
+light li1 0.7 0.7 0.7 0.5 0 0 0 0 0
+add-child li1 tlight
+add-child tlight root
+
+# Assign Root
+assign-root root
+
+camera 0 60 300 0 0 0
