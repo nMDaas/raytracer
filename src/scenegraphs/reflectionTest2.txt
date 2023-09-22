@@ -1,55 +1,64 @@
+#reflective box
+
 #all the instances
 instance box src/models/box.obj
 instance sphere src/models/sphere.obj
 
-texture checkerboard src/textures/checkerboard.ppm
+#textures
+texture checkerboard src/textures/checkerboardBox.ppm
 
-material mat-box-r
+#material
+material mat-base
 emission 0 0 0
-ambient 1 1 1
+ambient 1 0.9 1
 diffuse 1 1 1
-specular 1 1 1
-shininess 100
-absorption 0.1
-reflection 0.9
+specular 0 0 0
+shininess 5
 end-material
 
 #material
-material mat
+material mat-sphere
 emission 0 0 0
-ambient 0.7 0.7 0.7
-diffuse 0.1 0.1 0.3
-specular 0 0 1
-shininess 5
-absorption 1
-reflection 0
+ambient 0.96 0.65 0.52
+diffuse 0 1 0
+specular 0 0.5 0.5
+shininess 100
+absorption 0.7
+reflection 0.3
 end-material
 
-group root1
+group root 
 
-translate tlight 0 0 40 
-light li1 1 1 1 1 1 1 1 1 1
-add-child li1 tlight
-add-child tlight root1
-
-translate t1 0 0 0  
-scale s1 50 50 2
+# base
+translate t1 0 0 100 
+scale s1 500 2 1000
 leaf l1 instanceof box  
-add-child t1 root1
+add-child t1 root
 add-child s1 t1
 add-child l1 s1
-assign-material l1 mat-box-r
+assign-material l1 mat-base
+assign-texture l1 checkerboard
 
-translate t2 0 -25 500  
-scale s2 200 2 200
-leaf l2 instanceof box  
-add-child t2 root1
-add-child s2 t2
+# yellow box
+translate t2 0 50 70
+scale s2 100 100 2
+leaf l2 instanceof box
+assign-material l2 mat-sphere
 add-child l2 s2
-assign-texture l2 checkerboard
-assign-material l2 mat
+add-child s2 t2
+add-child t2 root
+
+translate tlight 100 0 200 
+light li1 0.4 0.4 0.4 0.5 0 0 0 0 0
+add-child li1 tlight
+add-child tlight root
+
+translate tlight2 80 140 150
+light li2 0.4 0.4 0.4 0 0.4 0.4 0 0.8 0.8
+add-child li2 tlight2
+add-child tlight2 root
 
 # Assign Root
-assign-root root1
+assign-root root
 
-camera 0 0 500 0 0 0
+camera 0 60 300 0 0 0
