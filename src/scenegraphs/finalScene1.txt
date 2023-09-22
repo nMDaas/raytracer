@@ -4,6 +4,7 @@ instance sphere src/models/sphere.obj
 
 #textures
 texture checkerboard src/textures/checkerboardBox.ppm
+texture diner src/textures/dinerBox.ppm
 
 #material
 material mat-base
@@ -51,13 +52,23 @@ group root
 
 # base
 translate t1 0 0 0  
-scale s1 500 2 500
+scale s1 800 2 500
 leaf l1 instanceof box  
 add-child t1 root
 add-child s1 t1
 add-child l1 s1
 assign-material l1 mat-base
 assign-texture l1 checkerboard
+
+#background 
+translate tBack 0 400 -200
+scale sBack 800 800 2
+leaf lBack instanceof box
+assign-material lBack mat-base
+assign-texture lBack diner
+add-child lBack sBack
+add-child sBack tBack
+add-child tBack root
 
 # orange sphere
 translate t2 0 50 90
@@ -78,7 +89,7 @@ add-child s3 t3
 add-child t3 root
 
 #green sphere
-translate t4 -40 25 190
+translate t4 -40 15 190
 scale s4 15 15 15
 leaf l4 instanceof sphere
 assign-material l4 mat-sphere3
@@ -99,4 +110,4 @@ add-child tlight2 root
 # Assign Root
 assign-root root
 
-camera 0 60 300 0 0 0
+camera 0 15 300 0 130 0
