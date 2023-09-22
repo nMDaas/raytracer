@@ -15,7 +15,7 @@ shininess 5
 end-material
 
 #material
-material mat-sphere
+material mat-sphere1
 emission 0 0 0
 ambient 0.96 0.65 0.52
 diffuse 0 1 0
@@ -23,6 +23,28 @@ specular 0 0.5 0.5
 shininess 50
 absorption 0.9
 reflection 0.1
+end-material
+
+#material 
+material mat-sphere2
+emission 0 0 0
+ambient 0.96 0.65 0.52
+diffuse 0.5 0 0.5
+specular 0.5 0.5 0.5
+shininess 50
+absorption 0.925
+reflection 0.025
+end-material
+
+#material 
+material mat-sphere3
+emission 0 0 0
+ambient 0.6 0.96 0.96
+diffuse 0.5 0.5 0
+specular 0.5 0.5 0.5
+shininess 50
+absorption 0.925
+reflection 0.025
 end-material
 
 group root 
@@ -38,20 +60,38 @@ assign-material l1 mat-base
 assign-texture l1 checkerboard
 
 # orange sphere
-translate t2 0 50 70
+translate t2 0 50 90
 scale s2 50 50 50
 leaf l2 instanceof sphere
-assign-material l2 mat-sphere
+assign-material l2 mat-sphere1
 add-child l2 s2
 add-child s2 t2
 add-child t2 root
+
+#pink sphere
+translate t3 140 90 -20
+scale s3 90 90 90
+leaf l3 instanceof sphere
+assign-material l3 mat-sphere2
+add-child l3 s3
+add-child s3 t3
+add-child t3 root
+
+#green sphere
+translate t4 -40 25 190
+scale s4 15 15 15
+leaf l4 instanceof sphere
+assign-material l4 mat-sphere3
+add-child l4 s4
+add-child s4 t4
+add-child t4 root
 
 translate tlight 100 0 200 
 light li1 0.4 0.4 0.4 0.5 0 0 0 0 0
 add-child li1 tlight
 add-child tlight root
 
-translate tlight2 80 140 150
+translate tlight2 170 140 150
 light li2 0.4 0.4 0.4 0 0.4 0.4 0 0.8 0.8
 add-child li2 tlight2
 add-child tlight2 root
