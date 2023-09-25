@@ -238,6 +238,10 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
     for (int hh = 0; hh < HEIGHT; hh++) {
         for (int ww = 0; ww < WIDTH; ww++) {
 
+            while (!refractiveIndexStack.empty()) {
+                refractiveIndexStack.pop();
+            }
+
             std::cout << "(" << hh << "," << ww << ")" << std::endl;
 
             float dx = (float)ww - (0.5f * WIDTH);
@@ -294,9 +298,10 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
 
 // RGB values are between 0 and 1
 glm::vec4 View::getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph, glm::vec4 rayDirection,int reflectiveBounces) {
-    //std::cout << "in getColor()" << std::endl;
+    std::cout << "in getColor()" << std::endl;
     float a = hitRecord.object_mat->getAbsorption();
     float r = hitRecord.object_mat->getReflection();
+    float t = hitRecord.object_mat->getTransparency();
     //std::cout << "material absorption: " << a << std::endl;
     //std::cout << "material reflection: " << r << std::endl;
 
@@ -319,19 +324,24 @@ glm::vec4 View::getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneL
 
     //std::cout << "reflection color: " << glm::to_string(reflection) << std::endl;
 
-    glm::vec4 color = absorption + reflection;
+    glm::vec4 transparency = glm::vec4(0,0,0,0);
+    if (t > 0) {
+        transparency = t * getTransparencyColor(hitRecord,sceneLightCollections,scenegraph,rayDirection,reflectiveBounces);
+    }
+
+    glm::vec4 color = absorption + reflection + transparency;
     glm::vec4 textureColor = hitRecord.textureImage->getColor(hitRecord.textureCoordinates.x, hitRecord.textureCoordinates.y);
     glm::vec4 colorWithTexture = color * glm::vec4(textureColor.x/255, textureColor.y/255, textureColor.z/255, textureColor.w/255);
 
-    //std::cout << "color: " << glm::to_string(color) << std::endl;
-    //std::cout << "textureColor: " << glm::to_string(textureColor) << std::endl;
-    //std::cout << "colorWithTexture: " << glm::to_string(colorWithTexture) << std::endl;
+    std::cout << "color: " << glm::to_string(color) << std::endl;
+    std::cout << "textureColor: " << glm::to_string(textureColor) << std::endl;
+    std::cout << "colorWithTexture: " << glm::to_string(colorWithTexture) << std::endl;
 
     return colorWithTexture;
 }
 
 glm::vec4 View::getAbsorptionColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph) {
-    //std::cout << "in getAbsorptionColor()" << std::endl;
+    std::cout << "in getAbsorptionColor()" << std::endl;
     glm::vec3 outColor(0,0,0);
     glm::vec3 lightVec;
     glm::vec4 fPosition = hitRecord.intersection_position;
@@ -470,7 +480,7 @@ glm::vec4 View::getAbsorptionColor(HitRecord hitRecord, vector<vector<util::Ligh
 }
 
 glm::vec4 View::getReflectionColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph, glm::vec4 rayDirection, int reflectiveBounces) {
-    //std::cout << "in getReflectionColor()" << std::endl;
+    std::cout << "in getReflectionColor()" << std::endl;
     
     glm::vec4 relectedRayOrigin = hitRecord.intersection_position;
     glm::vec4 incidentRay = normalize(rayDirection);
@@ -509,8 +519,124 @@ glm::vec4 View::getReflectionColor(HitRecord hitRecord, vector<vector<util::Ligh
     }
 }
 
-glm::vec4 View::getTransparencyColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph) {
+glm::vec4 View::getTransparencyColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph, glm::vec4 rayDirection, int reflectiveBounces) {
+    std::cout << "in getTransparencyColor()" << std::endl;
+    float n;
+    if (refractiveIndexStack.size() == 0) {
+        std::cout << "object_mat RI: " << hitRecord.object_mat->getRefractiveIndex() << std::endl;
+        n = 1.0f / hitRecord.object_mat->getRefractiveIndex(); // if size == 0, the ray is coming from air into material
+        refractiveIndexStack.push(hitRecord.object_mat->getRefractiveIndex());
+    }
+    else {
+        std::cout << "top RI: " << refractiveIndexStack.top() << std::endl;
+        n = refractiveIndexStack.top() / 1.0f; // size > 0, the ray is coming from the one material (not air) into a new material
+        refractiveIndexStack.pop();
+    }
+    std::cout << "n = " << n << std::endl;
+
+    glm::vec4 normal;
+    if (hitRecord.instanceOf == "box") {
+        normal = box.getNormal(hitRecord.intersection_position);
+    }
+    if (hitRecord.instanceOf == "sphere") {
+        normal = sphere.getNormal(hitRecord.intersection_position);
+    }
+    //normal = glm::normalize(normal);
+    //rayDirection = glm::normalize(rayDirection);
+    float cosTheta = std::min(glm::dot(-1.0f * glm::normalize(rayDirection),glm::normalize(normal)),1.0f);
+    
+    glm::vec4 perpR = n * (rayDirection + (cosTheta * normal));
+    glm::vec4 parallelR = -1.0f * (float) sqrt(abs(1.0f - (pow(perpR.x,2) + pow(perpR.y,2) + pow(perpR.z,2)))) * normal;
+
+    glm::vec4 T = perpR + parallelR;
+    std::cout << "hitRecord.intersection_position: " << glm::to_string(hitRecord.intersection_position) << std::endl;
+    std::cout << "cosTheta: " << cosTheta << std::endl;
+    std::cout << "normal: " << glm::to_string(normal) << std::endl;
+    std::cout << "perpR: " << glm::to_string(perpR) << std::endl;
+    std::cout << "----" << std::endl;
+    std::cout << "sqrt(abs(1.0f - (pow(perpR.x,2) + pow(perpR.y,2) + pow(perpR.z,2)))): " << sqrt(abs(1.0f - (pow(perpR.x,2) + pow(perpR.y,2) + pow(perpR.z,2)))) << std::endl;
+    std::cout << "parallelR: " << glm::to_string(parallelR) << std::endl;
+    std::cout << "----" << std::endl;
+    std::cout << "T: " << glm::to_string(T) << std::endl;
+
+    while (!transparency_modelview.empty()) {
+        transparency_modelview.pop();
+    }
+
+    transparency_modelview.push(glm::mat4(1.0));
+    transparency_modelview.top() = transparency_modelview.top() * getLookAtMatrix();
+    glm::vec4 newOrigin = hitRecord.intersection_position + (T * 0.001f);
+    transparencyVisitor = new RaytracerRenderer(transparency_modelview,newOrigin,T);
+    scenegraph->getRoot()->accept(transparencyVisitor); 
+
+    HitRecord& transparencyHitRecord = dynamic_cast<RaytracerRenderer *>(transparencyVisitor)->getHitRecord();
+
+    if (isinf(transparencyHitRecord.t)) {
+        std::cout << "refracted ray hit background" << std::endl;
+        return glm::vec4(0,0,0,0);
+    }
+    else {
+        util::Material* mat = transparencyHitRecord.object_mat;
+        vector<util::Light> sceneLights = transparencyVisitor->getLights();
+        vector<vector<util::Light>> lightCellCollections = transparencyVisitor->getLightCollections();
+        glm::vec4 color = getColor(transparencyHitRecord, lightCellCollections, scenegraph, T, reflectiveBounces+1);
+
+        transparencyVisitor->clearLights();
+        transparencyVisitor->clearLightCollections();
+        return color;
+    }
+
+    /*
+    std::cout << "hitRecord.intersection_position = " << glm::to_string(hitRecord.intersection_position) << std::endl;
+    std::cout << "normal = " << glm::to_string(normal) << std::endl;
+    std::cout << "c1 = " << c1 << std::endl;
+
+    float intermed = 1 - pow(n,2) * (1 - pow(c1,2));
+    std::cout << "intermed = " << intermed << std::endl;
+    float c2;
+    std::cout << "c2 = " << c2 << std::endl;
+    glm::vec4 T;
+    if (intermed < 0) {
+        std::cout << "total internal reflection" << std::endl;
+        return glm::vec4(1,1,1,0); // total internal reflection
+    }
+
+    else {
+        c2 = sqrt(intermed);
+        T = (n * rayDirection) + (n * c1 * normal) - (normal * c2);
+        std::cout << "rayDirection: " << glm::to_string(rayDirection) << std::endl;
+        std::cout << "T: " << glm::to_string(T) << std::endl;
+
+        while (!transparency_modelview.empty()) {
+            transparency_modelview.pop();
+        }
+
+        transparency_modelview.push(glm::mat4(1.0));
+        transparency_modelview.top() = transparency_modelview.top() * getLookAtMatrix();
+        glm::vec4 newOrigin = hitRecord.intersection_position + (T * 0.001f);
+        transparencyVisitor = new RaytracerRenderer(transparency_modelview,newOrigin,T);
+        scenegraph->getRoot()->accept(transparencyVisitor); 
+
+        HitRecord& transparencyHitRecord = dynamic_cast<RaytracerRenderer *>(transparencyVisitor)->getHitRecord();
+
+        if (isinf(transparencyHitRecord.t)) {
+            std::cout << "refracted ray hit background" << std::endl;
+            return glm::vec4(0,0,0,0);
+        }
+        else {
+            util::Material* mat = transparencyHitRecord.object_mat;
+            vector<util::Light> sceneLights = transparencyVisitor->getLights();
+            vector<vector<util::Light>> lightCellCollections = transparencyVisitor->getLightCollections();
+            glm::vec4 color = getColor(transparencyHitRecord, lightCellCollections, scenegraph, T, reflectiveBounces+1);
+
+            transparencyVisitor->clearLights();
+            transparencyVisitor->clearLightCollections();
+            return color;
+        }
+    }
+
     return glm::vec4(0,0,0,0);
+    */
 }
 
 bool View::inShadow(HitRecord hitRecord, util::Light light,IScenegraph* scenegraph) {

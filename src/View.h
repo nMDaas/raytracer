@@ -34,6 +34,8 @@ using namespace std;
 #include <ShaderProgram.h>
 #include <glm/gtx/string_cast.hpp>
 
+#include "objects/Box.h"
+#include "objects/Sphere.h"
 
 class View
 {
@@ -62,14 +64,19 @@ private:
     stack<glm::mat4> modelview;
     stack<glm::mat4> raytracer_modelview;
     stack<glm::mat4> reflection_modelview;
+    stack<glm::mat4> transparency_modelview;
     map<string,util::ObjectInstance *> objects;
     SGNodeVisitor *renderer;
     SGNodeVisitor *raytracerRenderer;
     SGNodeVisitor *reflectionVisitor;
+    SGNodeVisitor *transparencyVisitor;
     vector<LightLocation> lightLocations; // shader locations for lights
     int WIDTH = 200; // width of ppm file, in pixels (width:height::29:40)
     int HEIGHT = 200; // height of ppm file, in pixels
     float cameraFOV = (float) glm::radians(60.0f);
+    stack<float> refractiveIndexStack; 
+    Box box;
+    Sphere sphere;
 
     // camera details - assumes that we are looking down the z axis
     glm::vec3 cameraPosition;
@@ -82,8 +89,8 @@ private:
     void initShaderVariables(vector<util::Light>& lights);
     glm::vec4 getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph, glm::vec4 rayDirection, int reflectiveBounces); // RGB values are between 0 and 1
     glm::vec4 getAbsorptionColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph); 
-    glm::vec4 getReflectionColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph, glm::vec4 rayDirectionn, int reflectiveBounces);
-    glm::vec4 getTransparencyColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph);
+    glm::vec4 getReflectionColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph, glm::vec4 rayDirection, int reflectiveBounces);
+    glm::vec4 getTransparencyColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph, glm::vec4 rayDirection, int reflectiveBounces);
     int clipValue(int val);
     bool inShadow(HitRecord hitRecord, util::Light light, IScenegraph* scenegraph);
     float getShadowIntensity(HitRecord hitRecord, vector<util::Light> lightCollection, IScenegraph* scenegraph);
