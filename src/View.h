@@ -67,8 +67,8 @@ private:
     SGNodeVisitor *raytracerRenderer;
     SGNodeVisitor *reflectionVisitor;
     vector<LightLocation> lightLocations; // shader locations for lights
-    int WIDTH = 200; // width of ppm file, in pixels
-    int HEIGHT = 400; // height of ppm file, in pixels
+    int WIDTH = 200; // width of ppm file, in pixels (width:height::29:40)
+    int HEIGHT = 200; // height of ppm file, in pixels
     float cameraFOV = (float) glm::radians(60.0f);
 
     // camera details - assumes that we are looking down the z axis

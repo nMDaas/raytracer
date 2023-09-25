@@ -76,7 +76,7 @@ void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
     // Setup window and terminate the program if this is not successful
-    window = glfwCreateWindow(WIDTH*4,HEIGHT*4, "Raytracer", NULL, NULL);
+    window = glfwCreateWindow(800,800, "Raytracer", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
