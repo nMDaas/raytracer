@@ -206,6 +206,7 @@ void ScenegraphImporter::parseMaterial(istream& input) {
     util::Material mat;
     float r,g,b;
     float absorption,reflection,transparency;
+    float refractiveIndex;
     string name;
     input >> name;
     string command;
@@ -248,6 +249,10 @@ void ScenegraphImporter::parseMaterial(istream& input) {
         else if (command == "transparency") {
             input >> transparency;
             mat.setTransparency(transparency);
+        }
+        else if (command == "refractiveIndex") {
+            input >> refractiveIndex;
+            mat.setRefractiveIndex(refractiveIndex);
         }
         input >> command;
     }
