@@ -534,20 +534,23 @@ glm::vec4 View::getReflectionColor(HitRecord hitRecord, vector<vector<util::Ligh
 glm::vec4 View::getTransparencyColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph, glm::vec4 rayDirection, int reflectiveBounces, int refractiveBounces) {
     std::cout << "in getTransparencyColor()" << std::endl;
     float refractiveIndex;
+    glm::vec4 normal;
     if (refractiveIndexStack.size() == 0) {
         std::cout << "object_mat RI: " << hitRecord.object_mat->getRefractiveIndex() << std::endl;
         refractiveIndex = 1.0f / hitRecord.object_mat->getRefractiveIndex(); // if size == 0, the ray is coming from air into material
         refractiveIndexStack.push(hitRecord.object_mat->getRefractiveIndex());
+        normal = normalize(hitRecord.intersection_normal);
     }
     else {
         std::cout << "top RI: " << refractiveIndexStack.top() << std::endl;
         refractiveIndex = refractiveIndexStack.top() / 1.0f; // size > 0, the ray is coming from the one material (not air) into a new material
         refractiveIndexStack.pop();
+         normal = -1.0f * normalize(hitRecord.intersection_normal);
     }
     std::cout << "refractiveIndex = " << refractiveIndex << std::endl;
 
     glm::vec4 incidentRay = normalize(rayDirection);
-    glm::vec4 normal = normalize(hitRecord.intersection_normal);
+   
     glm::vec4 perpR = refractiveIndex * (incidentRay - (glm::dot(normal,incidentRay) * normal));
     std::cout << "incidentRay: " << glm::to_string(incidentRay) << std::endl;
     std::cout << "normal: " << glm::to_string(normal) << std::endl;
