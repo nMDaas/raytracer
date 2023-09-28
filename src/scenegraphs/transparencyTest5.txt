@@ -31,9 +31,9 @@ end-material
 
 group root 
 
-# base
-translate t1 0 -30 -100  
-scale s1 600 2 700
+# bg
+translate t1 0 0 0
+scale s1 200 200 2
 leaf l1 instanceof box  
 add-child t1 root
 add-child s1 t1
@@ -42,23 +42,13 @@ assign-material l1 mat-base
 assign-texture l1 checkerboard
 
 # orange sphere
-translate t2 0 10 0
-scale s2 50 50 50
+translate t2 0 70 0
+scale s2 60 60 60
 leaf l2 instanceof sphere
 assign-material l2 mat-sphere
 add-child l2 s2
 add-child s2 t2
 add-child t2 root
-
-# bg
-translate t3 0 -30 -200 
-scale s3 600 600 2
-leaf l3 instanceof box  
-add-child t3 root
-add-child s3 t3
-add-child l3 s3
-assign-material l3 mat-base
-assign-texture l3 checkerboard
 
 translate tlight 100 0 200 
 light li1 0.4 0.4 0.4 0.5 0 0 0 0 0
@@ -68,4 +58,4 @@ add-child tlight root
 # Assign Root
 assign-root root
 
-camera 0 50 300 0 0 0
+camera 0 0 300 0 0 0
