@@ -19,7 +19,7 @@ void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
 
     // inverse of modelview.top() are the transforms to convert back to Object Coordinate System
     glm::mat4 inverseTransform = glm::inverse(modelview.top()); 
-    //std::cout << "modelview top: " << glm::to_string(modelview.top()) << std::endl;
+    std::cout << "modelview top: " << glm::to_string(modelview.top()) << std::endl;
     spdlog::debug("modelview top: " + glm::to_string(modelview.top()));
     spdlog::debug("inverseTransform: " + glm::to_string(inverseTransform));
     glm::vec4 _s = inverseTransform * s; // s transformed to Object Coordinate System
@@ -55,6 +55,8 @@ void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
     }
 
     if (hit) {
+        std::cout << "instance being tested: " << leafNode->getName() << std::endl;
+        std::cout << "newTime: " << newTime << std::endl;
         if (newTime < hitRecordWithMinTime.t) {
             std::cout << "instance: " << leafNode->getName() << std::endl;
             glm::vec4 intersectionPoint = getIntersection(newTime,_s,_v);
