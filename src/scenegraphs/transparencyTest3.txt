@@ -62,7 +62,7 @@ add-child s2 t2
 add-child t2 root
 
 # another sphere
-translate t3 0 -40 -150
+translate t3 60 -40 -150
 scale s3 30 30 30
 leaf l3 instanceof sphere
 assign-material l3 mat-sphere1
