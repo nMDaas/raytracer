@@ -497,12 +497,18 @@ glm::vec4 View::getReflectionColor(HitRecord hitRecord, vector<vector<util::Ligh
     
     glm::vec4 relectedRayOrigin = hitRecord.intersection_position;
     glm::vec4 incidentRay = normalize(rayDirection);
+    std::cout << "incidentRay: " << glm::to_string(incidentRay) << std::endl;
     glm::vec4 reflectedRay = glm::reflect(incidentRay,normalize(hitRecord.intersection_normal));
+    std::cout << "reflectedRay before normalizing: " << glm::to_string(reflectedRay) << std::endl;
     relectedRayOrigin = relectedRayOrigin + (reflectedRay * 0.001f);
+    reflectedRay = glm::normalize(reflectedRay);
 
     while (!reflection_modelview.empty()) {
         reflection_modelview.pop();
     }
+
+    std::cout << "hitRecord.intersectionPoint: " << glm::to_string(hitRecord.intersection_position) << std::endl;
+    std::cout << "hitRecord.intersection_normal: " << glm::to_string(hitRecord.intersection_normal) << std::endl;
 
     std::cout << "relectedRayOrigin: " << glm::to_string(relectedRayOrigin) << std::endl;
     std::cout << "reflectedRay: " << glm::to_string(reflectedRay) << std::endl;

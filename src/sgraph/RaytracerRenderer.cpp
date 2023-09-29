@@ -61,9 +61,10 @@ void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
             std::cout << "instance: " << leafNode->getName() << std::endl;
             glm::vec4 intersectionPoint = getIntersection(newTime,_s,_v);
             //std::cout << "time: " << newTime << std::endl;
-            //std::cout << "intersectionPoint: " << glm::to_string(intersectionPoint) << std::endl;
+            std::cout << " In visitLeafNode... intersectionPoint: " << glm::to_string(intersectionPoint) << std::endl;
             glm::vec4 normal;
             normal = getNormal(intersectionPoint,leafNode->getInstanceOf());
+            std::cout << " In visitLeafNode... normal: " << glm::to_string(normal) << std::endl;
             
             spdlog::debug("in RaytracerRenderer - visitLeafNode() - intersectionPoint: " + glm::to_string(intersectionPoint));
             spdlog::debug("in RaytracerRenderer - visitLeafNode() - normal: " + glm::to_string(normal));
@@ -74,8 +75,16 @@ void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
             glm::vec2 textureCoordinates = getTextureCoordinates(intersectionPoint,leafNode->getInstanceOf());
         
             // points transformed to convert from object coordinate system to view coordinate system
-            intersectionPoint = modelview.top() * intersectionPoint; 
-            normal = modelview.top() * normal;
+            glm::mat4 mvt1 = modelview.top();
+            std::cout << "MVT1: " << glm::to_string(mvt1) << std::endl;
+            intersectionPoint = mvt1 * intersectionPoint; 
+            glm::mat4 mvt2 = modelview.top();
+            std::cout << "normal after norming: " << glm::to_string(normal) << std::endl;
+            std::cout << "MVT2: " << glm::to_string(mvt2) << std::endl;
+            normal = mvt2 * normal;
+            std::cout << " In visitLeafNode... intersectionPoint x mvt: " << glm::to_string(intersectionPoint) << std::endl;
+            std::cout << " In visitLeafNode... normal x mvt: " << glm::to_string(normal) << std::endl;
+
             spdlog::debug("in RaytracerRenderer - visitLeafNode() - intersectionPoint x modelview top: " + glm::to_string(intersectionPoint));
             spdlog::debug("in RaytracerRenderer - visitLeafNode() - normal x modelview top: " + glm::to_string(normal));
 
