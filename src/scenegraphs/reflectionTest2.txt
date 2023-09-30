@@ -41,11 +41,13 @@ assign-texture l1 checkerboard
 
 # yellow box
 translate t2 0 50 70
-scale s2 100 100 2
+scale s2 100 100 100
+rotate r2 30 0 1 0
 leaf l2 instanceof box
 assign-material l2 mat-sphere
 add-child l2 s2
-add-child s2 t2
+add-child s2 r2
+add-child r2 t2
 add-child t2 root
 
 translate tlight 100 0 200 
