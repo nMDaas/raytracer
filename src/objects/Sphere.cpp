@@ -67,11 +67,8 @@ float Sphere::getTime() {
 }
 
 glm::vec4 Sphere::getNormal(glm::vec4 intersectionPoint) {
-    std::cout << "in Sphere getNormal()" << std::endl;
-    std::cout << "XXX intersectionPoint: " << glm::to_string(intersectionPoint) << std::endl;
     spdlog::debug("intersection: " + glm::to_string(intersectionPoint));
     glm::vec4 normal = glm::vec4(intersectionPoint.x,intersectionPoint.y,intersectionPoint.z,0);
-    std::cout << "XXX normal: " << glm::to_string(normal) << std::endl;
     spdlog::debug("normal: " + glm::to_string(normal));
     return normal;
 }

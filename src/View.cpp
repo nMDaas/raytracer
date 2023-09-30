@@ -264,12 +264,7 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
             spdlog::debug( "modelview top * lookat: " + glm::to_string(raytracer_modelview.top()));
             spdlog::debug("origin: " + glm::to_string(origin));
             spdlog::debug("direction: " + glm::to_string(direction));
-            std::cout << "origin: " << glm::to_string(origin) << std::endl;
-            std::cout << "direction: " << glm::to_string(direction) << std::endl;
-            std::cout << "normalized DIRECTION: " << glm::to_string(glm::normalize(direction)) << std::endl;
-            std::cout << "raytracerRenderer visitor start use" << std::endl;
             scenegraph->getRoot()->accept(raytracerRenderer); 
-            std::cout << "raytracerRenderer visitor end use" << std::endl;
 
             HitRecord& hitRecord = dynamic_cast<RaytracerRenderer *>(raytracerRenderer)->getHitRecord();
 
@@ -303,13 +298,13 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
 
 // RGB values are between 0 and 1
 glm::vec4 View::getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph, glm::vec4 rayDirection,int reflectiveBounces, int refractiveBounces) {
-    std::cout << "in getColor() for instance " << hitRecord.instanceOf << std::endl;
+    spdlog::debug("in getColor() for instance " + hitRecord.instanceOf);
     float a = hitRecord.object_mat->getAbsorption();
     float r = hitRecord.object_mat->getReflection();
     float t = hitRecord.object_mat->getTransparency();
-    std::cout << "material absorption: " << a << std::endl;
-    std::cout << "material reflection: " << r << std::endl;
-    std::cout << "material transparency: " << t << std::endl;
+    spdlog::debug("material absorption: (int)" + (int) a);
+    spdlog::debug("material reflection: (int)" + (int) r);
+    spdlog::debug("material transparency: (int)" + (int) t);
 
     glm::vec4 absorption = glm::vec4(0,0,0,0);
     if (a > 0) {
@@ -319,7 +314,7 @@ glm::vec4 View::getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneL
     //std::cout << "absorption color: " << glm::to_string(absorption) << std::endl;
 
     glm::vec4 reflection = glm::vec4(0,0,0,0);
-    std::cout << "reflective bounces: " << reflectiveBounces << std::endl;
+    spdlog::debug("reflective bounces: " + reflectiveBounces);
     if (r > 0) {
         if (reflectiveBounces < 5)  {
             reflection = r * getReflectionColor(hitRecord,sceneLightCollections,scenegraph,rayDirection,reflectiveBounces,refractiveBounces);
@@ -329,12 +324,14 @@ glm::vec4 View::getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneL
         }
     }
 
-    //std::cout << "reflection color: " << glm::to_string(reflection) << std::endl;
-    std::cout << "refractive bounces: " << refractiveBounces << std::endl;
+    spdlog::debug("refractive bounces: " + refractiveBounces);
     glm::vec4 transparency = glm::vec4(0,0,0,0);
     if (t > 0) {
-        if (refractiveBounces <= 4) {
+        if (refractiveBounces <= 5) {
             transparency = t * getTransparencyColor(hitRecord,sceneLightCollections,scenegraph,rayDirection,reflectiveBounces,refractiveBounces);
+        }
+        else {
+            transparency = reflection;
         }
     }
 
@@ -342,15 +339,15 @@ glm::vec4 View::getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneL
     glm::vec4 textureColor = hitRecord.textureImage->getColor(hitRecord.textureCoordinates.x, hitRecord.textureCoordinates.y);
     glm::vec4 colorWithTexture = color * glm::vec4(textureColor.x/255, textureColor.y/255, textureColor.z/255, textureColor.w/255);
 
-    std::cout << "color: " << glm::to_string(color) << std::endl;
-    std::cout << "textureColor: " << glm::to_string(textureColor) << std::endl;
-    std::cout << "colorWithTexture: " << glm::to_string(colorWithTexture) << std::endl;
+    spdlog::debug("color: " + glm::to_string(color));
+    spdlog::debug("textureColor: " + glm::to_string(textureColor));
+    spdlog::debug("colorWithTexture: " + glm::to_string(colorWithTexture));
 
     return colorWithTexture;
 }
 
 glm::vec4 View::getAbsorptionColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph) {
-    std::cout << "in getAbsorptionColor()" << std::endl;
+    spdlog::debug("in getAbsorptionColor()");
     glm::vec3 outColor(0,0,0);
     glm::vec3 lightVec;
     glm::vec4 fPosition = hitRecord.intersection_position;
@@ -487,19 +484,18 @@ glm::vec4 View::getAbsorptionColor(HitRecord hitRecord, vector<vector<util::Ligh
 
     outColor = outColor;
 
-    std::cout << "outColor: " << glm::to_string(outColor) << std::endl;
+    spdlog::debug("outColor: " + glm::to_string(outColor));
 
     return glm::vec4(outColor.x, outColor.y, outColor.z, 0);
 }
 
 glm::vec4 View::getReflectionColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph, glm::vec4 rayDirection, int reflectiveBounces, int refractiveBounces) {
-    std::cout << "in getReflectionColor()" << std::endl;
+    spdlog::debug("in getReflectionColor()");
     
     glm::vec4 relectedRayOrigin = hitRecord.intersection_position;
     glm::vec4 incidentRay = normalize(rayDirection);
-    std::cout << "incidentRay: " << glm::to_string(incidentRay) << std::endl;
+    spdlog::debug("incidentRay: " + glm::to_string(incidentRay));
     glm::vec4 reflectedRay = glm::reflect(incidentRay,normalize(hitRecord.intersection_normal));
-    std::cout << "reflectedRay before normalizing: " << glm::to_string(reflectedRay) << std::endl;
     relectedRayOrigin = relectedRayOrigin + (reflectedRay * 0.001f);
     reflectedRay = glm::normalize(reflectedRay);
 
@@ -507,11 +503,11 @@ glm::vec4 View::getReflectionColor(HitRecord hitRecord, vector<vector<util::Ligh
         reflection_modelview.pop();
     }
 
-    std::cout << "hitRecord.intersectionPoint: " << glm::to_string(hitRecord.intersection_position) << std::endl;
-    std::cout << "hitRecord.intersection_normal: " << glm::to_string(hitRecord.intersection_normal) << std::endl;
+    spdlog::debug("hitRecord.intersectionPoint: " + glm::to_string(hitRecord.intersection_position));
+    spdlog::debug("hitRecord.intersection_normal: " + glm::to_string(hitRecord.intersection_normal));
 
-    std::cout << "relectedRayOrigin: " << glm::to_string(relectedRayOrigin) << std::endl;
-    std::cout << "reflectedRay: " << glm::to_string(reflectedRay) << std::endl;
+    spdlog::debug("relectedRayOrigin: " + glm::to_string(relectedRayOrigin));
+    spdlog::debug("reflectedRay: " + glm::to_string(reflectedRay));
 
     reflection_modelview.push(glm::mat4(1.0));
     reflection_modelview.top() = reflection_modelview.top() * getLookAtMatrix();
@@ -521,7 +517,7 @@ glm::vec4 View::getReflectionColor(HitRecord hitRecord, vector<vector<util::Ligh
     HitRecord& reflectedHitRecord = dynamic_cast<RaytracerRenderer *>(reflectionVisitor)->getHitRecord();
 
     if (isinf(reflectedHitRecord.t)) {
-        std::cout << "reflected ray hit background" << std::endl;
+        spdlog::debug("reflected ray hit background");
         return glm::vec4(1,1,1,0);
     }
     else {
@@ -529,20 +525,16 @@ glm::vec4 View::getReflectionColor(HitRecord hitRecord, vector<vector<util::Ligh
         vector<util::Light> sceneLights = reflectionVisitor->getLights();
         vector<vector<util::Light>> lightCellCollections = reflectionVisitor->getLightCollections();
         glm::vec4 color = getColor(reflectedHitRecord, lightCellCollections, scenegraph, reflectedRay, reflectiveBounces+1,refractiveBounces);
-        //std::cout << "reflected ray color: " << glm::to_string(color) << std::endl;
-        //glm::vec4 textureColor = reflectedHitRecord.textureImage->getColor(reflectedHitRecord.textureCoordinates.x, reflectedHitRecord.textureCoordinates.y);
-        //std::cout << "reflected ray textureColor: " << glm::to_string(textureColor) << std::endl;
-        //glm::vec4 colorWithTexture = color * glm::vec4(textureColor.x/255, textureColor.y/255, textureColor.z/255, textureColor.w/255) * 255.0f;
 
         reflectionVisitor->clearLights();
         reflectionVisitor->clearLightCollections();
-        std::cout << "reflected ray hit something. color: " << glm::to_string(color) << std::endl;
+        spdlog::debug("reflected ray hit something. color: " + glm::to_string(color));
         return color;
     }
 }
 
 glm::vec4 View::getTransparencyColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph, glm::vec4 rayDirection, int reflectiveBounces, int refractiveBounces) {
-    std::cout << "in getTransparencyColor()" << std::endl;
+    spdlog::debug("in getTransparencyColor()");
     float refractiveIndex;
     glm::vec4 normal;
     if (refractiveIndexStack.size() == 0) {
@@ -562,53 +554,27 @@ glm::vec4 View::getTransparencyColor(HitRecord hitRecord, vector<vector<util::Li
     glm::vec4 incidentRay = normalize(rayDirection);
    
     glm::vec4 perpR = refractiveIndex * (incidentRay - (glm::dot(normal,incidentRay) * normal));
-    std::cout << "incidentRay: " << glm::to_string(incidentRay) << std::endl;
-    std::cout << "normal: " << glm::to_string(normal) << std::endl;
-    std::cout << "glm::dot(normal,incidentRay): " << glm::dot(normal,incidentRay) << std::endl;
-    std::cout << "normal: " << glm::to_string(normal) << std::endl;
-    std::cout << "perpR: " << glm::to_string(perpR) << std::endl;
+    spdlog::debug("incidentRay: " + glm::to_string(incidentRay));
+    spdlog::debug("normal: " + glm::to_string(normal));
+    spdlog::debug("glm::dot(normal,incidentRay): " + (int) glm::dot(normal,incidentRay));
+    spdlog::debug("normal: " + glm::to_string(normal));
+    spdlog::debug("perpR: " + glm::to_string(perpR));
 
     float cosThetaI = -1.0f * glm::dot(normal,incidentRay);
     float sinThetaI = sqrt(1 - pow(cosThetaI,2));
     float sinThetaT = refractiveIndex * sinThetaI;
     float cosThetaT = sqrt(1 - pow(sinThetaT,2));
     glm::vec4 parallelR = cosThetaT * normal;
-    std::cout << "cosThetaI: " << cosThetaI << std::endl;
-    std::cout << "sinThetaI: " << sinThetaI << std::endl;
-    std::cout << "sinThetaT: " << sinThetaT << std::endl;
-    std::cout << "cosThetaT: " << cosThetaT << std::endl;
-    std::cout << "parallelR: " << glm::to_string(parallelR) << std::endl;
+    spdlog::debug("cosThetaI: (int)" + (int) cosThetaI);
+    spdlog::debug("sinThetaI: (int)" + (int) sinThetaI);
+    spdlog::debug("sinThetaT: (int)" + (int) sinThetaT);
+    spdlog::debug("cosThetaT: (int)" + (int) cosThetaT);
+    spdlog::debug("parallelR: (int)" + glm::to_string(parallelR));
 
     glm::vec4 T = perpR - parallelR;
 
-    std::cout << "intersection point: " << glm::to_string(hitRecord.intersection_position) << std::endl;
-    std::cout << "T: " << glm::to_string(T) << std::endl;
-
-    /*
-    // check for total internal reflection 
-    // air to glass = 1/1.52 = 0.657
-    // glass to air = 1.52
-    float criticalAngle;
-    if (refractiveIndex > 1.0f) {
-        criticalAngle = asin(1/refractiveIndex);
-    }
-    else {
-        criticalAngle = asin(refractiveIndex);
-    }
-    
-    std::cout << "criticalAngle: " << criticalAngle << std::endl;
-    std::cout << "acos(cosThetaI): " << acos(cosThetaI) << std::endl;
-    if (acos(cosThetaI) > criticalAngle) {
-        // there is total internal reflection 
-        std::cout << "total internal reflection happening" << std::endl;
-        if (reflectiveBounces < 5)  {
-            return getReflectionColor(hitRecord,sceneLightCollections,scenegraph,rayDirection,reflectiveBounces);
-        }
-        else {
-            return glm::vec4(1,1,1,0);
-        }
-    }
-    */
+    spdlog::debug("intersection point: " + glm::to_string(hitRecord.intersection_position));
+    spdlog::debug("T: " + glm::to_string(T));
 
     while (!transparency_modelview.empty()) {
         transparency_modelview.pop();
@@ -618,14 +584,12 @@ glm::vec4 View::getTransparencyColor(HitRecord hitRecord, vector<vector<util::Li
     transparency_modelview.top() = transparency_modelview.top() * getLookAtMatrix();
     glm::vec4 newOrigin = hitRecord.intersection_position + (T * 0.001f);
     transparencyVisitor = new RaytracerRenderer(transparency_modelview,newOrigin,T);
-    std::cout << "transparencyVisitor visitor start use" << std::endl;
     scenegraph->getRoot()->accept(transparencyVisitor); 
-    std::cout << "transparencyVisitor visitor end use" << std::endl;
 
     HitRecord& transparencyHitRecord = dynamic_cast<RaytracerRenderer *>(transparencyVisitor)->getHitRecord();
 
     if (isinf(transparencyHitRecord.t)) {
-        std::cout << "refracted ray hit background" << std::endl;
+        spdlog::debug("refracted ray hit background");
         return glm::vec4(1,1,1,0);
     }
     else {
