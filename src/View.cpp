@@ -423,7 +423,6 @@ glm::vec4 View::getAbsorptionColor(HitRecord hitRecord, vector<vector<util::Ligh
 
             lightIntensity = 1.0f;
 
-            /*
             if (!inShadow(hitRecord, mainLight,scenegraph)) {
                 lightIntensity = 1.0f;
             }
@@ -431,7 +430,6 @@ glm::vec4 View::getAbsorptionColor(HitRecord hitRecord, vector<vector<util::Ligh
                 shadowIntensity = getShadowIntensity(hitRecord,sceneLightCollections[i],scenegraph);
                 lightIntensity = 1.0f - shadowIntensity;
             }
-            */
 
             /* nDotL is greater > 0 only if angle between normal and light vector is between 
             0° and 90° and between 270° and 360°. This ensures that the light direction is coming in 
@@ -662,7 +660,7 @@ float View::getShadowIntensity(HitRecord hitRecord, vector<util::Light> lightCol
 
         if (otherHitRecord.t < hitRecord.t) {
             spdlog::debug("in shadow");
-            total = total + 1.0f;
+            total = total + (1.0f * (1 - otherHitRecord.object_mat->getTransparency()));
         }
         else {
             spdlog::debug("not in shadow");
