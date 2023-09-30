@@ -1,0 +1,81 @@
+#transparent sphere
+
+#all the instances
+instance sphere src/models/sphere.obj
+instance box src/models/box.obj
+
+#textures
+texture checkerboard src/textures/checkerboardBox.ppm
+
+#material
+material mat-base
+emission 0 0 0
+ambient 1 0.9 1
+diffuse 1 1 1
+specular 0 0 0
+shininess 5
+end-material
+
+#material
+material mat-sphere
+emission 0 0 0
+ambient 0.96 0.65 0.52
+diffuse 0 1 0
+specular 0 0.5 0.5
+shininess 50
+absorption 0
+reflection 0
+transparency 1
+refractiveIndex 1.52
+end-material
+
+material mat-sphere2
+emission 0 0 0
+ambient 0.96 0.65 0.52
+diffuse 0 1 0
+specular 0 0.5 0.5
+shininess 50
+absorption 0.5
+reflection 0
+transparency 0.5
+refractiveIndex 2
+end-material
+
+group root 
+
+# bg
+translate t1 0 -70 0
+scale s1 700 2 700
+leaf l1 instanceof box  
+add-child t1 root
+add-child s1 t1
+add-child l1 s1
+assign-material l1 mat-base
+assign-texture l1 checkerboard
+
+# orange sphere
+translate t2 0 0 0
+scale s2 80 80 80
+leaf l2 instanceof sphere
+assign-material l2 mat-sphere
+add-child l2 s2
+add-child s2 t2
+add-child t2 root
+
+translate t3 0 0 0
+scale s3 30 30 30
+leaf l3 instanceof sphere
+assign-material l3 mat-sphere2
+add-child l3 s3
+add-child s3 t3
+add-child t3 root
+
+translate tlight 100 0 200 
+light li1 0.4 0.4 0.4 0.5 0 0 0 0 0
+add-child li1 tlight
+add-child tlight root
+
+# Assign Root
+assign-root root
+
+camera 0 20 300 0 0 0

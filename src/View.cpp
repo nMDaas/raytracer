@@ -237,11 +237,6 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
 
     for (int hh = 0; hh < HEIGHT; hh++) {
         for (int ww = 0; ww < WIDTH; ww++) {
-
-            while (!refractiveIndexStack.empty()) {
-                refractiveIndexStack.pop();
-            }
-
             std::cout << "(" << hh << "," << ww << ")" << std::endl;
 
             float dx = (float)ww - (0.5f * WIDTH);
@@ -284,6 +279,9 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
                 //std::cout << "color * 255: " << glm::to_string(color) << std::endl;
                 raytracerRenderer->clearLights();
                 raytracerRenderer->clearLightCollections();
+                while (!refractiveIndexStack.empty()) {
+                    refractiveIndexStack.pop();
+                }
                 //spdlog::debug("color in raytracer(): " + glm::to_string(color));
                 //std::cout << "colorWithTexture: " << glm::to_string(colorWithTexture) << std::endl;
                 out << clipValue(color.x) << " " <<  clipValue(color.y) << " " <<  clipValue(color.z) << endl; 
@@ -359,15 +357,6 @@ glm::vec4 View::getAbsorptionColor(HitRecord hitRecord, vector<vector<util::Ligh
     viewVec = glm::normalize(viewVec);
 
     spdlog::debug("sceneLightCollections size: " + sceneLightCollections.size());
-
-    /*
-    std::cout << "TESTING IN GETCOLOR()" << std::endl;
-    for (int i = 0; i < sceneLightCollections.size(); i++) {
-        for (int j = 0; j < sceneLightCollections[i].size(); j++) {
-            std::cout << "light " << i << "," << j << ": " << glm::to_string(sceneLightCollections[i][j].getPosition()) << std::endl;
-        }
-    }
-    */
 
     for (int i = 0; i < sceneLightCollections.size(); i++) {
 
@@ -536,19 +525,35 @@ glm::vec4 View::getTransparencyColor(HitRecord hitRecord, vector<vector<util::Li
     spdlog::debug("in getTransparencyColor()");
     float refractiveIndex;
     glm::vec4 normal;
+    spdlog::debug("leaf name: " + hitRecord.instanceName);
     if (refractiveIndexStack.size() == 0) {
-        std::cout << "object_mat RI: " << hitRecord.object_mat->getRefractiveIndex() << std::endl;
+        spdlog::debug("object_mat RI: (int)" + (int) hitRecord.object_mat->getRefractiveIndex());
         refractiveIndex = 1.0f / hitRecord.object_mat->getRefractiveIndex(); // if size == 0, the ray is coming from air into material
         refractiveIndexStack.push(hitRecord.object_mat->getRefractiveIndex());
         normal = normalize(hitRecord.intersection_normal);
     }
     else {
-        std::cout << "top RI: " << refractiveIndexStack.top() << std::endl;
-        refractiveIndex = refractiveIndexStack.top() / 1.0f; // size > 0, the ray is coming from the one material (not air) into a new material
-        refractiveIndexStack.pop();
-         normal = -1.0f * normalize(hitRecord.intersection_normal);
+        spdlog::debug("refractiveIndexStack.top(): (int)" + (int) refractiveIndexStack.top());
+
+        if (hitRecord.object_mat->getRefractiveIndex() == refractiveIndexStack.top()) {
+            refractiveIndexStack.pop();
+            if (refractiveIndexStack.size() == 0) {
+                refractiveIndex = hitRecord.object_mat->getRefractiveIndex() / 1.0f; 
+            }
+            else {
+                refractiveIndex = hitRecord.object_mat->getRefractiveIndex() / refractiveIndexStack.top(); 
+            }
+            normal = -1.0f * normalize(hitRecord.intersection_normal);
+        }
+        else {
+            refractiveIndex = refractiveIndexStack.top() / hitRecord.object_mat->getRefractiveIndex(); 
+            refractiveIndexStack.push(hitRecord.object_mat->getRefractiveIndex());
+            normal = normalize(hitRecord.intersection_normal);
+        }
+        
     }
-    std::cout << "refractiveIndex = " << refractiveIndex << std::endl;
+    spdlog::debug("size of refractiveIndexStack: " + refractiveIndexStack.size());
+    spdlog::debug("refractiveIndex: (int)" + (int) refractiveIndex);
 
     glm::vec4 incidentRay = normalize(rayDirection);
    
