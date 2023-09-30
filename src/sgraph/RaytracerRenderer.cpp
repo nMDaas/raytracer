@@ -76,7 +76,7 @@ void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
             spdlog::debug("in RaytracerRenderer - visitLeafNode() - intersectionPoint x modelview top: " + glm::to_string(intersectionPoint));
             spdlog::debug("in RaytracerRenderer - visitLeafNode() - normal x modelview top: " + glm::to_string(normal));
 
-            HitRecord newHitRecord = {newTime,intersectionPoint,normal,leafNode->getMaterial(),leafNode->getTexture(),textureCoordinates};
+            HitRecord newHitRecord = {newTime,intersectionPoint,normal,leafNode->getMaterial(),leafNode->getTexture(),textureCoordinates,leafNode->getName()};
 
             hitRecordWithMinTime = newHitRecord;
         }
