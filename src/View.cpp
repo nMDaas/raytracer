@@ -298,7 +298,6 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
 
 // RGB values are between 0 and 1
 glm::vec4 View::getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneLightCollections, IScenegraph* scenegraph, glm::vec4 rayDirection,int reflectiveBounces, int refractiveBounces) {
-    spdlog::debug("in getColor() for instance " + hitRecord.instanceOf);
     float a = hitRecord.object_mat->getAbsorption();
     float r = hitRecord.object_mat->getReflection();
     float t = hitRecord.object_mat->getTransparency();

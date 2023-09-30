@@ -13,7 +13,6 @@ typedef struct HitRecord {
     util::Material* object_mat;
     TextureImage* textureImage;
     glm::vec2 textureCoordinates;
-    std::string instanceOf;
 } HitRecord;
 
 #endif
