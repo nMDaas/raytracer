@@ -15,6 +15,7 @@
 #include "../objects/Sphere.h"
 #include "../objects/Cylinder.h"
 #include "../objects/Cone.h"
+#include "../objects/Triangle.h"
 
 /* RaytraceRenderer is a visitor that extends AbstractRenderer and 
 will be used to traverse the scenegraph and return a HitRecord */
@@ -37,6 +38,7 @@ class RaytracerRenderer: public AbstractRenderer {
     Box box;
     Sphere sphere;
     Cylinder cylinder;
+    Triangle triangle;
     Cone cone;
     float minTime = INFINITY;
     util::Material* dummyMaterial;

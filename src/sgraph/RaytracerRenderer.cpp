@@ -52,6 +52,12 @@ void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
             newTime = cone.getTime();
         }
     }
+    else if (leafNode->getInstanceOf() == "triangle") {
+        hit = triangle.calcTimes(_s,_v);
+        if (hit) {
+            newTime = triangle.getTime();
+        }
+    }
 
     if (hit) {
         if (newTime < hitRecordWithMinTime.t) {
@@ -108,6 +114,9 @@ glm::vec4 RaytracerRenderer::getNormal(glm::vec4 intersectionPoint,string instan
     }
     else if (instanceOf == "cone") {
         return cone.getNormal(intersectionPoint);
+    }
+    else if (instanceOf == "triangle") {
+        return triangle.getNormal(intersectionPoint);
     }
 }
 
