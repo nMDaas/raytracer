@@ -9,6 +9,11 @@ class Triangle {
         ~Triangle();
 
         Triangle (Triangle &t); // to check for copy constructors
+        bool calcTimes(glm::vec4 s, glm::vec4 v); // calculates time of a ray's intersection with a triangle
+        float getTime(); // returns the time of first intersection of the ray with the triangle
+        glm::vec4 getNormal(glm::vec4 intersectionPoint);
+        bool pointInsideTriangle(glm::vec4 intersectionPoint);
+
     private:
         glm::vec4 v0 = glm::vec4(-1.0f,-1.0f,0.0f,1.0f); 
         glm::vec4 v1 = glm::vec4(1.0f,-1.0f,0.0f,1.0f); 
@@ -20,6 +25,7 @@ class Triangle {
         float normalZ = (e1.x * e2.y) - (e1.y * e2.x);
         glm::vec4 normal = normalize(glm::vec4(normalX,normalY,normalZ,0.0f));
         float t;
+        glm::vec4 getCrossProduct(glm::vec4 vec1, glm::vec4 vec2);
 };
 
 #endif
