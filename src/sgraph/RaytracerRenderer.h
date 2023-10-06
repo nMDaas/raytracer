@@ -22,14 +22,14 @@ will be used to traverse the scenegraph and return a HitRecord */
 class RaytracerRenderer: public AbstractRenderer {
     public:
 
-        RaytracerRenderer(stack<glm::mat4>& mv, glm::vec4& in_s, glm::vec4& in_v);
-        ~RaytracerRenderer();
+    RaytracerRenderer(stack<glm::mat4>& mv, glm::vec4& in_s, glm::vec4& in_v);
+    ~RaytracerRenderer();
 
-        // to check for copy constructors
-        RaytracerRenderer (RaytracerRenderer &t);
+    // to check for copy constructors
+    RaytracerRenderer (RaytracerRenderer &t);
 
-        void visitLeafNode(LeafNode *leafNode);
-        HitRecord& getHitRecord();
+    void visitLeafNode(LeafNode *leafNode);
+    HitRecord& getHitRecord();
 
 
     private: 
