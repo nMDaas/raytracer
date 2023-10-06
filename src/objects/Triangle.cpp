@@ -52,6 +52,9 @@ glm::vec4 Triangle::getNormal(glm::vec4 intersectionPoint) {
     return normal;
 }
 
+glm::vec2 Triangle::getTextureCoordinates(glm::vec4 intersectionPoint) {
+    return glm::vec2(0,0);
+}
 
 bool Triangle::pointInsideTriangle(glm::vec4 intersectionPoint) {
     glm::vec4 edge0 = v1 - v0;
