@@ -40,4 +40,9 @@ void ObjImporter::parseVertex(istream& input) {
     input >> x >> y >> z;
     vertices.push_back(glm::vec4(x,y,z,1.0f));
 }
+
+void ObjImporter::testParse(){
+    for (int i = 0; i < vertices.size(); i++) {
+        std::cout << "vertex: " << glm::to_string(vertices[i]) << std::endl;
+    } 
 }

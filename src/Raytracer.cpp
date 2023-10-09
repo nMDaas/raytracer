@@ -27,6 +27,7 @@ int main(int argc,char *argv[])
     ObjImporter objImporter;
 
     objImporter.parseObjFile(inFile);
+    objImporter.testParse();
 
     /*
     if (argc > 1) {

@@ -30,6 +30,7 @@ class ObjImporter {
         ObjImporter (ObjImporter &t);
 
         void parseObjFile(std::istream& input);
+        void testParse();
 
     private: 
         std::string stripComments(std::istream& input);
