@@ -14,13 +14,16 @@ void ObjImporter::parseObjFile(std::istream& input) {
     istringstream inputWithOutComments(inputWithOutCommentsString);
     string command;
     while (inputWithOutComments >> command) {
-        std::cout << command << " "; 
+        if (command == "v") {
+            parseVertex(inputWithOutComments);
+        }
     }
 }
 
 std::string ObjImporter::stripComments(std::istream& input) {
     std::string line;
     stringstream clean;
+    vertices.push_back(glm::vec4(0.0f,0.0f,0.0f,0.0f));
     while (getline(input,line)) {
         int i=0;
         while ((i<line.length()) && (line[i]!='#')) {
@@ -30,4 +33,11 @@ std::string ObjImporter::stripComments(std::istream& input) {
         clean << endl;
     }
     return clean.str();
+}
+
+void ObjImporter::parseVertex(istream& input) {
+    float x,y,z;
+    input >> x >> y >> z;
+    vertices.push_back(glm::vec4(x,y,z,1.0f));
+}
 }
