@@ -1,4 +1,4 @@
-OBJS = Raytracer.o VertexAttrib.o TextureImage.o ScenegraphImporter.o ObjImporter.o Controller.o Model.o View.o AbstractSGNode.o GroupNode.o ChildSGNode.o LeafNode.o LightNode.o SpotlightNode.o ParentSGNode.o RotateTransform.o ScaleTransform.o TransformNode.o TranslateTransform.o AbstractRenderer.o GLScenegraphRenderer.o RaytracerRenderer.o Scenegraph.o Box.o Sphere.o Cylinder.o Cone.o Triangle.o
+OBJS = Raytracer.o VertexAttrib.o TextureImage.o ScenegraphImporter.o ObjImporter.o Controller.o Model.o View.o AbstractSGNode.o GroupNode.o ChildSGNode.o LeafNode.o LightNode.o SpotlightNode.o ParentSGNode.o RotateTransform.o ScaleTransform.o TransformNode.o TranslateTransform.o AbstractRenderer.o GLScenegraphRenderer.o RaytracerRenderer.o Scenegraph.o Box.o Sphere.o Cylinder.o Cone.o Triangle.o Object.o
 INCLUDES = -I../include
 LIBS = -L../lib
 LDFLAGS = -lglad -lglfw3
@@ -99,6 +99,9 @@ Cone.o: objects/Cone.cpp
 
 Triangle.o: objects/Triangle.cpp 
 	$(COMPILER) $(INCLUDES) $(CFLAGS) -c objects/Triangle.cpp
+
+Object.o: objects/Object.cpp 
+	$(COMPILER) $(INCLUDES) $(CFLAGS) -c objects/Object.cpp
 
 RM = rm	-f
 ifeq ($(OS),Windows_NT)     # is Windows_NT on XP, 2000, 7, Vista, 10...
