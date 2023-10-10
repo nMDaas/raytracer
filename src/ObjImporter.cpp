@@ -47,25 +47,19 @@ void ObjImporter::parseVertex(istream& input) {
 void ObjImporter::parseFace(std::istream& input) {
     string v1,v2,v3;
     input >> v1 >> v2 >> v3;
-    std::cout << "v1[0]: " << v1[0] << std::endl;
     int v1int = ((int) v1[0]) - 48;
     int v2int = ((int) v2[0]) - 48;
     int v3int = ((int) v3[0]) - 48;
-    //std::cout << "v1int: " << v1int << std::endl;
-    //std::cout << "vertices{v1[0]}: " << glm::to_string(vertices[v1int]) << std::endl;
-    //std::cout << vertices[(int) v1[0]] << " " << vertices[(int) v2[0]] << " " << vertices[(int) v3[0]] << std::endl;
-    Triangle triangle(vertices[v1int],vertices[v2int],vertices[v3int]);
-    triangles.push_back(triangle);
+    meshObject.addTriangle(vertices[v1int],vertices[v2int],vertices[v3int]);
 }
 
 void ObjImporter::testParse(){
     for (int i = 0; i < vertices.size(); i++) {
         std::cout << "vertex: " << glm::to_string(vertices[i]) << std::endl;
     }
+    meshObject.printTriangles();
+}
 
-    std::cout << "Triangles: " << std::endl;
-
-    for (int i = 0; i < triangles.size(); i++) {
-        triangles[i].printTriangleDetails();
-    } 
+MeshObject* ObjImporter::getMeshObject() {
+    return &meshObject;
 }

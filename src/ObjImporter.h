@@ -22,6 +22,7 @@ using namespace std;
 #include <glm/gtx/string_cast.hpp>
 
 #include "objects/Triangle.h"
+#include "objects/MeshObject.h"
 
 class ObjImporter {
     public:
@@ -33,6 +34,7 @@ class ObjImporter {
 
         void parseObjFile(std::istream& input);
         void testParse();
+        MeshObject* getMeshObject();
 
     private: 
         std::string stripComments(std::istream& input);
@@ -40,7 +42,8 @@ class ObjImporter {
         void parseFace(std::istream& input);
 
         std::vector<glm::vec4> vertices;
-        std::vector<Triangle> triangles;
+
+        MeshObject meshObject;
 };
 
 #endif
