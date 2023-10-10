@@ -8,7 +8,7 @@ class Triangle {
         Triangle();
         ~Triangle();
 
-        Triangle (Triangle &t); // to check for copy constructors
+       // Triangle (Triangle &t); // to check for copy constructors
         bool calcTimes(glm::vec4 s, glm::vec4 v); // calculates time of a ray's intersection with a triangle
         float getTime(); // returns the time of first intersection of the ray with the triangle
         glm::vec4 getNormal(glm::vec4 intersectionPoint);

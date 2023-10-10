@@ -8,9 +8,16 @@ Triangle::Triangle(){}
 Triangle::~Triangle(){}
 
 // to check for copy constructors
+/*
 Triangle::Triangle (Triangle &t){
+    v0 = t.v0; 
+    v1 = t.v1;
+    v2 = t.v2;
+    e1 = t.e1;
+    e2 = t.e2;
+    normal = t.normal;
     std::cout << "TRIANGLE COPY CONSTRUCTOR CALLED" << std::endl;
-}
+}*/
 
 bool Triangle::calcTimes(glm::vec4 s, glm::vec4 v) {
     std::cout << "in Triangle calcTimes()" << std::endl;
