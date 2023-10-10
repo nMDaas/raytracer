@@ -1,0 +1,23 @@
+#all the instances
+instance boxMaya src/models/boxMaya.obj
+
+#material
+material mat
+emission 0 0 0
+ambient 1 0 0
+diffuse 0 1 0
+specular 0 0 1
+shininess 5
+end-material
+
+group root 
+
+leaf l1 instanceof boxMaya
+assign-material l1 mat
+add-child l1 root
+
+# Assign Root
+assign-root root
+
+
+camera 0 0 150 0 0 0
