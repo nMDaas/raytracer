@@ -5,6 +5,18 @@
 
 Triangle::Triangle(){}
 
+Triangle::Triangle(glm::vec4 v0_in, glm::vec4 v1_in, glm::vec4 v2_in) {
+    v0 = v0_in; 
+    v1 = v1_in;
+    v2 = v2_in;
+    e1 = v1 - v0;
+    e2 = v2 - v0;
+    float normalX = (e1.y * e2.z) - (e1.z * e2.y);
+    float normalY = (e1.z * e2.x) - (e1.x * e2.z);
+    float normalZ = (e1.x * e2.y) - (e1.y * e2.x);
+    normal = normalize(glm::vec4(normalX,normalY,normalZ,0.0f));
+}
+
 Triangle::~Triangle(){}
 
 // to check for copy constructors
