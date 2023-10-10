@@ -21,6 +21,8 @@ using namespace std;
 #include <ShaderProgram.h>
 #include <glm/gtx/string_cast.hpp>
 
+#include "objects/Triangle.h"
+
 class ObjImporter {
     public:
         ObjImporter();
@@ -35,8 +37,10 @@ class ObjImporter {
     private: 
         std::string stripComments(std::istream& input);
         void parseVertex(std::istream& input);
+        void parseFace(std::istream& input);
 
         std::vector<glm::vec4> vertices;
+        std::vector<Triangle> triangles;
 };
 
 #endif
