@@ -4,12 +4,12 @@
 #include <glm/glm.hpp>
 
 /* This object is for non primitive objects that are made up of triangles */
-class Object {
+class MeshObject {
     public:
-        Object();
-        ~Object();
+        MeshObject();
+        ~MeshObject();
 
-        Object (Object &t); // to check for copy constructors
+        MeshObject (MeshObject &t); // to check for copy constructors
 
     private:
 };
