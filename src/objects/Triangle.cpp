@@ -117,3 +117,11 @@ glm::vec4 Triangle::getCrossProduct(glm::vec4 vec1, glm::vec4 vec2) {
     float crossZ = (vec1.x * vec2.y) - (vec1.y * vec2.x);
     return glm::vec4(crossX,crossY,crossZ,0);
 }
+
+void Triangle::printTriangleDetails() {
+    std::cout << "---Triangle---" << std::endl;
+    std::cout << "v0: " << glm::to_string(v0) << std::endl;
+    std::cout << "v1: " << glm::to_string(v1) << std::endl;
+    std::cout << "v2: " << glm::to_string(v2) << std::endl;
+    std::cout << "normal: " << glm::to_string(normal) << std::endl;
+}

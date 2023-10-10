@@ -15,6 +15,7 @@ class Triangle {
         glm::vec4 getNormal(glm::vec4 intersectionPoint);
         glm::vec2 getTextureCoordinates(glm::vec4 intersectionPoint);
         bool pointInsideTriangle(glm::vec4 intersectionPoint);
+        void printTriangleDetails();
 
     private:
         glm::vec4 v0; 
