@@ -19,11 +19,11 @@ Users can build scenes by adding and transforming objects, translating lights, a
 * cameras 
 
 # How to Run 
-To compile:  
-* make -C src
-* make
-  
-To run program: src/Raytracer src/scenegraphs/["example txt file in scenegraphs directory"]
+```
+make -C src
+make
+src/Raytracer src/scenegraphs/["example txt file in scenegraphs directory"]
+```
 
 # External Resources Used: 
 * Some OpenGL and starter code provided by Professor Amit Shesh
