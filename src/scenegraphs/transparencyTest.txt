@@ -1,4 +1,4 @@
-#transparent sphere with background and base
+# test with transparent sphere with background and base
 
 #all the instances
 instance sphere src/models/sphere.obj

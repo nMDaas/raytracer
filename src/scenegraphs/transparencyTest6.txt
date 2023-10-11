@@ -1,4 +1,4 @@
-#transparent sphere
+# test with transparent spheres within each other - multiple refractions
 
 #all the instances
 instance sphere src/models/sphere.obj
