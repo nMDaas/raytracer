@@ -7,9 +7,7 @@
 #include "PolygonMesh.h"
 #include "../VertexAttrib.h"
 
-/*
-    This is an abstract class.
-*/
+/* This is an interface for a scenegraph. */
 class IScenegraph {
     public:
     // add a node to the scenegraph to keep track of all nodes

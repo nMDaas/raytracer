@@ -45,9 +45,7 @@ bool Cylinder::calcTimes(glm::vec4 s, glm::vec4 v) {
 
     float tMinY = (vmin.y - s.y)/v.y; 
     float tMaxY = (vmax.y - s.y)/v.y; 
-    std::cout << "tMinY: " << tMinY << std::endl;
-    std::cout << "tMaxY: " << tMaxY << std::endl;
-
+    
     if (tMinY > tMaxY) {
         std::swap(tMinY, tMaxY); 
     }

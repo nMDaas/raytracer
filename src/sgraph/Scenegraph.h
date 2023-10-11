@@ -9,7 +9,7 @@
 #include "../VertexAttrib.h"
 
 
-// an implementation of IScenegraph
+/* Scenegraph implements IScenegraph */
 class Scenegraph: public IScenegraph {
     protected:
       SGNode *root;

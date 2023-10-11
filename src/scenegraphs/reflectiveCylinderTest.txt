@@ -1,4 +1,4 @@
-#reflective box
+# test for raytracing with a reflective cylinder
 
 #all the instances
 instance box src/models/box.obj
