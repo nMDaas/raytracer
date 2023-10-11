@@ -1,4 +1,4 @@
-#version 330
+# simple vertex shader
 
 in vec4 vPosition;
 uniform vec4 vColor;

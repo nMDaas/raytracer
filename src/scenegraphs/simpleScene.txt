@@ -1,6 +1,10 @@
+# simple test for basic functionality
+
 group root
 
 light li1 1.0 0.5 0.3 0.0 1.0 0.0 0.0 0.0 1.0
 add-child li1 root
 
 assign-root root
+
+camera 0 0 150 0 0 0

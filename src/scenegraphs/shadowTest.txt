@@ -1,3 +1,5 @@
+# test for shadows
+
 #all the instances
 instance box src/models/box.obj
 instance sphere src/models/sphere.obj
@@ -48,3 +50,5 @@ add-child tlight root
 
 # Assign Root
 assign-root root
+
+camera 0 0 150 0 0 0

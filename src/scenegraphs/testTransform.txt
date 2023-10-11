@@ -44,3 +44,4 @@ add-child tlight2 root
 
 assign-root root
 
+camera 0 0 150 0 0 0
