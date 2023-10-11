@@ -1,3 +1,5 @@
+# test for cylinder raytracing
+
 # these instances will be ignored if debugger is being used
 instance cylinder src/models/cylinder.obj
 
@@ -26,3 +28,5 @@ add-child l1 s1
 add-child s1 r1
 add-child r1 root
 assign-root root
+
+camera 0 0 150 0 0 0

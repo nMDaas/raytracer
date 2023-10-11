@@ -6,9 +6,7 @@
 
 class IScenegraph;
 
-/*
-    This interface represents a scenegraph node.
-*/
+/* This interface represents a scenegraph node. */
 class SGNode {
     public:
     SGNode(){}

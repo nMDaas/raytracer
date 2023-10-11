@@ -1,3 +1,5 @@
+# test for raytracing overlapping objects 
+
 # these instances will be ignored if debugger is being used
 instance box src/models/box.obj
 instance sphere src/models/sphere.obj
@@ -41,3 +43,5 @@ add-child r2 t2
 add-child t2 root
 
 assign-root root
+
+camera 0 0 150 0 0 0

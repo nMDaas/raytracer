@@ -9,6 +9,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
+/* RotateTransform extends TransformNode */
 class RotateTransform: public TransformNode {
     protected:
             float angleInRadians;

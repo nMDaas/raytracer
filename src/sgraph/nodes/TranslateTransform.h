@@ -9,6 +9,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
+/* TranslateTransform extends TransformNode */
 class TranslateTransform: public TransformNode {
     protected: 
     float tx, ty, tz;

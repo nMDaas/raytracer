@@ -5,6 +5,7 @@
 #include "../SGNodeVisitor.h"
 #include "SGNode.h"
 
+/* GroupNode extends ParentSGNode */
 class GroupNode : public ParentSGNode {
     protected:
     ParentSGNode *copyNode();

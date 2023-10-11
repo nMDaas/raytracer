@@ -6,9 +6,7 @@
 #include "AbstractSGNode.h"
 #include "SGNode.h"
 
-/*
-    This class represents a SGNode that can have children.
-*/
+/* This class represents a SGNode that can have children. */
 class ParentSGNode: public AbstractSGNode {
 
     protected:

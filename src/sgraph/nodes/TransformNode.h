@@ -9,6 +9,7 @@
 
 #include "glm/glm.hpp"
 
+/* TransformNode extends ParentSGNode */
 class TransformNode: public ParentSGNode {
     protected:
       glm::mat4 transform;

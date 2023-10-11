@@ -7,6 +7,7 @@
 #include "../IScenegraph.h"
 #include "SGNode.h"
 
+/* LightNode extends ChildSGNode */
 class LightNode: public ChildSGNode {
     protected: 
     util::Light* light;

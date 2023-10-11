@@ -9,6 +9,7 @@
 #include "TransformNode.h"
 #include "ParentSGNode.h"
 
+/* ScaleTransform extends TransformNode */
 class ScaleTransform : public TransformNode {
     protected:
         float sx,sy,sz;

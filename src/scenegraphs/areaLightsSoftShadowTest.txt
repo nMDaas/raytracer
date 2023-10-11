@@ -1,3 +1,5 @@
+# test for area lighting and soft shadows
+
 #all the instances
 instance box src/models/box.obj
 instance sphere src/models/sphere.obj

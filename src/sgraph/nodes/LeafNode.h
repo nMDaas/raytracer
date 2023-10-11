@@ -8,6 +8,7 @@
 #include "../IScenegraph.h"
 #include "SGNode.h"
 
+/* LeafNode extends ChildSGNode */
 class LeafNode: public ChildSGNode {
     protected: 
     util::Material material;
