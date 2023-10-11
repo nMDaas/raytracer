@@ -222,9 +222,6 @@ void View::display(IScenegraph *scenegraph) {
 
 void View::raytrace(bool debugging,IScenegraph *scenegraph) {
     ofstream out;
-    //ofstream debug;
-    //debug.open("src/images/debug.ppm", fstream::app);
-    //debug << "example" << ex << std::endl;
     if (debugging) {
         out.open("images/out.ppm");
     }
@@ -266,7 +263,6 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
             std::cout << "(" << hh << "," << ww << "): time: " << hitRecord.t << std::endl;
 
             if (isinf(hitRecord.t)) {
-                //std::cout << "printing 0 0 0: " << hitRecord.t << std::endl;
                 out << "255 255 255" << endl;
             }
             else {
@@ -274,16 +270,11 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
                 vector<util::Light> sceneLights = raytracerRenderer->getLights();
                 vector<vector<util::Light>> lightCellCollections = raytracerRenderer->getLightCollections();
                 glm::vec4 color = getColor(hitRecord, lightCellCollections, scenegraph, direction, 0, 0) * 255.0f;
-                //glm::vec4 textureColor = hitRecord.textureImage->getColor(hitRecord.textureCoordinates.x, hitRecord.textureCoordinates.y);
-                //glm::vec4 colorWithTexture = color * glm::vec4(textureColor.x/255, textureColor.y/255, textureColor.z/255, textureColor.w/255) * 255.0f;
-                //std::cout << "color * 255: " << glm::to_string(color) << std::endl;
                 raytracerRenderer->clearLights();
                 raytracerRenderer->clearLightCollections();
                 while (!refractiveIndexStack.empty()) {
                     refractiveIndexStack.pop();
                 }
-                //spdlog::debug("color in raytracer(): " + glm::to_string(color));
-                //std::cout << "colorWithTexture: " << glm::to_string(colorWithTexture) << std::endl;
                 out << clipValue(color.x) << " " <<  clipValue(color.y) << " " <<  clipValue(color.z) << endl; 
             }
 
@@ -307,8 +298,6 @@ glm::vec4 View::getColor(HitRecord hitRecord, vector<vector<util::Light>> sceneL
     if (a > 0) {
         absorption = hitRecord.object_mat->getAbsorption() * getAbsorptionColor(hitRecord,sceneLightCollections,scenegraph);
     }
-
-    //std::cout << "absorption color: " << glm::to_string(absorption) << std::endl;
 
     glm::vec4 reflection = glm::vec4(0,0,0,0);
     spdlog::debug("reflective bounces: " + reflectiveBounces);
@@ -621,9 +610,6 @@ bool View::inShadow(HitRecord hitRecord, util::Light light,IScenegraph* scenegra
 
     HitRecord& otherHitRecord = dynamic_cast<RaytracerRenderer *>(inShadowVisitor)->getHitRecord();
 
-    //std::cout << "hitRecord time: " << hitRecord.t << std::endl;
-    //std::cout << "otherHitRecord time: " << otherHitRecord.t << std::endl;
-
     if (otherHitRecord.t < hitRecord.t) {
         spdlog::debug("in shadow");
         return true;
@@ -641,7 +627,6 @@ float View::getShadowIntensity(HitRecord hitRecord, vector<util::Light> lightCol
 
     for (int i = 1; i < lightCollection.size(); i++) {
         spdlog::debug("light " + i);
-        // ray origin and direction (s,v) from intersectionPoint to light
         glm::vec4 origin(hitRecord.intersection_position.x, hitRecord.intersection_position.y, hitRecord.intersection_position.z, 1.0f);
         spdlog::debug("light position: " + glm::to_string(lightCollection[i].getPosition()));
         glm::vec4 direction = (lightCollection[i].getPosition() - origin);
@@ -654,9 +639,6 @@ float View::getShadowIntensity(HitRecord hitRecord, vector<util::Light> lightCol
         scenegraph->getRoot()->accept(inShadowVisitor); 
 
         HitRecord& otherHitRecord = dynamic_cast<RaytracerRenderer *>(inShadowVisitor)->getHitRecord();
-
-        //std::cout << "hitRecord time: " << hitRecord.t << std::endl;
-        //std::cout << "otherHitRecord time: " << otherHitRecord.t << std::endl;
 
         if (otherHitRecord.t < hitRecord.t) {
             spdlog::debug("in shadow");

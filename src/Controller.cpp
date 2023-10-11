@@ -73,15 +73,6 @@ void Controller::run()
 
     view.closeWindow();
 
-    /*
-    if (debugging) {
-        remove("images/out.ppm");
-    }
-    else {
-        remove("src/images/out.ppm");
-    }
-    */
-
     exit(EXIT_SUCCESS);
 }
 

@@ -129,7 +129,6 @@ void ScenegraphImporter::addInstance(string name, string path) {
 void ScenegraphImporter::parseInstance(istream& input) {
     string name,path;
     input >> name >> path;
-    //std::cout << "command: instance " << name << " " << path << std::endl;
     meshPaths[name] = path;
 
     // add instance only if path is valid
@@ -158,7 +157,6 @@ void ScenegraphImporter::parseLeaf(istream& input) {
     if (command == "instanceof") {
         input >> instanceof;
     }
-    //std::cout << "command: leaf " << varname << " " << name << " " << command << " " << instanceof << std::endl;
     SGNode *leaf = new LeafNode(instanceof,name,NULL);
     auto search = textureObjects.find("default");
     TextureImage* textureImage = search->second;
@@ -169,7 +167,6 @@ void ScenegraphImporter::parseLeaf(istream& input) {
 void ScenegraphImporter::parseLight(istream& input) {
     string name;
     input >> name;
-    //std::cout << "command: light " << varname << " " << name << " " << std::endl;
     float ambientR,ambientG,ambientB;
     input >> ambientR >> ambientG >> ambientB;
     float diffuseR,diffuseG,diffuseB;
@@ -185,7 +182,6 @@ void ScenegraphImporter::parseLight(istream& input) {
 void ScenegraphImporter::parseSpotlight(istream& input) {
     string name;
     input >> name;
-    //std::cout << "command: light " << varname << " " << name << " " << std::endl;
     float ambientR,ambientG,ambientB;
     input >> ambientR >> ambientG >> ambientB;
     float diffuseR,diffuseG,diffuseB;
@@ -211,31 +207,25 @@ void ScenegraphImporter::parseMaterial(istream& input) {
     input >> name;
     string command;
     input >> command;
-    //std::cout << "command: material " << name << std::endl;
     while (command!="end-material") {
         if (command == "ambient") {
             input >> r >> g >> b;
-            //std::cout << "ambient: " << r << " " << g << " " << b << std::endl;
             mat.setAmbient(r,g,b);
         }
         else if (command == "diffuse") {
             input >> r >> g >> b;
-            //std::cout << "diffuse: " << r << " " << g << " " << b << std::endl;
             mat.setDiffuse(r,g,b);
         }
         else if (command == "specular") {
             input >> r >> g >> b;
-            //std::cout << "specular: " << r << " " << g << " " << b << std::endl;
             mat.setSpecular(r,g,b);
         }
         else if (command == "emission") {
             input >> r >> g >> b;
-            //std::cout << "emission: " << r << " " << g << " " << b << std::endl;
             mat.setEmission(r,g,b);
         }
         else if (command == "shininess") {
             input >> r;
-            //std::cout << "shininess: " << r  << std::endl;
             mat.setShininess(r);
         }
         else if (command == "absorption") {
@@ -264,7 +254,6 @@ void ScenegraphImporter::parseScale(istream& input) {
     input >> name;
     float sx,sy,sz;
     input >> sx >> sy >> sz;
-    //std::cout << "command: scale " << varname << " " << name << " " << sx << " " << sy << " " << sz << std::endl;
     SGNode *scaleNode = new ScaleTransform(sx,sy,sz,name,NULL);
     nodes[name] = scaleNode;
 }
@@ -274,7 +263,6 @@ void ScenegraphImporter::parseRotate(istream& input) {
     input >> name;
     float angleInDegrees,ax,ay,az;
     input >> angleInDegrees >> ax >> ay >> az;
-    //std::cout << "command: rotate " << varname << " " << name << " " << angleInDegrees << " " << ax << " " << ay << " " << az <<std::endl;
     SGNode *rotateNode = new RotateTransform(glm::radians(angleInDegrees),ax,ay,az,name,NULL);
     nodes[name] = rotateNode;  
 }
@@ -284,7 +272,6 @@ void ScenegraphImporter::parseTranslate(istream& input) {
     input >> name;
     float tx,ty,tz;
     input >> tx >> ty >> tz;
-    //std::cout << "command: translate " << varname << " " << name << " " << tx << " " << ty << " " << tz << std::endl;
     SGNode *translateNode = new TranslateTransform(tx,ty,tz,name,NULL);
     nodes[name] = translateNode;  
 }
@@ -292,7 +279,6 @@ void ScenegraphImporter::parseTranslate(istream& input) {
 void ScenegraphImporter::parseCopy(istream& input) {
     string nodename,copyof;
     input >> nodename >> copyof;
-    //std::cout << "command: copy " << nodename << " " << copyof << std::endl;
     if (nodes.find(copyof)!=nodes.end()) {
         SGNode * copy = nodes[copyof]->clone();
         nodes[nodename] = copy;
@@ -305,7 +291,6 @@ void ScenegraphImporter::parseCopy(istream& input) {
 void ScenegraphImporter::parseImport(istream& input) {
     string nodename,filepath;
     input >> nodename >> filepath;
-    //std::cout << "command: import " << nodename << " " << filepath << std::endl;
     ifstream external_scenegraph_file(filepath);
     if (external_scenegraph_file.is_open()) {
         IScenegraph *importedSG = parse(external_scenegraph_file);
@@ -318,7 +303,6 @@ void ScenegraphImporter::parseImport(istream& input) {
 void ScenegraphImporter::parseAssignMaterial(istream& input) {
     string nodename,matname;
     input >> nodename >> matname;
-    //std::cout << "command: assign-material " << nodename << " " << matname << std::endl;
     LeafNode *leafNode = dynamic_cast<LeafNode *>(nodes[nodename]);
     if ((leafNode!=NULL) && (materials.find(matname)!=materials.end())) {
         leafNode->setMaterial(materials[matname]);
@@ -334,7 +318,6 @@ void ScenegraphImporter::parseAssignMaterial(istream& input) {
 void ScenegraphImporter::parseAddChild(istream& input) {
     string childname,parentname;
     input >> childname >> parentname;
-    //std::cout << "command: add-child" << " " << childname << " " << parentname << std::endl;
 
     // find parent node in array and cast to parentSGNode
     ParentSGNode * parentNode = NULL;
@@ -364,7 +347,6 @@ void ScenegraphImporter::parseAddChild(istream& input) {
 void ScenegraphImporter::parseSetRoot(istream& input) {
     string rootname;
     input >> rootname;
-    //std::cout << "command: assign-root " << rootname << std::endl;
     if (nodes.find(rootname)!=nodes.end()) {
         root = nodes[rootname];
     }

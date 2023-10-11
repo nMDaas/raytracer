@@ -1,4 +1,5 @@
-# phong vertex shader
+#version 330
+
 
 in vec4 vPosition;
 in vec4 vNormal;

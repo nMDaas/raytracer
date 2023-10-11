@@ -24,6 +24,7 @@ using namespace std;
 #include "objects/Triangle.h"
 #include "objects/MeshObject.h"
 
+/* to import non primitive objects that are made of triangles */
 class ObjImporter {
     public:
         ObjImporter();

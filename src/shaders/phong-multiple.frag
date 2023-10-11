@@ -1,4 +1,4 @@
-# phong fragment shader
+#version 330
 
 struct MaterialProperties
 {
