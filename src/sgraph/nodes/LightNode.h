@@ -25,8 +25,8 @@ class LightNode: public ChildSGNode {
     void generateLightCells(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular); 
 
     // each cell is described as (lightWidth,lightHeight)
-    int lightWidth = 6; 
-    int lightHeight = 6; 
+    int lightWidth = 3; 
+    int lightHeight = 3; 
     float cellSize = 15.0f; // width and height difference bewtween each cell
 };
 

@@ -1,0 +1,151 @@
+#all the instances
+instance box src/models/box.obj
+instance sphere src/models/sphere.obj
+instance cylinder src/models/cylinder.obj
+
+#material
+material mat-pink
+emission 0 0 0
+ambient 0.5 0.25 0.25
+diffuse 0.5 0.25 0.25
+specular 0 0 0
+shininess 5
+end-material
+
+material mat-white
+emission 0 0 0
+ambient 0.6 0.6 0.6
+diffuse 0.3 0.3 0.3
+specular 0 0 0
+shininess 5
+end-material
+
+material mat-yellow
+emission 0 0 0
+ambient 0.4 0.4 0.25
+diffuse 0.4 0.4 0.25
+specular 0 0 0
+shininess 5
+end-material
+
+material mat-box-reflective
+emission 0 0 0
+ambient 0.5 0.25 0.25
+diffuse 0.5 0.25 0.25
+specular 0 0 0
+shininess 50
+absorption 0.2
+reflection 0.7
+transparency 0
+end-material
+
+material mat-sphere
+emission 0 0 0
+ambient 0.25 0.3 0.5
+diffuse 0.25 0.4 0.5
+specular 0 0 0
+shininess 50
+absorption 1
+end-material
+
+#material 
+material mat-cylinder
+emission 0 0 0
+ambient 0.25 0.3 0.3
+diffuse 0.25 0.4 0.3
+specular 0 0 0
+shininess 50
+absorption 0.3
+reflection 0
+transparency 0.7
+refractiveIndex 1.52
+end-material
+
+group root 
+
+# base
+translate t1 0 0 120 
+scale s1 200 2 300
+leaf l1 instanceof box  
+add-child t1 root
+add-child s1 t1
+add-child l1 s1
+assign-material l1 mat-white
+
+# left wall
+translate t2 -100 100 120
+scale s2 2 200 300
+leaf l2 instanceof box  
+add-child t2 root
+add-child s2 t2
+add-child l2 s2
+assign-material l2 mat-white
+
+# right wall
+translate t3 100 100 120
+scale s3 2 200 300
+leaf l3 instanceof box  
+add-child t3 root
+add-child s3 t3
+add-child l3 s3
+assign-material l3 mat-pink
+
+# ceiling
+translate t4 0 200 120 
+scale s4 200 2 300
+leaf l4 instanceof box  
+add-child t4 root
+add-child s4 t4
+add-child l4 s4
+assign-material l4 mat-white
+
+# back wall
+translate t5 0 100 0 
+scale s5 200 200 2
+leaf l5 instanceof box  
+add-child t5 root
+add-child s5 t5
+add-child l5 s5
+assign-material l5 mat-yellow
+
+# reflective cube
+translate t6 -20 0 50
+scale s6 70 200 70
+rotate r6 30 0 1 0
+leaf l6 instanceof box  
+add-child t6 root
+add-child r6 t6
+add-child s6 r6
+add-child l6 s6
+assign-material l6 mat-box-reflective
+
+# cylinder
+translate t7 110 20 150
+scale s7 20 70 20
+rotate r7 90 0 0 1
+leaf l7 instanceof cylinder  
+add-child t7 root
+add-child r7 t7
+add-child s7 r7
+add-child l7 s7
+assign-material l7 mat-sphere
+
+translate t8 -27 20 200
+scale s8 20 20 20
+rotate r8 90 0 0 1
+leaf l8 instanceof sphere  
+add-child t8 root
+add-child r8 t8
+add-child s8 r8
+add-child l8 s8
+assign-material l8 mat-cylinder
+
+translate tlight 0 100 200
+light li1 1 1 1 1 1 1 0 0 0
+add-child li1 tlight
+add-child tlight root
+
+# Assign Root
+assign-root root
+
+camera 0 40 380 0 140 0
