@@ -5,6 +5,8 @@ Users can build scenes by adding and transforming objects, translating lights, a
 
 # Raytracer Output
 
+![Image of Key](https://github.com/nMDaas/raytracer/blob/main/src/images/finalScene1.jpg)
+
 # Raytracer Features 
 
 * object translation, scaling and rotation 
