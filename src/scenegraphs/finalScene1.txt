@@ -5,25 +5,39 @@ instance sphere src/models/sphere.obj
 #textures
 texture checkerboard src/textures/checkerboardBox.ppm
 texture diner src/textures/dinerBox.ppm
+texture dinerFront src/textures/dinerFront.ppm
+texture dinerRight src/textures/dinerRight.ppm
 
 #material
 material mat-base
 emission 0 0 0
 ambient 1 0.9 1
+#ambient 0.3 0.3 0.3
 diffuse 1 1 1
 specular 0 0 0
 shininess 5
 end-material
 
 #material
-material mat-sphere1
+material mat-orange
 emission 0 0 0
 ambient 0.96 0.65 0.52
 diffuse 0 1 0
-specular 0 0.5 0.5
+specular 0.5 0.5 0.5
 shininess 50
 absorption 0.9
 reflection 0.1
+end-material
+
+#material
+material mat-solid
+emission 0 0 0
+ambient 0.6 0.96 0.96
+diffuse 0.5 0.5 0
+specular 0.5 0.5 0.5
+shininess 50
+absorption 1
+reflection 0
 end-material
 
 #material 
@@ -31,28 +45,64 @@ material mat-sphere2
 emission 0 0 0
 ambient 0.96 0.65 0.52
 diffuse 0.5 0 0.5
-specular 0.5 0.5 0.5
+specular 0.2 0.2 0.2
 shininess 50
-absorption 0.925
-reflection 0.025
+absorption 0.9999
+reflection 0.0001
 end-material
 
 #material 
-material mat-sphere3
+material mat-bluegreen-sphere
 emission 0 0 0
 ambient 0.6 0.96 0.96
 diffuse 0.5 0.5 0
 specular 0.5 0.5 0.5
 shininess 50
-absorption 0.925
-reflection 0.025
+absorption 0.9
+transparent 0.1
+end-material
+
+#material 
+material mat-transparent
+emission 0 0 0
+ambient 0.6 0.96 0.96
+diffuse 0.5 0.5 0
+specular 0.5 0.5 0.5
+shininess 50
+absorption 0
+reflection 0
+transparency 1
+refractiveIndex 1.52
+end-material
+
+#material 
+material mat-reflective
+emission 0 0 0
+ambient 0.96 0.65 0.52
+diffuse 0.5 0 0.5
+specular 0.5 0.5 0.5
+shininess 50
+absorption 0.1
+reflection 0.9
+transparency 0
+end-material
+
+#material 
+material mat-purple
+emission 0 0 0
+ambient 0.5 0 0.5
+diffuse 0.5 0.5 0.5
+specular 0 0 0
+shininess 50
+absorption 0.8
+reflection 0.2
 end-material
 
 group root 
 
 # base
 translate t1 0 0 0  
-scale s1 800 2 500
+scale s1 800 2 800
 leaf l1 instanceof box  
 add-child t1 root
 add-child s1 t1
@@ -61,8 +111,8 @@ assign-material l1 mat-base
 assign-texture l1 checkerboard
 
 #background 
-translate tBack 0 400 -200
-scale sBack 800 800 2
+translate tBack 0 320 -200
+scale sBack 700 650 2
 leaf lBack instanceof box
 assign-material lBack mat-base
 assign-texture lBack diner
@@ -71,38 +121,101 @@ add-child sBack tBack
 add-child tBack root
 
 # orange sphere
-translate t2 0 50 90
+translate t2 50 50 -30
 scale s2 50 50 50
 leaf l2 instanceof sphere
-assign-material l2 mat-sphere1
+assign-material l2 mat-orange
 add-child l2 s2
 add-child s2 t2
 add-child t2 root
 
-#pink sphere
-translate t3 140 90 -20
-scale s3 90 90 90
+#transparent sphere
+translate t3 100 50 90
+scale s3 50 50 50
 leaf l3 instanceof sphere
-assign-material l3 mat-sphere2
+assign-material l3 mat-transparent
 add-child l3 s3
 add-child s3 t3
 add-child t3 root
 
-#green sphere
-translate t4 -40 15 190
-scale s4 15 15 15
+#reflective sphere
+translate t4 -20 20 210
+scale s4 20 20 20
 leaf l4 instanceof sphere
-assign-material l4 mat-sphere3
+assign-material l4 mat-reflective
 add-child l4 s4
 add-child s4 t4
 add-child t4 root
+
+#blue/green sphere
+translate t6 -90 50 0
+scale s6 50 50 50
+leaf l6 instanceof sphere
+assign-material l6 mat-bluegreen-sphere
+add-child l6 s6
+add-child s6 t6
+add-child t6 root
+
+#diner other side 
+translate tFront 0 250 700
+rotate rFront 0 1 0 0 
+scale sFront 700 650 2
+leaf lFront instanceof box
+assign-material lFront mat-base
+assign-texture lFront dinerFront
+add-child lFront sFront
+add-child sFront rFront
+add-child rFront tFront
+add-child tFront root
+
+# purple sphere
+translate t7 -100 35 150
+scale s7 35 35 35
+leaf l7 instanceof sphere
+assign-material l7 mat-purple
+add-child l7 s7
+add-child s7 t7
+add-child t7 root
+
+#solid sphere
+translate t8 30 13 250
+scale s8 10 10 10
+leaf l8 instanceof sphere
+assign-material l8 mat-solid
+add-child l8 s8
+add-child s8 t8
+add-child t8 root
+
+#diner right
+translate tRight 290 350 0
+rotate rRight 0 1 0 0 
+scale sRight 2 700 1200
+leaf lRight instanceof box
+assign-material lRight mat-base
+assign-texture lRight dinerRight
+add-child lRight sRight
+add-child sRight rRight
+add-child rRight tRight
+add-child tRight root
+
+#diner left
+translate tLeft -290 350 0
+rotate rLeft 0 1 0 0 
+scale sLeft 2 700 1200
+leaf lLeft instanceof box
+assign-material lLeft mat-base
+assign-texture lLeft dinerRight
+add-child lLeft sLeft
+add-child sLeft rLeft
+add-child rLeft tLeft
+add-child tLeft root
 
 translate tlight 100 0 200 
 light li1 0.4 0.4 0.4 0.5 0 0 0 0 0
 add-child li1 tlight
 add-child tlight root
 
-translate tlight2 170 140 150
+translate tlight2 110 140 250
 light li2 0.4 0.4 0.4 0 0.4 0.4 0 0.8 0.8
 add-child li2 tlight2
 add-child tlight2 root
@@ -110,4 +223,5 @@ add-child tlight2 root
 # Assign Root
 assign-root root
 
-camera 0 15 300 0 130 0
+camera 0 30 375 0 140 0
+#camera 0 140 -170 0 40 400

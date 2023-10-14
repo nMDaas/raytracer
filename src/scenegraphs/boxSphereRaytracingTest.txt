@@ -15,10 +15,10 @@ end-material
 
 #the root
 group root
-scale s1 25 25 25
-rotate r1 30 0 1 0
+scale s1 50 50 50
+rotate r1 30 1 1 0
 translate t1 0 0 0
-leaf l1 instanceof sphere 
+leaf l1 instanceof box 
 
 translate tlight 50 30 70
 light li1 1 1 1 1 1 1 1 1 1

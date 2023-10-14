@@ -10,6 +10,9 @@ emission 0 0 0
 ambient 1 0 0
 diffuse 0 1 0
 specular 0 0 1
+absorption 0.5
+transparency 0.5
+refractiveIndex 1.52
 shininess 5
 end-material
 

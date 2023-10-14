@@ -3,11 +3,13 @@
 # these instances will be ignored if debugger is being used
 instance sphere src/models/sphere.obj
 
+texture skybox src/textures/skyboxtext.ppm
+
 #material
 material mat
 emission 0 0 0
-ambient 0.5 0.5 0.5
-diffuse 0.5 1 0
+ambient 0.5 0.7 0.7
+diffuse 0 0 1
 specular 0 0 0
 shininess 0.1
 end-material
@@ -25,11 +27,12 @@ add-child li2 tlight2
 add-child tlight2 root
 
 translate tlight 50 30 70
-light li1 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2
+light li1 1 1 1 1 1 1 1 1 1
 add-child li1 tlight
 add-child tlight root
 
 assign-material l1 mat
+assign-texture l1 skyboxtext
 add-child l1 s1
 add-child s1 r1
 add-child r1 t1

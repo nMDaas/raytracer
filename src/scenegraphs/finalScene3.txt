@@ -1,0 +1,80 @@
+#all the instances
+instance box src/models/box.obj
+instance sphere src/models/sphere.obj
+
+#textures
+texture text src/textures/earthmap.ppm
+texture skybox src/textures/skyboxtext.ppm
+
+#material
+material mat-sphere
+emission 0 0 0
+ambient 0.5 0.7 0.7
+diffuse 0 0 1
+specular 0 0 0
+shininess 5
+absorption 1
+end-material
+
+material mat-wall
+emission 0 0 0
+ambient 0.1 0.1 0.1
+diffuse 0.4 0.3 0.3
+specular 1 1 1
+shininess 100
+absorption 0.6
+reflection 0.4
+end-material
+
+material mat-wall-r
+emission 0 0 0
+ambient 0.3 0.3 0.3
+diffuse 0.9 0.9 0.9
+specular 1 1 1
+shininess 100
+absorption 1
+reflection 0
+end-material
+
+group root1 
+
+# earth
+translate t1 0 0 15 
+scale s1 7 7 7 
+leaf l1 instanceof sphere 
+add-child t1 root1
+add-child s1 t1
+add-child l1 s1
+assign-material l1 mat-sphere
+assign-texture l1 text
+
+translate t2 0 16 -15  
+scale s2 72 72 1  
+rotate r2 0 0 0 1  
+leaf l2 instanceof box  
+assign-texture l2 skybox
+add-child l2 s2
+add-child s2 r2
+add-child r2 t2
+add-child t2 root1
+assign-material l2 mat-wall-r
+
+translate t3 0 -12 15  
+scale s3 80 80 1  
+rotate r3 90 1 0 0  
+leaf l3 instanceof box  
+add-child l3 s3
+add-child s3 r3
+add-child r3 t3
+add-child t3 root1
+assign-material l3 mat-wall
+
+translate tlight2 0 50 1000
+spotlight li2 0.7 0.7 0.7 0.7 0.7 0.7 0.2 0.2 0.2 0 0 -1000 65
+add-child li2 tlight2
+add-child tlight2 root1
+
+# Assign Root
+assign-root root1
+
+camera 0 0 60 0 0 10

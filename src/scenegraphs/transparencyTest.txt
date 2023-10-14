@@ -61,7 +61,7 @@ assign-material l3 mat-base
 assign-texture l3 checkerboard
 
 translate tlight 100 0 200 
-light li1 0.4 0.4 0.4 0.5 0 0 0 0 0
+light li1 0.4 0.4 0.4 0.3 0.3 0.3 0 0 0
 add-child li1 tlight
 add-child tlight root
 

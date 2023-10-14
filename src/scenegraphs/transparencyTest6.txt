@@ -62,7 +62,7 @@ add-child l2 s2
 add-child s2 t2
 add-child t2 root
 
-translate t3 0 0 0
+translate t3 0 0 -150
 scale s3 30 30 30
 leaf l3 instanceof sphere
 assign-material l3 mat-sphere2
@@ -71,7 +71,7 @@ add-child s3 t3
 add-child t3 root
 
 translate tlight 100 0 200 
-light li1 0.4 0.4 0.4 0.5 0 0 0 0 0
+light li1 0.4 0.4 0.4 0.3 0.3 0.3 0 0 0
 add-child li1 tlight
 add-child tlight root
 
