@@ -13,12 +13,18 @@ MeshObject::MeshObject (MeshObject &t){
     std::cout << "MESH OBJECT COPY CONSTRUCTOR CALLED" << std::endl;
 }
 
-void MeshObject::addTriangle(glm::vec4 v0, glm::vec4 v1, glm::vec4 v2) {
-    Triangle triangle(v0,v1,v2);
-    triangles.push_back(triangle);
+void MeshObject::setTriangles(std::vector<Triangle>* in_triangles) {
+    std::cout << "in_traingles size: " << in_triangles->size() << std::endl;
+    std::vector<Triangle> temp = *in_triangles;
+    for (int i = 0; i < temp.size(); i++) {
+        Triangle t = temp[i];
+        triangles.push_back(t);
+        std::cout << "traingles size: " << triangles.size() << std::endl;
+    }
 }
 
  void MeshObject::printTriangles() {
+    std::cout << "traingles size: " << triangles.size() << std::endl;
     for (int i = 0; i < triangles.size(); i++) {
         std::cout << "--" << i << "--" << std::endl;
         triangles[i].printTriangleDetails();

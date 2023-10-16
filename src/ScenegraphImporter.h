@@ -15,6 +15,7 @@ using namespace std;
 #include "sgraph/IScenegraph.h"
 #include <glm/gtx/string_cast.hpp>
 #include "TextureImage.h"
+#include "objects/MeshObject.h"
 
 #include "sgraph/IScenegraph.h"
 #include "sgraph/Scenegraph.h"
@@ -53,6 +54,9 @@ class ScenegraphImporter {
         map<string,TextureImage*> textureObjects;
         glm::vec3 cameraPos;
         glm::vec3 cameraTarget; // what camera is looking at
+        map<string,MeshObject> meshObjects;
+        std::vector<glm::vec4> vertices;
+        std::vector<Triangle> triangles;
 
         void parseInstance(istream& input);
         void parseGroup(istream& input);
@@ -71,6 +75,9 @@ class ScenegraphImporter {
         void parseTexture(istream& input);
         void parseAssignTexture(istream& input);
         void parseCamera(istream& input);
+        void parseObjFile(std::istream& input, string meshObjectName);
+        void parseVertex(std::istream& input);
+        void parseFace(std::istream& input);
 };
 
 #endif

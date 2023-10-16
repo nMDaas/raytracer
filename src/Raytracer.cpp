@@ -14,7 +14,7 @@ int main(int argc,char *argv[])
     Model model;
     View view;
     Controller controller(model, view);
-
+     /*
     string filePath = "src/models/boxMaya.obj";
     string file = filePath;
     std::ifstream test(filePath); 
@@ -28,9 +28,9 @@ int main(int argc,char *argv[])
 
     objImporter.parseObjFile(inFile);
     MeshObject* newMeshObject = objImporter.getMeshObject();
-    newMeshObject->printTriangles();
+    newMeshObject->printTriangles(); */
     
-    /*
+   
     if (argc > 1) {
         // run via terminal
         controller.meshMaterialSetup(argv[1], false);
@@ -39,5 +39,5 @@ int main(int argc,char *argv[])
         // run via debugger
         controller.meshMaterialSetup("scenegraphs/areaLightsSoftShadowTest.txt", true);
     }
-    controller.run(); */
+    controller.run(); 
 }

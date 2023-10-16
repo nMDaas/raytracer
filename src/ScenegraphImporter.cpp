@@ -102,6 +102,9 @@ IScenegraph* ScenegraphImporter::parse(std::istream& input) {
         }
     }
 
+    std::cout << "meshObjects size: " << meshObjects.size() << std::endl;
+    meshObjects.at("boxMaya").printTriangles();
+
     if (root!=NULL) {
         IScenegraph *scenegraph = new Scenegraph();
         scenegraph->makeScenegraph(root);
@@ -131,15 +134,27 @@ void ScenegraphImporter::parseInstance(istream& input) {
     input >> name >> path;
     meshPaths[name] = path;
 
-    // add instance only if path is valid
-    std::ifstream test(path); 
-    if (test)
-    {
-        ifstream in(path);
-        if (in.is_open()) {
-            util::PolygonMesh<VertexAttrib> mesh = util::ObjImporter<VertexAttrib>::importFile(in,false);
-            meshes[name] = mesh;         
-        } 
+    if (name == "box" || name == "sphere" || name == "cylinder" || name == "cone") {
+        // add instance only if path is valid
+        std::ifstream test(path); 
+        if (test)
+        {
+            ifstream in(path);
+            if (in.is_open()) {
+                util::PolygonMesh<VertexAttrib> mesh = util::ObjImporter<VertexAttrib>::importFile(in,false);
+                meshes[name] = mesh;         
+            } 
+        }
+    }
+    else {
+        std::ifstream test(path); 
+        if (!test)
+        {
+            throw runtime_error("The file doesn't exist");
+        }
+
+        ifstream inFile(path);
+        parseObjFile(inFile,name);
     }
     
 }
@@ -390,6 +405,41 @@ void ScenegraphImporter::parseCamera(istream& input) {
     cameraTarget = glm::vec3(tx,ty,tz);
 }
 
+void ScenegraphImporter::parseObjFile(std::istream& input, string meshObjectName) {
+    string inputWithOutCommentsString = stripComments(input); // remove comments
+    istringstream inputWithOutComments(inputWithOutCommentsString);
+    string command;
+    MeshObject meshObject;
+    while (inputWithOutComments >> command) {
+        if (command == "v") {
+            parseVertex(inputWithOutComments);
+        }
+        else if (command == "f") {
+            parseFace(inputWithOutComments);
+        }
+    }
+    meshObject.setTriangles(&triangles);
+    meshObjects[meshObjectName] = meshObject;
+    vertices.clear();
+    triangles.clear();
+}
+
+void ScenegraphImporter::parseVertex(istream& input) {
+    float x,y,z;
+    input >> x >> y >> z;
+    vertices.push_back(glm::vec4(x,y,z,1.0f));
+}
+
+void ScenegraphImporter::parseFace(std::istream& input) {
+    string v1,v2,v3;
+    input >> v1 >> v2 >> v3;
+    int v1int = ((int) v1[0]) - 48;
+    int v2int = ((int) v2[0]) - 48;
+    int v3int = ((int) v3[0]) - 48;
+    Triangle triangle(vertices[v1int],vertices[v2int],vertices[v3int]);
+    triangles.push_back(triangle);
+}
+
 // parseAddChild() and parseAssignMaterial() is implicitly tested
 void ScenegraphImporter::testParse(IScenegraph* scenegraph) {
     std::cout << "----------------------" << std::endl;
@@ -547,6 +597,7 @@ void ScenegraphImporter::testParse(IScenegraph* scenegraph) {
     for (auto i : meshes) {
         std::cout << "mesh: " << i.first << std::endl;
     }
+    std::cout << "meshObjects size: " << meshObjects.size() << std::endl;
 
     std::cout << std::endl;
 

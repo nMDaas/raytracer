@@ -15,7 +15,7 @@ class MeshObject {
 
         MeshObject (MeshObject &t); // to check for copy constructors
 
-        void addTriangle(glm::vec4 v0, glm::vec4 v1, glm::vec4 v2);
+        void setTriangles(std::vector<Triangle>* in_triangles);
         void printTriangles();
     private:
         std::vector<Triangle> triangles;
