@@ -102,14 +102,12 @@ IScenegraph* ScenegraphImporter::parse(std::istream& input) {
         }
     }
 
-    std::cout << "meshObjects size: " << meshObjects.size() << std::endl;
-    meshObjects.at("boxMaya").printTriangles();
-
     if (root!=NULL) {
         IScenegraph *scenegraph = new Scenegraph();
         scenegraph->makeScenegraph(root);
         scenegraph->setMeshes(meshes);
         scenegraph->setMeshPaths(meshPaths);
+        scenegraph->setMeshObjects(meshObjects);
         scenegraph->setCameraPos(cameraPos);
         scenegraph->setCameraTarget(cameraTarget);
         return scenegraph;

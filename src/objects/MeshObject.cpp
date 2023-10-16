@@ -14,12 +14,10 @@ MeshObject::MeshObject (MeshObject &t){
 }
 
 void MeshObject::setTriangles(std::vector<Triangle>* in_triangles) {
-    std::cout << "in_traingles size: " << in_triangles->size() << std::endl;
     std::vector<Triangle> temp = *in_triangles;
     for (int i = 0; i < temp.size(); i++) {
         Triangle t = temp[i];
         triangles.push_back(t);
-        std::cout << "traingles size: " << triangles.size() << std::endl;
     }
 }
 

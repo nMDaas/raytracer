@@ -7,6 +7,7 @@
 #include "nodes/SGNode.h"
 #include "PolygonMesh.h"
 #include "../VertexAttrib.h"
+#include "../objects/MeshObject.h"
 
 
 /* Scenegraph implements IScenegraph */
@@ -15,6 +16,7 @@ class Scenegraph: public IScenegraph {
       SGNode *root;
       std::map<std::string,SGNode *> nodes; // to keep track of all nodes in this scenegraph
       std::map<std::string,util::PolygonMesh<VertexAttrib> > meshes;
+      std::map<std::string,MeshObject> meshObjects;
       map<string,string> meshPaths;
       glm::vec3 cameraPosition;
       glm::vec3 cameraTarget;
@@ -38,7 +40,11 @@ class Scenegraph: public IScenegraph {
 
     void setMeshes(map<string,util::PolygonMesh<VertexAttrib> >& meshes);
 
+    void setMeshObjects(map<string,MeshObject>& in_meshObjects);
+
     map<string,util::PolygonMesh<VertexAttrib>>& getMeshes();
+
+    map<string,MeshObject>& getMeshObjects();
 
     SGNode *getRoot();
 

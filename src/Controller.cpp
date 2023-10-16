@@ -43,13 +43,13 @@ void Controller::meshMaterialSetup(char* filePath, bool debugger) {
         importer.addInstance("cylinder","models/cylinder.obj");
         debugging = true;
         scenegraph = importer.parse(inFile);
-        importer.testParse(scenegraph);
+        //importer.testParse(scenegraph);
     }
     else {
         ScenegraphImporter importer(false);
         debugging = false;
         scenegraph = importer.parse(inFile);
-        importer.testParse(scenegraph);
+        //importer.testParse(scenegraph);
     }
     spdlog::debug("Scenegraph made.");
 
@@ -61,6 +61,17 @@ void Controller::run()
 {
     IScenegraph* scenegraph = model.getScenegraph();
     std::map<string,util::PolygonMesh<VertexAttrib>>& meshes = scenegraph->getMeshes();
+    std::map<string,MeshObject>& meshObjects = scenegraph->getMeshObjects();
+    std::map<string,MeshObject> test = std::move(meshObjects);
+    std::cout << "meshObjects.size(): " << meshObjects.size() << std::endl;
+    std::cout << "test.size(): " << test.size() << std::endl;
+    for(auto it = test.begin(); it != test.end();)
+    {
+        auto next = it;
+        ++next; // get the next element
+        std::cout << "new object: " << it->first << std::endl;
+        it = next; // skip to the next element
+    }
     glm::vec3 cameraPosition = scenegraph->getCameraPos();
     glm::vec3 cameraTarget = scenegraph->getCameraTarget();
 

@@ -6,6 +6,7 @@
 #include "nodes/SGNode.h"
 #include "PolygonMesh.h"
 #include "../VertexAttrib.h"
+#include "../objects/MeshObject.h"
 
 /* This is an interface for a scenegraph. */
 class IScenegraph {
@@ -18,10 +19,12 @@ class IScenegraph {
 
     virtual void setMeshPaths(map<string,string>& meshPaths)=0;
     virtual void setMeshes(map<string,util::PolygonMesh<VertexAttrib> >& meshes)=0;
+    virtual void setMeshObjects(map<string,MeshObject>& in_meshObjects)=0;
     virtual void setCameraPos(glm::vec3 camPos)=0;
     virtual void setCameraTarget(glm::vec3 camTarget)=0;
     virtual map<string,util::PolygonMesh<VertexAttrib>>& getMeshes()=0;
     virtual map<string,string>& getMeshPaths()=0;
+    virtual map<string,MeshObject>& getMeshObjects()=0;
     virtual glm::vec3 getCameraPos()=0;
     virtual glm::vec3 getCameraTarget()=0;
 
