@@ -5,8 +5,13 @@
 #include "spdlog/spdlog.h"
 #include "spdlog/cfg/env.h"
 
-RaytracerRenderer::RaytracerRenderer(stack<glm::mat4>& mv, glm::vec4& in_s, glm::vec4& in_v)
-: AbstractRenderer(mv), s(in_s), v(in_v) {}
+RaytracerRenderer::RaytracerRenderer(stack<glm::mat4>& mv, glm::vec4& in_s, glm::vec4& in_v, map<string,MeshObject>& in_meshObjects)
+: AbstractRenderer(mv), s(in_s), v(in_v), meshObjects(in_meshObjects) {
+    for (auto i : meshObjects) {
+        std::cout << "object name: " << i.first << std::endl;
+        i.second.printTriangles();
+    }
+}
 
 RaytracerRenderer::~RaytracerRenderer(){}
 

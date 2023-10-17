@@ -65,12 +65,6 @@ void View::initObjects(map<string,util::PolygonMesh<VertexAttrib>>& meshes) {
 
 void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>& meshes, map<string,MeshObject>& in_meshObjects, bool debugger, glm::vec3 camPos, glm::vec3 camTarget) {
     meshObjects = std::move(in_meshObjects);
-    std::cout << "in View init()" << std::endl;
-    std::cout << "meshObjects size: " << meshObjects.size() << std::endl;
-    for (auto i : meshObjects) {
-        std::cout << "new object: " << i.first << std::endl;
-        i.second.printTriangles();
-    }
     // This function initializes the GLFW library because before GLFW functions can be used, GLFW must be initialized
     if (!glfwInit())
         exit(EXIT_FAILURE);
@@ -258,7 +252,7 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
             spdlog::debug("modelview top: " + glm::to_string(raytracer_modelview.top()));
             spdlog::debug("lookat: " + glm::to_string(getLookAtMatrix()));
             raytracer_modelview.top() = raytracer_modelview.top() * getLookAtMatrix();
-            raytracerRenderer = new RaytracerRenderer(raytracer_modelview,origin,direction);
+            raytracerRenderer = new RaytracerRenderer(raytracer_modelview,origin,direction,meshObjects);
             spdlog::debug( "modelview top * lookat: " + glm::to_string(raytracer_modelview.top()));
             spdlog::debug("origin: " + glm::to_string(origin));
             spdlog::debug("direction: " + glm::to_string(direction));
@@ -492,7 +486,7 @@ glm::vec4 View::getReflectionColor(HitRecord hitRecord, vector<vector<util::Ligh
 
     reflection_modelview.push(glm::mat4(1.0));
     reflection_modelview.top() = reflection_modelview.top() * getLookAtMatrix();
-    reflectionVisitor = new RaytracerRenderer(reflection_modelview,relectedRayOrigin,reflectedRay);
+    reflectionVisitor = new RaytracerRenderer(reflection_modelview,relectedRayOrigin,reflectedRay,meshObjects);
     scenegraph->getRoot()->accept(reflectionVisitor); 
 
     HitRecord& reflectedHitRecord = dynamic_cast<RaytracerRenderer *>(reflectionVisitor)->getHitRecord();
@@ -580,7 +574,7 @@ glm::vec4 View::getTransparencyColor(HitRecord hitRecord, vector<vector<util::Li
     transparency_modelview.push(glm::mat4(1.0));
     transparency_modelview.top() = transparency_modelview.top() * getLookAtMatrix();
     glm::vec4 newOrigin = hitRecord.intersection_position + (T * 0.001f);
-    transparencyVisitor = new RaytracerRenderer(transparency_modelview,newOrigin,T);
+    transparencyVisitor = new RaytracerRenderer(transparency_modelview,newOrigin,T,meshObjects);
     scenegraph->getRoot()->accept(transparencyVisitor); 
 
     HitRecord& transparencyHitRecord = dynamic_cast<RaytracerRenderer *>(transparencyVisitor)->getHitRecord();
@@ -611,7 +605,7 @@ bool View::inShadow(HitRecord hitRecord, util::Light light,IScenegraph* scenegra
     stack<glm::mat4> inShadow_modelview;
     inShadow_modelview.push(glm::mat4(1.0));
     inShadow_modelview.top() = inShadow_modelview.top() * getLookAtMatrix();
-    SGNodeVisitor *inShadowVisitor = new RaytracerRenderer(inShadow_modelview,origin,direction);
+    SGNodeVisitor *inShadowVisitor = new RaytracerRenderer(inShadow_modelview,origin,direction,meshObjects);
     scenegraph->getRoot()->accept(inShadowVisitor); 
 
     HitRecord& otherHitRecord = dynamic_cast<RaytracerRenderer *>(inShadowVisitor)->getHitRecord();
@@ -641,7 +635,7 @@ float View::getShadowIntensity(HitRecord hitRecord, vector<util::Light> lightCol
         stack<glm::mat4> inShadow_modelview;
         inShadow_modelview.push(glm::mat4(1.0));
         inShadow_modelview.top() = inShadow_modelview.top() * getLookAtMatrix();
-        SGNodeVisitor *inShadowVisitor = new RaytracerRenderer(inShadow_modelview,origin,direction);
+        SGNodeVisitor *inShadowVisitor = new RaytracerRenderer(inShadow_modelview,origin,direction,meshObjects);
         scenegraph->getRoot()->accept(inShadowVisitor); 
 
         HitRecord& otherHitRecord = dynamic_cast<RaytracerRenderer *>(inShadowVisitor)->getHitRecord();

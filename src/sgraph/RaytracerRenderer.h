@@ -16,13 +16,14 @@
 #include "../objects/Cylinder.h"
 #include "../objects/Cone.h"
 #include "../objects/Triangle.h"
+#include "../objects/MeshObject.h"
 
 /* RaytraceRenderer is a visitor that extends AbstractRenderer and 
 will be used to traverse the scenegraph and return a HitRecord */
 class RaytracerRenderer: public AbstractRenderer {
     public:
 
-    RaytracerRenderer(stack<glm::mat4>& mv, glm::vec4& in_s, glm::vec4& in_v);
+    RaytracerRenderer(stack<glm::mat4>& mv, glm::vec4& in_s, glm::vec4& in_v, map<string,MeshObject>& in_meshObjects);
     ~RaytracerRenderer();
 
     // to check for copy constructors
@@ -44,6 +45,7 @@ class RaytracerRenderer: public AbstractRenderer {
     util::Material* dummyMaterial;
     TextureImage* dummyTextureImage;
     HitRecord hitRecordWithMinTime = {minTime,glm::vec4(0,0,0,0),glm::vec4(0,0,0,0),dummyMaterial,dummyTextureImage,glm::vec2(0,0),""};
+    map<string,MeshObject> meshObjects;
 
     glm::vec4 getIntersection(float time, glm::vec4 _s, glm::vec4 _v);
     glm::vec4 getNormal(glm::vec4 intersectionPoint, string instanceOf);

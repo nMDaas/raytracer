@@ -70,8 +70,8 @@ private:
     SGNodeVisitor *reflectionVisitor;
     SGNodeVisitor *transparencyVisitor;
     vector<LightLocation> lightLocations; // shader locations for lights
-    int WIDTH = 600; // width of ppm file, in pixels (width:height::29:40)
-    int HEIGHT = 600; // height of ppm file, in pixels
+    int WIDTH = 100; // width of ppm file, in pixels (width:height::29:40)
+    int HEIGHT = 100; // height of ppm file, in pixels
     float cameraFOV = (float) glm::radians(60.0f);
     stack<float> refractiveIndexStack; 
 
