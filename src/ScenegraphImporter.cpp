@@ -152,7 +152,12 @@ void ScenegraphImporter::parseInstance(istream& input) {
         }
 
         ifstream inFile(path);
-        parseObjFile(inFile,name);
+        if (inFile.is_open()) {
+            // create polygonMesh - used by openGL
+            util::PolygonMesh<VertexAttrib> mesh = util::ObjImporter<VertexAttrib>::importFile(inFile,false);
+            meshes[name] = mesh;         
+        } 
+        parseObjFile(inFile,name); // create objectMesh - used by raytracer
     }
     
 }
