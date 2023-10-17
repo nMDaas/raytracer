@@ -13,7 +13,7 @@ class MeshObject {
         MeshObject();
         ~MeshObject();
 
-        MeshObject (MeshObject &t); // to check for copy constructors
+        //MeshObject (MeshObject &t); // to check for copy constructors
 
         void setTriangles(std::vector<Triangle>* in_triangles);
         void printTriangles();

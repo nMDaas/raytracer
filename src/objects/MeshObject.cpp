@@ -8,10 +8,10 @@ MeshObject::MeshObject(){}
 
 MeshObject::~MeshObject(){}
 
-// to check for copy constructors
+/* to check for copy constructors
 MeshObject::MeshObject (MeshObject &t){
     std::cout << "MESH OBJECT COPY CONSTRUCTOR CALLED" << std::endl;
-}
+}*/
 
 void MeshObject::setTriangles(std::vector<Triangle>* in_triangles) {
     std::vector<Triangle> temp = *in_triangles;

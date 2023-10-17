@@ -62,20 +62,11 @@ void Controller::run()
     IScenegraph* scenegraph = model.getScenegraph();
     std::map<string,util::PolygonMesh<VertexAttrib>>& meshes = scenegraph->getMeshes();
     std::map<string,MeshObject>& meshObjects = scenegraph->getMeshObjects();
-    std::map<string,MeshObject> test = std::move(meshObjects);
-    std::cout << "meshObjects.size(): " << meshObjects.size() << std::endl;
-    std::cout << "test.size(): " << test.size() << std::endl;
-    for(auto it = test.begin(); it != test.end();)
-    {
-        auto next = it;
-        ++next; // get the next element
-        std::cout << "new object: " << it->first << std::endl;
-        it = next; // skip to the next element
-    }
+    std::map<string,MeshObject> theMeshObjects = std::move(meshObjects);
     glm::vec3 cameraPosition = scenegraph->getCameraPos();
     glm::vec3 cameraTarget = scenegraph->getCameraTarget();
 
-    view.init(this, meshes, debugging,cameraPosition,cameraTarget);
+    view.init(this, meshes, theMeshObjects, debugging,cameraPosition,cameraTarget);
 
 
     while (!view.shouldWindowClose()) {

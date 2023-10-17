@@ -18,6 +18,7 @@ using namespace std;
 #include "ObjectInstance.h"
 #include "Callbacks.h"
 #include "LightLocation.h"
+#include "objects/MeshObject.h"
 
 #include "sgraph/IScenegraph.h"
 #include "sgraph/Scenegraph.h"
@@ -44,7 +45,7 @@ public:
     // to check for copy constructors
     View (View &t);
 
-    void init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>& meshes, bool debugger, glm::vec3 camPos, glm::vec3 camTarget);
+    void init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>& meshes, map<string,MeshObject>& in_meshObjects, bool debugger, glm::vec3 camPos, glm::vec3 camTarget);
     void raytrace(bool debugging,IScenegraph *scenegraph);
     bool shouldWindowClose();
     void display(IScenegraph *scenegraph);
@@ -63,6 +64,7 @@ private:
     stack<glm::mat4> reflection_modelview;
     stack<glm::mat4> transparency_modelview;
     map<string,util::ObjectInstance *> objects;
+    map<string,MeshObject> meshObjects;
     SGNodeVisitor *renderer;
     SGNodeVisitor *raytracerRenderer;
     SGNodeVisitor *reflectionVisitor;

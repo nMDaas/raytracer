@@ -63,8 +63,14 @@ void View::initObjects(map<string,util::PolygonMesh<VertexAttrib>>& meshes) {
     }
 }
 
-void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>& meshes, bool debugger, glm::vec3 camPos, glm::vec3 camTarget) {
-
+void View::init(Callbacks* callbacks,map<string,util::PolygonMesh<VertexAttrib>>& meshes, map<string,MeshObject>& in_meshObjects, bool debugger, glm::vec3 camPos, glm::vec3 camTarget) {
+    meshObjects = std::move(in_meshObjects);
+    std::cout << "in View init()" << std::endl;
+    std::cout << "meshObjects size: " << meshObjects.size() << std::endl;
+    for (auto i : meshObjects) {
+        std::cout << "new object: " << i.first << std::endl;
+        i.second.printTriangles();
+    }
     // This function initializes the GLFW library because before GLFW functions can be used, GLFW must be initialized
     if (!glfwInit())
         exit(EXIT_FAILURE);

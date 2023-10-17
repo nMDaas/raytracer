@@ -157,7 +157,8 @@ void ScenegraphImporter::parseInstance(istream& input) {
             util::PolygonMesh<VertexAttrib> mesh = util::ObjImporter<VertexAttrib>::importFile(inFile,false);
             meshes[name] = mesh;         
         } 
-        parseObjFile(inFile,name); // create objectMesh - used by raytracer
+        ifstream inFile2(path);
+        parseObjFile(inFile2,name); // create objectMesh - used by raytracer
     }
     
 }

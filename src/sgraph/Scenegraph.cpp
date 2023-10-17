@@ -44,7 +44,6 @@ void Scenegraph::setMeshes(map<string,util::PolygonMesh<VertexAttrib> >& meshes)
 
 void Scenegraph::setMeshObjects(map<string,MeshObject>& in_meshObjects) {
     meshObjects = std::move(in_meshObjects);
-    std::cout << "in setMeshObjects - meshObjects.size(): " << meshObjects.size() << std::endl;
 }
 
 map<string,util::PolygonMesh<VertexAttrib>>& Scenegraph::getMeshes() {
@@ -52,7 +51,6 @@ map<string,util::PolygonMesh<VertexAttrib>>& Scenegraph::getMeshes() {
 }
 
 map<string,MeshObject>& Scenegraph::getMeshObjects() {
-    std::cout << "in getMeshObjects - meshObjects.size(): " << meshObjects.size() << std::endl;
     return this->meshObjects;
 }
 
