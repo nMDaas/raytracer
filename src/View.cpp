@@ -267,7 +267,7 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
                 out << "255 255 255" << endl;
             }
             else {
-                std::cout << "hit - printing white" << std::endl;
+                std::cout << "hit - printing black" << std::endl;
                 out << "0 0 0" << endl;
                 /*
                 util::Material* mat = hitRecord.object_mat;
