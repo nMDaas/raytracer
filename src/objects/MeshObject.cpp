@@ -29,3 +29,17 @@ void MeshObject::setTriangles(std::vector<Triangle>* in_triangles) {
         std::cout << "----" << std::endl;
     }
  }
+
+  bool MeshObject::calcTimes(glm::vec4 s, glm::vec4 v) {
+    for (int i = 0; i < triangles.size(); i++) {
+        if (triangles[i].calcTimes(s,v)) {
+            t = triangles[i].getTime();
+            return true;
+        }
+    }
+  }
+
+
+float MeshObject::getTime() {
+   return t;
+}

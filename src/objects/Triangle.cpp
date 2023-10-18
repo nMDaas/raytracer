@@ -33,15 +33,20 @@ Triangle::Triangle (Triangle &t){
 
 bool Triangle::calcTimes(glm::vec4 s, glm::vec4 v) {
     std::cout << "in Triangle calcTimes()" << std::endl;
+    std::cout << "v0: " << glm::to_string(v0) << std::endl;
+    std::cout << "v1: " << glm::to_string(v1) << std::endl;
+    std::cout << "v2: " << glm::to_string(v2) << std::endl;
+    /*
     std::cout << "s: " << glm::to_string(s) << std::endl;
     std::cout << "v: " << glm::to_string(s) << std::endl;
     std::cout << "e1: " << glm::to_string(e1) << std::endl;
     std::cout << "e2: " << glm::to_string(e2) << std::endl;
     std::cout << "e1 * e2: " << glm::to_string(e1 * e2) << std::endl;
     std::cout << "noramalize(e1 * e2): " << glm::to_string(normalize(e1 * e2)) << std::endl;
-    std::cout << "normal: " << glm::to_string(normal) << std::endl;
+    std::cout << "normal: " << glm::to_string(normal) << std::endl;*/
     float NDotRayDir = glm::dot(v,normal);
     if (NDotRayDir == 0) {
+        std::cout << "normal and ray direction are perpedicular - no hit" << std::endl;
         // normal and ray direction are perpedicular, so ray direction is parallel to triangle so no intersection
         return false;
     }
@@ -50,9 +55,11 @@ bool Triangle::calcTimes(glm::vec4 s, glm::vec4 v) {
 
     glm::vec4 intersectionPoint = s + (v * t); 
     if (!pointInsideTriangle(intersectionPoint)) {
+        std::cout << "point inside triangle - no hit" << std::endl;
         return false;
     }
 
+    std::cout << "returning true - hit" << std::endl;
     return true;
 }
 
@@ -82,6 +89,7 @@ bool Triangle::pointInsideTriangle(glm::vec4 intersectionPoint) {
     glm::vec4 C0 = intersectionPoint - v0;
     glm::vec4 C1 = intersectionPoint - v1;
     glm::vec4 C2 = intersectionPoint - v2;
+    /*
     std::cout << "intersectionPoint: " << glm::to_string(intersectionPoint) << std::endl;
     std::cout << "v0: " << glm::to_string(v0) << std::endl;
     std::cout << "v1: " << glm::to_string(v1) << std::endl;
@@ -98,6 +106,7 @@ bool Triangle::pointInsideTriangle(glm::vec4 intersectionPoint) {
     std::cout << "glm::dot(normal, edge0 * C0): " << glm::dot(normal, getCrossProduct(edge0,C0)) << std::endl;
     std::cout << "glm::dot(normal, edge1 * C1): " << glm::dot(normal, getCrossProduct(edge1,C1)) << std::endl;
     std::cout << "glm::dot(normal, edge2 * C2): " << glm::dot(normal, getCrossProduct(edge2,C2)) << std::endl;
+    */
     if ((glm::dot(normal, getCrossProduct(edge0,C0)) > 0) && 
     (glm::dot(normal, getCrossProduct(edge1,C1)) > 0) &&
     (glm::dot(normal, getCrossProduct(edge2,C2)) > 0)) {

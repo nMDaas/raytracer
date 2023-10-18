@@ -17,8 +17,13 @@ class MeshObject {
 
         void setTriangles(std::vector<Triangle>* in_triangles);
         void printTriangles();
+
+        bool calcTimes(glm::vec4 s, glm::vec4 v); // calculates tmin and tmax of a ray's intersection with the meshObject
+        float getTime();
+
     private:
         std::vector<Triangle> triangles;
+        float t;
 };
 
 #endif

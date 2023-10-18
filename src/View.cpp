@@ -263,9 +263,13 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
             std::cout << "(" << hh << "," << ww << "): time: " << hitRecord.t << std::endl;
 
             if (isinf(hitRecord.t)) {
+                std::cout << "no hits - printing white" << std::endl;
                 out << "255 255 255" << endl;
             }
             else {
+                std::cout << "hit - printing white" << std::endl;
+                out << "0 0 0" << endl;
+                /*
                 util::Material* mat = hitRecord.object_mat;
                 vector<util::Light> sceneLights = raytracerRenderer->getLights();
                 vector<vector<util::Light>> lightCellCollections = raytracerRenderer->getLightCollections();
@@ -276,6 +280,7 @@ void View::raytrace(bool debugging,IScenegraph *scenegraph) {
                     refractiveIndexStack.pop();
                 }
                 out << clipValue(color.x) << " " <<  clipValue(color.y) << " " <<  clipValue(color.z) << endl; 
+                */
             }
 
             spdlog::debug("----");

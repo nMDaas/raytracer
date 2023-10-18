@@ -7,10 +7,6 @@
 
 RaytracerRenderer::RaytracerRenderer(stack<glm::mat4>& mv, glm::vec4& in_s, glm::vec4& in_v, map<string,MeshObject>& in_meshObjects)
 : AbstractRenderer(mv), s(in_s), v(in_v), meshObjects(in_meshObjects) {
-    for (auto i : meshObjects) {
-        std::cout << "object name: " << i.first << std::endl;
-        i.second.printTriangles();
-    }
 }
 
 RaytracerRenderer::~RaytracerRenderer(){}
@@ -61,6 +57,13 @@ void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
         hit = triangle.calcTimes(_s,_v);
         if (hit) {
             newTime = triangle.getTime();
+        }
+    }
+    else {
+        MeshObject it = meshObjects.at(leafNode->getInstanceOf());
+        hit = it.calcTimes(_s,_v);
+        if (hit) {
+            newTime = it.getTime();
         }
     }
 
@@ -120,8 +123,15 @@ glm::vec4 RaytracerRenderer::getNormal(glm::vec4 intersectionPoint,string instan
     else if (instanceOf == "cone") {
         return cone.getNormal(intersectionPoint);
     }
-    else if (instanceOf == "triangle") {
-        return triangle.getNormal(intersectionPoint);
+    else {
+        /*
+        MeshObject it = meshObjects.at(leafNode->getInstanceOf());
+        hit = it.calcTimes(_s,_v);
+        if (hit) {
+            newTime = it.getTime();
+        }
+        */
+        return glm::vec4(0,0,0,0);
     }
 }
 

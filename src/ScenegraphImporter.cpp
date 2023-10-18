@@ -414,6 +414,7 @@ void ScenegraphImporter::parseObjFile(std::istream& input, string meshObjectName
     istringstream inputWithOutComments(inputWithOutCommentsString);
     string command;
     MeshObject meshObject;
+    vertices.push_back(glm::vec4(0,0,0,0)); // dummy first vertex
     while (inputWithOutComments >> command) {
         if (command == "v") {
             parseVertex(inputWithOutComments);
@@ -431,6 +432,7 @@ void ScenegraphImporter::parseObjFile(std::istream& input, string meshObjectName
 void ScenegraphImporter::parseVertex(istream& input) {
     float x,y,z;
     input >> x >> y >> z;
+    std::cout << "vertex: " << x << ", " << y << ", " << z << std::endl;
     vertices.push_back(glm::vec4(x,y,z,1.0f));
 }
 
@@ -440,6 +442,17 @@ void ScenegraphImporter::parseFace(std::istream& input) {
     int v1int = ((int) v1[0]) - 48;
     int v2int = ((int) v2[0]) - 48;
     int v3int = ((int) v3[0]) - 48;
+    std::cout << "iterating through vertices: " << std::endl;
+    for (int i = 0; i < vertices.size(); i++) {
+        std::cout << "vertex: " << glm::to_string(vertices[i]) << std::endl;
+    }
+    std::cout << "v1int: " << v1int << std::endl;
+    std::cout << "v2int: " << v2int << std::endl;
+    std::cout << "v3int: " << v3int << std::endl;
+    std::cout << "face: " << std::endl;
+    std::cout << "vertices[v1int]: " << glm::to_string(vertices[v1int]) << std::endl;
+    std::cout << "vertices[v2int]: " << glm::to_string(vertices[v2int]) << std::endl;
+    std::cout << "vertices[v3int]: " << glm::to_string(vertices[v3int]) << std::endl;
     Triangle triangle(vertices[v1int],vertices[v2int],vertices[v3int]);
     triangles.push_back(triangle);
 }
