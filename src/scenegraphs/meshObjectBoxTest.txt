@@ -1,7 +1,7 @@
 # test for raytracing a mesh object made of many triangles
 
 #all the instances
-instance boxMaya src/models/boxMaya.obj
+instance boxMaya src/models/bigBoxMaya.obj
 
 #material
 material mat
