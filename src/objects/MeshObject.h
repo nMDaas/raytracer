@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 
 #include <vector>
+#include <math.h>
 
 #include "Triangle.h"
 
