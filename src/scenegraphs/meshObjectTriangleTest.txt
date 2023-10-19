@@ -15,10 +15,12 @@ end-material
 group root 
 
 leaf l1 instanceof triangleMesh
-scale s1 1 1 1
+translate t1 30 -50 -30
+scale s1 50 50 50
 assign-material l1 mat
 add-child l1 s1 
-add-child s1 root
+add-child s1 t1
+add-child t1 root
 
 # Assign Root
 assign-root root
