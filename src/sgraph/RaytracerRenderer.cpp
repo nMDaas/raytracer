@@ -61,10 +61,12 @@ void RaytracerRenderer::visitLeafNode(LeafNode *leafNode) {
     }
     else {
         MeshObject it = meshObjects.at(leafNode->getInstanceOf());
+        it.transformTriangles(modelview.top());
         hit = it.calcTimes(_s,_v);
         if (hit) {
             newTime = it.getTime();
         }
+        it.inverseTransformTriangles(inverseTransform);
     }
 
     if (hit) {

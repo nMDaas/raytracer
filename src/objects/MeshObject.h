@@ -21,6 +21,8 @@ class MeshObject {
 
         bool calcTimes(glm::vec4 s, glm::vec4 v); // calculates tmin and tmax of a ray's intersection with the meshObject
         float getTime();
+        void transformTriangles(glm::mat4 transform);
+        void inverseTransformTriangles(glm::mat4 inverseTransform); // remove modelview.top() transform 
 
     private:
         std::vector<Triangle> triangles;

@@ -134,3 +134,27 @@ void Triangle::printTriangleDetails() {
     std::cout << "v2: " << glm::to_string(v2) << std::endl;
     std::cout << "normal: " << glm::to_string(normal) << std::endl;
 }
+
+void Triangle::applyTransform(glm::mat4 transform) {
+    v0 = transform * v0; 
+    v1 = transform * v1;
+    v2 = transform * v2;
+    e1 = v1 - v0;
+    e2 = v2 - v0;
+    float normalX = (e1.y * e2.z) - (e1.z * e2.y);
+    float normalY = (e1.z * e2.x) - (e1.x * e2.z);
+    float normalZ = (e1.x * e2.y) - (e1.y * e2.x);
+    normal = normalize(glm::vec4(normalX,normalY,normalZ,0.0f));
+}
+
+void Triangle::removeTransform(glm::mat4 inverseTransform) {
+    v0 = inverseTransform * v0; 
+    v1 = inverseTransform * v1;
+    v2 = inverseTransform * v2;
+    e1 = v1 - v0;
+    e2 = v2 - v0;
+    float normalX = (e1.y * e2.z) - (e1.z * e2.y);
+    float normalY = (e1.z * e2.x) - (e1.x * e2.z);
+    float normalZ = (e1.x * e2.y) - (e1.y * e2.x);
+    normal = normalize(glm::vec4(normalX,normalY,normalZ,0.0f));
+}

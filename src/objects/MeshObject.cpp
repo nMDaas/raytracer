@@ -48,3 +48,15 @@ void MeshObject::setTriangles(std::vector<Triangle>* in_triangles) {
 float MeshObject::getTime() {
    return t;
 }
+
+void  MeshObject::transformTriangles(glm::mat4 transform) {
+    for (int i = 1; i < triangles.size(); i++) {
+        triangles[i].applyTransform(transform);
+    }
+}
+
+void MeshObject::inverseTransformTriangles(glm::mat4 inverseTransform) {
+    for (int i = 1; i < triangles.size(); i++) {
+        triangles[i].applyTransform(inverseTransform);
+    }
+}
