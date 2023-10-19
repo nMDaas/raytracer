@@ -1,0 +1,27 @@
+# test for raytracing a mesh object made of many triangles
+
+#all the instances
+instance squareMaya src/models/squareObjectMesh.obj
+
+#material
+material mat
+emission 0 0 0
+ambient 1 0 0
+diffuse 0 1 0
+specular 0 0 1
+shininess 5
+end-material
+
+group root 
+
+leaf l1 instanceof squareMaya
+scale s1 1 1 1
+assign-material l1 mat
+add-child l1 s1 
+add-child s1 root
+
+# Assign Root
+assign-root root
+
+
+camera 0 0 150 0 0 0
