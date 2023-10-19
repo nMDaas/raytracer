@@ -107,9 +107,9 @@ bool Triangle::pointInsideTriangle(glm::vec4 intersectionPoint) {
     std::cout << "glm::dot(normal, edge1 * C1): " << glm::dot(normal, getCrossProduct(edge1,C1)) << std::endl;
     std::cout << "glm::dot(normal, edge2 * C2): " << glm::dot(normal, getCrossProduct(edge2,C2)) << std::endl;
     */
-    if ((glm::dot(normal, getCrossProduct(edge0,C0)) > 0) && 
-    (glm::dot(normal, getCrossProduct(edge1,C1)) > 0) &&
-    (glm::dot(normal, getCrossProduct(edge2,C2)) > 0)) {
+    if ((glm::dot(normal, getCrossProduct(edge0,C0)) >= 0) && 
+    (glm::dot(normal, getCrossProduct(edge1,C1)) >= 0) &&
+    (glm::dot(normal, getCrossProduct(edge2,C2)) >= 0)) {
         std::cout << "point inside triangle" << std::endl;
         return true;
     }
