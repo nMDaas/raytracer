@@ -32,11 +32,11 @@ Triangle::Triangle (Triangle &t){
 }*/
 
 bool Triangle::calcTimes(glm::vec4 s, glm::vec4 v) {
+    /*
     std::cout << "in Triangle calcTimes()" << std::endl;
     std::cout << "v0: " << glm::to_string(v0) << std::endl;
     std::cout << "v1: " << glm::to_string(v1) << std::endl;
     std::cout << "v2: " << glm::to_string(v2) << std::endl;
-    /*
     std::cout << "s: " << glm::to_string(s) << std::endl;
     std::cout << "v: " << glm::to_string(s) << std::endl;
     std::cout << "e1: " << glm::to_string(e1) << std::endl;
@@ -46,7 +46,7 @@ bool Triangle::calcTimes(glm::vec4 s, glm::vec4 v) {
     std::cout << "normal: " << glm::to_string(normal) << std::endl;*/
     float NDotRayDir = glm::dot(v,normal);
     if (NDotRayDir == 0) {
-        std::cout << "normal and ray direction are perpedicular - no hit" << std::endl;
+        //std::cout << "normal and ray direction are perpedicular - no hit" << std::endl;
         // normal and ray direction are perpedicular, so ray direction is parallel to triangle so no intersection
         return false;
     }
@@ -55,11 +55,11 @@ bool Triangle::calcTimes(glm::vec4 s, glm::vec4 v) {
 
     glm::vec4 intersectionPoint = s + (v * t); 
     if (!pointInsideTriangle(intersectionPoint)) {
-        std::cout << "point inside triangle - no hit" << std::endl;
+        //std::cout << "point inside triangle - no hit" << std::endl;
         return false;
     }
 
-    std::cout << "returning true - hit" << std::endl;
+    //std::cout << "returning true - hit" << std::endl;
     return true;
 }
 
@@ -110,11 +110,11 @@ bool Triangle::pointInsideTriangle(glm::vec4 intersectionPoint) {
     if ((glm::dot(normal, getCrossProduct(edge0,C0)) >= 0) && 
     (glm::dot(normal, getCrossProduct(edge1,C1)) >= 0) &&
     (glm::dot(normal, getCrossProduct(edge2,C2)) >= 0)) {
-        std::cout << "point inside triangle" << std::endl;
+        //std::cout << "point inside triangle" << std::endl;
         return true;
     }
     else {
-        std::cout << "point outside triangle" << std::endl;
+        //std::cout << "point outside triangle" << std::endl;
         return false;
     }
 
@@ -133,9 +133,13 @@ void Triangle::printTriangleDetails() {
     std::cout << "v1: " << glm::to_string(v1) << std::endl;
     std::cout << "v2: " << glm::to_string(v2) << std::endl;
     std::cout << "normal: " << glm::to_string(normal) << std::endl;
+    std::cout << "------" << std::endl;
 }
 
 void Triangle::applyTransform(glm::mat4 transform) {
+    printTriangleDetails();
+    std::cout << "transform: " << glm::to_string(transform) << std::endl;
+    std::cout << "applying transform" << std::endl;
     v0 = transform * v0; 
     v1 = transform * v1;
     v2 = transform * v2;
@@ -145,6 +149,8 @@ void Triangle::applyTransform(glm::mat4 transform) {
     float normalY = (e1.z * e2.x) - (e1.x * e2.z);
     float normalZ = (e1.x * e2.y) - (e1.y * e2.x);
     normal = normalize(glm::vec4(normalX,normalY,normalZ,0.0f));
+    printTriangleDetails();
+    std::cout << "---" << std::endl;
 }
 
 void Triangle::removeTransform(glm::mat4 inverseTransform) {
