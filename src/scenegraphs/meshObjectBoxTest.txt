@@ -16,9 +16,11 @@ group root
 
 leaf l1 instanceof boxMaya
 scale s1 1 1 1
+rotate r1 0 0 1 0
 assign-material l1 mat
 add-child l1 s1 
-add-child s1 root
+add-child s1 r1
+add-child r1 root
 
 # Assign Root
 assign-root root
