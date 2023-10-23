@@ -1,7 +1,10 @@
 # test for raytracing a mesh object made of many triangles
 
 #all the instances
+
 instance squareMaya src/models/squareObjectMesh.obj
+instance translatedSquareMaya src/models/squareTransformed.obj
+instance halfTriangle src/models/halfTriangle.obj
 
 #material
 material mat
@@ -14,11 +17,15 @@ end-material
 
 group root 
 
-leaf l1 instanceof squareMaya
+leaf l1 instanceof halfTriangle
 scale s1 1 1 1
+translate t1 0 0 0
+rotate r1 0 1 0 0
 assign-material l1 mat
-add-child l1 s1 
-add-child s1 root
+add-child l1 s1
+add-child s1 r1
+add-child r1 t1
+add-child t1 root
 
 # Assign Root
 assign-root root
