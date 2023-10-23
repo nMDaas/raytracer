@@ -50,13 +50,15 @@ float MeshObject::getTime() {
 }
 
 void  MeshObject::transformTriangles(glm::mat4 transform) {
-    for (int i = 1; i < triangles.size(); i++) {
+    for (int i = 0; i < triangles.size(); i++) {
+        std::cout << "in transformTriangles(): " << i << std::endl;
         triangles[i].applyTransform(transform);
     }
 }
 
 void MeshObject::inverseTransformTriangles(glm::mat4 inverseTransform) {
-    for (int i = 1; i < triangles.size(); i++) {
+    for (int i = 0; i < triangles.size(); i++) {
+        std::cout << "in inverseTransformTriangles(): " << i << std::endl;
         triangles[i].applyTransform(inverseTransform);
     }
 }
