@@ -1,0 +1,6 @@
+# this is a triangle from bigBoxMaya.obj that is translated in the y direction by +50
+v -3.862852 46.137 3.862852
+v 3.862852 46.137 3.862852
+v -3.862852 53.863 3.862852
+v 3.862852 53.863 3.862852
+f 1/1 2/2 3/3

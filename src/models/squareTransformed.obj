@@ -1,0 +1,7 @@
+#this is squareObjectMesh.obj transformed up by 10 in the y direction
+v -3.862852 6.137 3.862852
+v 3.862852 6.137 3.862852
+v -3.862852 13.862852 3.862852
+v 3.862852 13.862852 3.862852
+f 1/1 2/2 3/3
+f 3/3 2/2 4/4
