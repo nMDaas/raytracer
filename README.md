@@ -10,18 +10,50 @@ Users can build scenes by adding and transforming objects, translating lights, a
 ![Image of Key](https://github.com/nMDaas/raytracer/blob/main/src/images/finalScene1.jpg)
 
 # Raytracer Features 
-Visit https://www.natashamishradaas.com/code for details on features implemented.
+* Customizable Scenes and Hierarchical Rendering of Nodes
+* Box, Sphere, Cylinder Raytracing
+* Box and Sphere Texturing
+* Point Lights, Area Lights, Hard and Soft Shadows
+  * Shadows accounting for material transparency
+* Reflection & Infinite Reflections
+* Refraction, Total Internal Refraction and Infinite Refraction
+* Spotlights
+* Object Translation, Scaling and Rotation 
+* Light Translation
+* Phong Shading
+* Cameras
 
-* object translation, scaling and rotation 
-* light translation
-* phong shading
-* point light
-* area lights
-* soft shadows, accounting for material transparency
-* reflection and infinite reflections
-* refraction, total internal refraction and infinite refraction
-* box and sphere texturing
-* cameras 
+## Box, Sphere, Cylinder Raytracing 
+* Used vector calculations to determine ray-object intersections and calculate the normals of the objects at the point of intersection.
+  
+![Image of Key](https://github.com/nMDaas/raytracer/blob/main/src/images/output2.png)
+
+## Box and Sphere Texturing
+* Used texture mapping to create ppm images that can wrap around sphere and box objects.
+
+![Image of Key](https://github.com/nMDaas/raytracer/blob/main/src/images/output3.png)
+
+## Point Lights, Area Lights, Hard and Soft Shadows
+* Implemented point lights that create hard shadows and area lights that create softer shadows. As the number of cells in the area lights is increased, the soft shadow is more smooth and has less banding. 
+* Shadow intensity also depends on the transparency of the material the light is passing through.
+
+![Image of Key](https://github.com/nMDaas/raytracer/blob/main/src/images/output4.png)
+
+## Reflection & Infinite Reflections
+* Implemented reflections, allowing objects in the scene to have reflective properties. Accounted for infinite reflection and stack overflow by limiting "reflective bounces"
+
+![Image of Key](https://github.com/nMDaas/raytracer/blob/main/src/images/output5.png)
+
+## Refraction, Total Internal Refraction and Infinite Refraction
+* Implemented refraction, allowing objects in the scene to have transparency determined by their refractive index.
+* Accounted for total internal reflection and infinite refraction. Also accounted for multiple transparent objects within the scene or transparent objects within each other. 
+
+![Image of Key](https://github.com/nMDaas/raytracer/blob/main/src/images/output6.png)
+
+## Spotlights
+* Spotlights can be added to the scene by mentioning angle of spotlight and spotlight direction.
+
+![Image of Key](https://github.com/nMDaas/raytracer/blob/main/src/images/output7.png)
 
 # How to Run 
 ```
