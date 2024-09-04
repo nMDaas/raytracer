@@ -1,6 +1,6 @@
 # Introduction 
 
-This is a computer graphics application that allows users to build complex scenes with objects and render realistic images. C++, OpenGL and vector math operations were used to implement several raytracing techniques. 
+This is a ray tracing engine that allows users to build complex scenes with objects and render realistic images. C++, OpenGL and vector math operations were used to implement several raytracing techniques. 
 Users can build scenes by adding and transforming objects, translating lights, and adding textures and materials to the objects. Users can also easily duplicate objects. 
 
 # Raytracer Output
