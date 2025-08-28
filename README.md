@@ -1,3 +1,9 @@
+# Raytracer
+Advanced Lighting, Shadows and Custom Scene Creation using C++	
+- Implemented accurate ray-object algorithms for boxes, spheres, cylinders, and cones using vector calculations.
+- Utilized an Object Oriented Model-View-Controller framework and visitor pattern to construct a hierarchical node system, enabling the creation of custom scenes with reflection, refraction, and refractive index properties.
+- Enhanced the application with advanced lighting features including spotlights, point lights, and area lights, enabling the creation of hard and soft shadows by adjusting light sample counts.
+
 # Introduction 
 
 This is a ray tracing engine that allows users to build complex scenes with objects and render realistic images. C++, OpenGL and vector math operations were used to implement several raytracing techniques. 
